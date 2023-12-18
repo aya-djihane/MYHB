@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "751768405958",
+    "project_id": "myhb-cf583",
+    "storage_bucket": "myhb-cf583.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751768405958:android:0ebbc7a33751bba3dcd4c7",
+        "android_client_info": {
+          "package_name": "com.example.myhb_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3YkxmyzlUXUTX_lwuYVBEKmXPrTWX2xU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
