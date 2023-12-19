@@ -6,10 +6,10 @@ abstract class AppColors {
   static const Color golden= Color(0xffCAAC59);
   static const Color ButtonColor= Color(0xFF303030);
   static const Color Danger= Color(0xffFF6262);
+  static const Color grey= Color(0xffBDBDBD);
   static const Color goldenlight= Color(0xffDBC483);
   static const Color primaryGreen = Color(0xff1c8c8a);
   static const Color textGreen = Color(0xFF1C8C8A);
-  static const Color grey = Color(0xFFE5E5E5);
   static const Color Tick = Color(0xFFC4C4C4);
   static const Color card = Color(0xFFF3F3F3);
   static const Color greylight = Color(0xFFF8F8F8);
@@ -23,6 +23,7 @@ abstract class AppColors {
   static const Color green= Color(0xFF6CBB1D);
   static const Color blue= Color(0xFF1B8989);
   static const Color greydark= Color(0xFFABABAB);
+  static const Color blacklight= Color(0xFF3B3A3A);
 
   // card
   static const Color cardLight = Color(0xFFFFFFFF);

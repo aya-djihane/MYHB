@@ -17,6 +17,7 @@ dependencies:
   firebase_core:
   firebase_auth:
   get:
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -30,6 +31,7 @@ flutter:
 
   assets:
     - images/
+    - svgfiles/
 
 
 
