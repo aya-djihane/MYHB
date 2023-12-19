@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Positioned(
             top: media.height / 4,
-            left: 30,
+            left: 20,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
