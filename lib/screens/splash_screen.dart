@@ -28,7 +28,6 @@ class _SplashScreenState extends State<SplashScreen> {
               bottom: 30,
               left: media.width/3,
               child: CustomButton(width: media.width/3,value: "Get Started",)),
-    );
         ],
       ),
     );
