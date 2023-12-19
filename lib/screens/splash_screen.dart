@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myhb_app/screens/loginscreen.dart';
 import 'package:myhb_app/widgets/custom_button.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,10 +25,20 @@ class _SplashScreenState extends State<SplashScreen> {
                 )
             ),
           ),
+         // att nchof andi nrml 2 min brQ mchi haja
           Positioned(
               bottom: 30,
               left: media.width/3,
-              child: CustomButton(width: media.width/3,value: "Get Started",))
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginScreen()),
+                  );
+                },
+                child: CustomButton(width: media.width/3,value: "Get Started"
+                ,),
+              ))
         ],
       ),
     );
