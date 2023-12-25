@@ -42,4 +42,7 @@ flutter:
     - family: Nunito
       fonts:
         - asset: fonts/Nunito.ttf
+    - family: Merriweather-Black
+    - fonts:
+      - asset: fonts/Merriweather-Black.ttf
 

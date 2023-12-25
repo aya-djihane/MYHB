@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/widgets/custom_button.dart';
+import 'package:myhb_app/screens/SignUpScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Column (
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
            Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -100,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
     const Padding(
-    padding: EdgeInsets.only(left: 90,top: 40),
+    padding: EdgeInsets.only(left: 80,top: 30),
     child: Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,20 +112,28 @@ class _LoginScreenState extends State<LoginScreen> {
     'forgot password ?',
     style: TextStyle(
     fontSize: 16,
-      fontFamily: "nunito",
-    fontWeight: FontWeight.bold,
+      fontFamily: "Nunito",
+    fontWeight: FontWeight.w600,
     color:AppColors.blacklight,)
     ),
-
   ]),
     ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 60,vertical: 40),
-              child: CustomButton(width: media.width, value: 'Log In'),
-            ),
-          ),
-        ],
+    Center(
+          child: Padding(
+             padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 40),
+             child: Column(
+              children: [
+               CustomButton( width: media.width, value: 'Log In',),
+                 SizedBox(height: 16),
+               CustomButton(
+               width: media.width,
+              value: 'SIGN UP',
+                 onTap: ()=>Get.to(SigninScreen()),
+          )],
+         ),
+        ),
+       ),
+      ],
       ),
     );
   }

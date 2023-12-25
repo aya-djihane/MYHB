@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/screens/loginscreen.dart';
 import 'package:myhb_app/widgets/custom_button.dart';
 
@@ -27,17 +27,16 @@ class _SplashScreenState extends State<SplashScreen> {
                 fit: BoxFit.fill,
               ),
             ),
-          ),
-          Positioned(
+           child: Positioned(
             bottom: 30,
-            left: media.width / 3,
+            left: media.width /4,
             child: CustomButton(
               onTap: ()=>Get.to(LoginScreen()),
               width: media.width / 3,
               value: "Get Started",
             ),
           ),
-        ],
+          )],
       ),
     );
   }
