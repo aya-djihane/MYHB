@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderSide: BorderSide(color:AppColors.primaryGreen),
                 ),
               ),
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: AppColors.black),
             ),
           ),
 
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderSide: BorderSide(color:AppColors.primaryGreen),
                 ),
               ),
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: AppColors.black),
             ),
           ),
     const Padding(

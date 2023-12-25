@@ -71,7 +71,7 @@ class _LoginScreenState extends State<SigninScreen> {
                   borderSide: BorderSide(color:AppColors.primaryGreen),
                 ),
               ),
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: AppColors.black),
             ),
           ),
           const Padding(
@@ -87,7 +87,7 @@ class _LoginScreenState extends State<SigninScreen> {
                   borderSide: BorderSide(color:AppColors.primaryGreen),
                 ),
               ),
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: AppColors.black),
             ),
           ),
 
@@ -105,7 +105,7 @@ class _LoginScreenState extends State<SigninScreen> {
                   borderSide: BorderSide(color:AppColors.primaryGreen),
                 ),
               ),
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: AppColors.black),
             ),
           ),
           const Padding(
@@ -141,7 +141,7 @@ class _LoginScreenState extends State<SigninScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                      'Already have account?,SIGN IN',
+                      'Already have account ?,SIGN IN',
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: "Nunito",
