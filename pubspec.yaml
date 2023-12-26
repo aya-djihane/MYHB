@@ -45,4 +45,7 @@ flutter:
     - family: Merriweather
     - fonts:
       - asset: fonts/Merriweather.ttf
+    - family: RubikLines
+      fonts:
+        - asset: fonts/RubikLines.ttf
 

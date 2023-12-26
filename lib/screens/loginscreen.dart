@@ -61,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 'Welcome Back',
                 style: TextStyle(
                   fontSize: 30,
+                  fontFamily: "RubikLines",
                   fontWeight: FontWeight.bold,
                   color: AppColors.greydark,
                 ),

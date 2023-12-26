@@ -27,16 +27,53 @@ class _SplashScreenState extends State<SplashScreen> {
                 fit: BoxFit.fill,
               ),
             ),
-           child: Positioned(
+
+          ), Positioned(
             bottom: 30,
-            left: media.width /2,
+            left: media.width /3.7,
             child: CustomButton(
               onTap: ()=>Get.to(LoginScreen()),
               width: media.width / 2,
               value: "Get Started",
             ),
           ),
-          )],
+          const Positioned(
+            top: 200,
+            left: 20,
+            child:   Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Make Your',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontFamily: "Merriweather",
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.black,
+                  ),
+                ),
+                Text(
+                  'Make Your',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontFamily: "RubikLines",
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.greydark,
+                  ),
+                ),
+                Text(
+                  'Make Your ',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontFamily: "RubikLines",
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.greydark,
+                  ),
+                ),
+              ],
+            ),
+          ),],
       ),
     );
   }
