@@ -35,6 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
               onTap: ()=>Get.to(LoginScreen()),
               width: media.width / 2,
               value: "Get Started",
+              color: AppColors.darkGrey,
             ),
           ),
           const Positioned(

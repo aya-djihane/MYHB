@@ -7,9 +7,10 @@ import 'package:myhb_app/appColors.dart';
 class CustomButton extends StatefulWidget {
   double? width;
   String value;
+  Color color;
   final VoidCallback? onTap;
 
-  CustomButton({required this.width,required this.value,this.onTap,Key? key}) : super(key: key);
+  CustomButton({required this.width,required this.value,this.onTap,this.color=AppColors.darkGrey,Key? key}) : super(key: key);
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
@@ -24,7 +25,7 @@ class _CustomButtonState extends State<CustomButton> {
           width: widget.width,
           height: 50,
           decoration: ShapeDecoration(
-            color: AppColors.ButtonColor.withOpacity(.6),
+            color: widget.color.withOpacity(.6),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           ),
           child:Center(

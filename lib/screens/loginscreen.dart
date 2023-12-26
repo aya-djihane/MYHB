@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
                 children: [
-                 Container(width: media.width/3.1,height: 1,color: AppColors.grey,),
+                 Container(width: media.width/3.2,height: 1,color: AppColors.grey,),
                   const SizedBox(
                     width: 10,
                   ),
@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Container(width: media.width/3.1,height: 1,color: AppColors.grey,),
+                  Container(width: media.width/3.2,height: 1,color: AppColors.grey,),
                 ],
               ),
             ),
