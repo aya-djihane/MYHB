@@ -29,10 +29,10 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
            child: Positioned(
             bottom: 30,
-            left: media.width /4,
+            left: media.width /2,
             child: CustomButton(
               onTap: ()=>Get.to(LoginScreen()),
-              width: media.width / 3,
+              width: media.width / 2,
               value: "Get Started",
             ),
           ),

@@ -58,7 +58,7 @@ class _LoginScreenState extends State<SigninScreen> {
             ),
           ),
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 30.0),
+            padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(
@@ -75,7 +75,7 @@ class _LoginScreenState extends State<SigninScreen> {
             ),
           ),
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50.0,vertical: 30.0),
+            padding: EdgeInsets.symmetric(horizontal: 40.0,vertical: 20.0),
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Email',
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<SigninScreen> {
           ),
 
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 30.0),
+            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20.0),
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(
@@ -109,7 +109,7 @@ class _LoginScreenState extends State<SigninScreen> {
             ),
           ),
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 30.0),
+            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20.0),
             child: TextField(
               obscureText: true,
               decoration: InputDecoration(
@@ -129,29 +129,28 @@ class _LoginScreenState extends State<SigninScreen> {
           Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60,vertical: 40),
-              child: CustomButton(width: media.width, value: 'SIGN UP'),
+              child: CustomButton(width: media.width, value: 'Sign Up'),
 
 
             ),
           ),
           const Padding(
-            padding: EdgeInsets.only(left: 80,top: 30),
+            padding: EdgeInsets.only(left: 60,top: 20),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                      'Already have account ?,SIGN IN',
+                      'Already have account ?,Sign In',
                       style: TextStyle(
                         fontSize: 16,
-                        fontFamily: "Nunito",
+                        fontFamily: "Merriweather",
                         fontWeight: FontWeight.w600,
                         color:AppColors.blacklight,)
                   ),
                 ]),
           ),
-        ],
-      ),
+      ]),
     );
   }
 }

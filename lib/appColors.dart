@@ -23,7 +23,7 @@ abstract class AppColors {
   static const Color green= Color(0xFF6CBB1D);
   static const Color blue= Color(0xFF1B8989);
   static const Color greydark= Color(0xFFABABAB);
-  static const Color blacklight= Color(0xFF3B3A3A);
+  static const Color blacklight= Color(0xFF5E5959);
 
   // card
   static const Color cardLight = Color(0xFFFFFFFF);
