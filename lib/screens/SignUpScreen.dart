@@ -69,8 +69,11 @@ class _SigninScreenState extends State<SigninScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
                 child: TextFormField(
-                  obscureText: true,
-                  onChanged: (value) => controller.validateName(value),
+                  obscureText: false,
+                  onChanged: (value) { controller.validateName(value);
+                    controller.name.value=value;
+
+                  },
                   decoration: const InputDecoration(
                     hintText: 'Name',
                     hintStyle: TextStyle(color: AppColors.blacklight),

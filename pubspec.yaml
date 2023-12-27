@@ -16,9 +16,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core:
   firebase_auth:
+  cloud_firestore: ^4.13.6
   get:
   flutter_svg: ^2.0.9
   ionicons: ^0.2.2
+  connectivity:
 
 dev_dependencies:
   flutter_test:

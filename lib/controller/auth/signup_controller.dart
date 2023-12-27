@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myhb_app/appColors.dart';
@@ -9,6 +10,7 @@ class SigninController extends GetxController {
   RxBool ckiked = false.obs;
   RxBool ckikedConfirm = false.obs;
   RxBool isConfirmPasswordValid = true.obs;
+  RxString name = "".obs;
 
   void validateName(String value) {
     isNameValid.value = value.isNotEmpty;
@@ -36,7 +38,13 @@ class SigninController extends GetxController {
         email: email,
         password: password,
       );
-
+     if(userCredential!=null){
+       FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
+         'name':name.value,
+       });
+     }else{
+       print('please try later');
+     }
       Get.snackbar('Success', 'Successfully signed up: ${userCredential.user!.email}',backgroundColor: AppColors.primaryGreen.withOpacity(.2));
 
     } on FirebaseAuthException catch (e) {
