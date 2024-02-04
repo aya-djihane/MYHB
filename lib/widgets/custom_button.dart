@@ -10,7 +10,7 @@ class CustomButton extends StatefulWidget {
   Color color;
   final VoidCallback? onTap;
 
-  CustomButton({required this.width,required this.value,this.onTap,this.color=AppColors.darkGrey,Key? key}) : super(key: key);
+  CustomButton({required this.width,required this.value,this.onTap,this.color=AppColors.darkGrey,Key? key,t}) : super(key: key);
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
