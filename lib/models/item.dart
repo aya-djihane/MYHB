@@ -6,12 +6,12 @@ class Item {
   final String? image;
   final List? colors;
 
-  Item(
+  Item({
     this.price,
     this.name,
     this.rate,
     this.image,
-    this.colors, {
+    this.colors,
     this.id,
   });
 }

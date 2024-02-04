@@ -69,7 +69,7 @@ class _BottomBarState extends State<BottomBar> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      widget.pageType == PageType.meet ? Iconsax.notification: Iconsax.notification_1,
+                      widget.pageType == PageType.meet ? Iconsax.notification:Iconsax.notification_copy,
                       size: 28.sp,
                       color: widget.pageType == PageType.meet ? AppColors.lightblack:AppColors.grey,
 

@@ -7,14 +7,14 @@ import 'package:myhb_app/controller/auth/signup_controller.dart';
 import 'package:myhb_app/screens/loginscreen.dart';
 import 'package:myhb_app/widgets/custom_button.dart';
 
-class SigninScreen extends StatefulWidget {
-  const SigninScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<SigninScreen> createState() => _SigninScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SigninScreenState extends State<SigninScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final SigninController signinController = Get.put(SigninController());
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
