@@ -1,5 +1,6 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'screens/noInternet_screen.dart';
 import 'screens/splash_screen.dart';
@@ -18,9 +19,11 @@ void main() async{
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  GetMaterialApp(
+    return  ScreenUtilInit(
+        builder: (context, child) =>GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: ConnectivityWrapper(),
+    )
     );
   }
 }

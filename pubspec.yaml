@@ -21,6 +21,9 @@ dependencies:
   flutter_svg: ^2.0.9
   ionicons: ^0.2.2
   connectivity:
+  flutter_screenutil: ^5.9.0
+  iconsax_flutter: ^1.0.0
+  flutter_iconly:
 
 dev_dependencies:
   flutter_test:

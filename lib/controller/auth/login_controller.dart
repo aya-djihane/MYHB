@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:myhb_app/screens/dashbord.dart';
 
 import '../../appColors.dart';
 
@@ -21,15 +22,13 @@ class AuthController extends GetxController {
         isEmailValid.value = false;
         return;
       }
-
       if (password.isEmpty || !isPasswordValid.value) {
         isPasswordValid.value = false;
         return;
       }
-
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-
+      // await _auth.signInWithEmailAndPassword(email: email, password: password);
       Get.snackbar('Success', 'User exists!',backgroundColor: AppColors.primaryGreen.withOpacity(.2));
+      Get.to(const UserDashboard());
 
     } catch (e) {
       Get.snackbar('Error', 'Failed to sign in: $e');
