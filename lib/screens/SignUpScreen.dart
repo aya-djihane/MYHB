@@ -160,7 +160,7 @@ class _SigninScreenState extends State<SigninScreen> {
               Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
-                  child: CustomButton(width: media.width, value: 'Sign Up', onTap: () => controller.signup(emailController.text,passwordController.text)),
+                  child: CustomButton(width: media.width, value: 'Sign Up', onTap: () => controller.signup(emailController.text,passwordController.text),),
                 ),
               ),
               GestureDetector(

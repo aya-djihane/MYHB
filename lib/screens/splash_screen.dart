@@ -29,13 +29,13 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
 
           ), Positioned(
-            bottom: 30,
+            bottom: 100,
             left: media.width /3.7,
             child: CustomButton(
               onTap: ()=>Get.to(LoginScreen()),
               width: media.width / 2,
               value: "Get Started",
-              color: AppColors.darkGrey,
+              color: AppColors.lightblack,
             ),
           ),
           const Positioned(
@@ -48,28 +48,33 @@ class _SplashScreenState extends State<SplashScreen> {
                 Text(
                   'Make Your',
                   style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Merriweather",
+                    fontSize: 25,
+                    fontFamily: "Gelasio",
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.greydark,
+                  ),
+                ),
+                Text(
+                  'HOME BEAUTIFUL',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontFamily: "Gelasio",
                     fontWeight: FontWeight.bold,
                     color: AppColors.black,
                   ),
                 ),
-                Text(
-                  'Make Your',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "RubikLines",
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.greydark,
-                  ),
-                ),
-                Text(
-                  'Make Your ',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "RubikLines",
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.greydark,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                  child: Text(
+                    'The best simple place where you\n '
+                        'discover most wonderful furnitures\n '
+                        'and make your home beautiful. ',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: "NunitoSans",
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.greydark,
+                    ),
                   ),
                 ),
               ],
