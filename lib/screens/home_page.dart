@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/controller/dashboard_controller.dart';
 import 'package:myhb_app/models/item.dart';
@@ -20,31 +21,32 @@ class _HomePageState extends State<HomePage> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: AppColors.white,
-            actions: const [Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: Icon(Iconsax.shopping_cart_copy,size: 30,color: Colors.grey,),
-            )],
-            leading: const Icon(Icons.search,size: 30,color: Colors.grey,),
-            title: SizedBox(
+            actions: const [
+              Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: Icon(Ionicons.cart_outline, size: 30, color: Colors.grey),
+              ),
+            ],
+            leading: const Icon(Icons.search, size: 30, color: Colors.grey),
+            title: const SizedBox(
               width: 200,
               child: Column(
                 children: [
-              Text(
-              "Make home ",
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-color: AppColors.darkGrey,
-                fontFamily: "Merriweather"
-              ),
-              textAlign: TextAlign.center,
-                        ),
+                  Text(
+                    "Make home ",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.darkGrey,
+                        fontFamily: "Merriweather"),
+                    textAlign: TextAlign.center,
+                  ),
                   Text(
                     "BEAUTIFUL",
-                    style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "Gelasio"
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "Gelasio",
                     ),
                     textAlign: TextAlign.center,
                   )
@@ -53,22 +55,224 @@ color: AppColors.darkGrey,
             ),
           ),
           backgroundColor: Colors.white,
-          body:
+          body: Column(
+            children: [
+            SizedBox(height: 10.h,),
+               SizedBox(height: 60.h,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 44,
+                                height: 44,
+                                decoration: ShapeDecoration(
+                                  color: Colors.black,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                            ),
+                                child: const Center(
+                                  child: Icon(Icons.star,color: Colors.white,),
+                                ),
+                                              ),
+                              const Text(
+                                "Popular ",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.darkGrey,
+                                    fontFamily: "Merriweather"),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 44,
+                                height: 44,
+                                decoration: ShapeDecoration(
+                                  color: AppColors.greylight,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                child: const Center(
+                                  child: Icon(Icons.chair,color: AppColors.darkGrey),
+                                ),
+                              ),
+                              const Text(
+                                "Chair ",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.darkGrey,
+                                    fontFamily: "Merriweather"),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 44,
+                                height: 44,
+                                decoration: ShapeDecoration(
+                                  color: AppColors.greylight,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                child: const Center(
+                                  child: Icon(Icons.table_bar_outlined,color: AppColors.darkGrey),
+                                ),
+                              ),
+                              const Text(
+                                "Table ",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.darkGrey,
+                                    fontFamily: "Merriweather"),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 44,
+                                height: 44,
+                                decoration: ShapeDecoration(
+                                  color: AppColors.greylight,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                child: const Center(
+                                  child: Icon(Icons.chair_outlined,color: AppColors.darkGrey),
+                                ),
+                              ),
+                              const Text(
+                                "Sofa ",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.darkGrey,
+                                    fontFamily: "Merriweather"),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 44,
+                                height: 44,
+                                decoration: ShapeDecoration(
+                                  color: AppColors.greylight,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                child: const Center(
+                                  child: Icon(Icons.bed_outlined,color: AppColors.darkGrey),
+                                ),
+                              ),
+                              const Text(
+                                "Bed ",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.darkGrey,
+                                    fontFamily: "Merriweather"),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 44,
+                                height: 44,
+                                decoration: ShapeDecoration(
+                                  color: AppColors.greylight,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                child: const Center(
+                                  child: Icon(Iconsax.lamp_1_copy,color: AppColors.darkGrey),
+                                ),
+                              ),
+                              const Text(
+                                "Lamb ",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.darkGrey,
+                                    fontFamily: "Merriweather"),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ]
+                                ),
+                ))),
+                                Expanded(
+                                  child: Center(
+                  child: FutureBuilder<List<Item>>(
+                    future:  dashboardController.generateRandomItems(10),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Text('No data available.');
+                      } else {
+                        return GridView.builder(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10.0,
+                            mainAxisSpacing: 10.0,
+                          ),
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return ItemCard(cardinfo: snapshot.data![index]);
+                          },
+                        );
+                      }
+                    },
+                  ),
+                                  ),
+                                ),
+                              ],
+                            ),),
 
-          Center(
-    child: Column(
-      children: [
-        ItemCard(cardinfo: Item(id: 0,image: "https://images.unsplash.com/photo-1540574163026-643ea20ade25?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",price: "5000DA"),),
-        ItemCard(cardinfo: Item(id: 0,image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjaxtAloq7bYDMmMgiAcA93p7LZRKnI4-EoBuu5KTVFC9eXmsWa2Y4RdlbeACJmy7_b2c&usqp=CAU"
-            "",price: "40000Da"),),
-      ],
-    ),
-          //   child: CircularProgressIndicator(strokeWidth: 1,
-          //     backgroundColor: Colors.white,
-          //     color: Colors.grey.withOpacity(.5),),
-          // )
-        ),
-        ),
         onWillPop: () async {
           bool exit = await showModalBottomSheet(
             context: context,

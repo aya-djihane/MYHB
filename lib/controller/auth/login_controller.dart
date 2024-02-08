@@ -26,11 +26,13 @@ class AuthController extends GetxController {
         isPasswordValid.value = false;
         return;
       }
-      // await _auth.signInWithEmailAndPassword(email: email, password: password);
+
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
       Get.snackbar('Success', 'User exists!',backgroundColor: AppColors.primaryGreen.withOpacity(.2));
       Get.to(const UserDashboard());
 
     } catch (e) {
+      print(e);
       Get.snackbar('Error', 'Failed to sign in: $e');
     }
   }
