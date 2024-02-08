@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
           body: Column(
             children: [
             SizedBox(height: 10.h,),
-               SizedBox(height: 60.h,
+               SizedBox(height: 80.h,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Padding(
@@ -254,16 +254,19 @@ class _HomePageState extends State<HomePage> {
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Text('No data available.');
                       } else {
-                        return GridView.builder(
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10.0,
-                            mainAxisSpacing: 10.0,
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: GridView.builder(
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10.0,
+                              mainAxisSpacing: 10.0,
+                            ),
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              return ItemCard(cardinfo: snapshot.data![index]);
+                            },
                           ),
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            return ItemCard(cardinfo: snapshot.data![index]);
-                          },
                         );
                       }
                     },
