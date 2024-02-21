@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/models/item.dart';
+import 'package:myhb_app/widgets/camerascreen.dart';
 import 'package:myhb_app/widgets/custom_button.dart';
 import 'package:readmore/readmore.dart';
 
@@ -33,7 +35,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       height: MediaQuery.of(context).size.height/2,
                       decoration:  BoxDecoration(
                      color: AppColors.white,
-                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50)),
+                        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(50)),
                           boxShadow:  [
                             BoxShadow(
                                 color: AppColors.black.withOpacity(.1),
@@ -44,13 +46,24 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
         
                     ),
-                    Positioned(
+                    const Positioned(
                       top: 50,
                       right: 20,
                       child:SizedBox(
                         width:250 ,
-                      height: 250,
-                      child: Image.network(widget.cardinfo.image!),
+                         height: 250,
+                      child: ModelViewer(
+                        backgroundColor: Colors.transparent,
+                        src: 'images/Wood_Table.glb',
+                        alt: 'A 3D model of an astronaut',
+                        ar: false,
+                        autoRotate: true,
+                        iosSrc: 'images/pellowbrown.glb',
+                        disableZoom: false,
+                        maxFieldOfView: '50deg',
+                        minFieldOfView: '50deg',
+                        cameraOrbit: '0deg 0deg 0.5m',
+                      ),
                       ),
                     ),
                     Positioned(
@@ -233,18 +246,37 @@ class _ProductDetailsState extends State<ProductDetails> {
       child: Row(
         children: [
           const SizedBox(width: 20,),
-          Container(
-            width: 50,
-            height: 50,
-            decoration: ShapeDecoration(
-              color: AppColors.greylight,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+          GestureDetector(
+            onTap: (){
+              Get.bottomSheet(
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height/2,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft:Radius.circular(50),
+                        )
+                      ),
+                      child: Center(child: CameraScreen()),
+                    ),
+                  )
+              );
+            },
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: ShapeDecoration(
+                color: AppColors.greylight,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-            ),
-            child:  Padding(
-              padding: const EdgeInsets.all(3.0),
-              child: SizedBox(height: 90, width: 90, child: Image.asset("images/augmentedreality.png", color: AppColors.black)),
+              child:  Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: SizedBox(height: 90, width: 90, child: Image.asset("images/augmentedreality.png", color: AppColors.black)),
+              ),
             ),
           ),
 

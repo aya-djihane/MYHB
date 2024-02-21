@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myhb_app/appColors.dart';
+import 'package:myhb_app/screens/loginscreen.dart';
 
 class SigninController extends GetxController {
   RxBool isNameValid = true.obs;
@@ -11,7 +12,7 @@ class SigninController extends GetxController {
   RxBool ckikedConfirm = false.obs;
   RxBool isConfirmPasswordValid = true.obs;
   RxString name = "".obs;
-
+  RxBool loading = false.obs;
   void validateName(String value) {
     isNameValid.value = value.isNotEmpty;
   }
@@ -30,23 +31,16 @@ class SigninController extends GetxController {
 
   bool get isValidForm =>
       isNameValid.value && isEmailValid.value && isPasswordValid.value && isConfirmPasswordValid.value;
-
   Future<void> signup(String email, String password) async {
-
+    loading.value==true;
     try {
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-     if(userCredential!=null){
-       FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
-         'name':name.value,
-       });
-     }else{
-       print('please try later');
-     }
       Get.snackbar('Success', 'Successfully signed up: ${userCredential.user!.email}',backgroundColor: AppColors.primaryGreen.withOpacity(.2));
-
+      loading.value==false;
+Get.to(const LoginScreen());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
