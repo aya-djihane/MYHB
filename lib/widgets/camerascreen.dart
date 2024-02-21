@@ -77,11 +77,11 @@ class _CameraScreenState extends State<CameraScreen> {
                   height: media.height,
                   child: const ModelViewer(
                     backgroundColor: Colors.transparent,
-                    src: 'images/pellowgreen.glb',
+                    src: 'images/Wood_Table.glb',
                     alt: 'A 3D model of an astronaut',
                     ar: false,
                     autoRotate: false,
-                    iosSrc: 'images/pellowgreen.glb',
+                    iosSrc: 'images/Wood_Table.glb',
                     disableZoom: false,
                     maxFieldOfView: '100deg',
                     minFieldOfView: '100deg',

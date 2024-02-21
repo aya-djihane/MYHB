@@ -275,7 +275,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
               child:  Padding(
                 padding: const EdgeInsets.all(3.0),
-                child: SizedBox(height: 90, width: 90, child: Image.asset("images/Wood_Table.glb", color: AppColors.black)),
+                child: SizedBox(height: 90, width: 90, child: Image.asset("images/augmentedreality.png", color: AppColors.black)),
               ),
             ),
           ),
