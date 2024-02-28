@@ -27,7 +27,7 @@ class AuthController extends GetxController {
         return;
       }
 
-      // await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
       Get.snackbar('Success', 'User exists!',backgroundColor: AppColors.primaryGreen.withOpacity(.2));
       Get.to(const UserDashboard());
 

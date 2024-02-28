@@ -3,10 +3,12 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:myhb_app/models/item.dart';
+import 'package:myhb_app/service/database_service.dart';
 import 'package:myhb_app/widgets/buttom_bar.dart';
 
 class DashboardController extends GetxController {
   Rx<PageType> pageType = PageType.home.obs;
+  final DatabaseService databaseService =DatabaseService();
   List<String> images = [
     "https://th.bing.com/th/id/R.3e063dbea335dd01a2b9f08e8483e221?rik=GgQUab%2bcvdoeVA&pid=ImgRaw&r=0",
     "https://i.pinimg.com/736x/bf/0f/6d/bf0f6d931224d9e128e65e22e7f1d1fa.jpg",
@@ -15,31 +17,31 @@ class DashboardController extends GetxController {
     "https://th.bing.com/th/id/OIP.zt3_9dU0AvYoVEtbVcUzJgHaHa?rs=1&pid=ImgDetMain",
   ];
 
-  Future<List<Item>> generateRandomItems(int count) {
-    List<Item> randomItems = [];
-    for (int i = 0; i < count; i++) {
-      String randomImage = images[Random().nextInt(5)];
-      String randomPrice = "${Random().nextInt(1000) + 500}DA";
-      String randomName = "${Random().nextInt(50)} Item ";
-      Type randoomtype = Type.values[Random().nextInt(4)];
-
-      String description = "Minimal Stand is made of by natural wood. The design that is very simple and minimal. This is truly one of the best furnitures in any family for now. With 3 different colors, you can easily select the best match for your home. ";
-      int rate = Random().nextInt(10);
-      randomItems.add(Item(
-          id: i,
-          image: randomImage,
-          price: randomPrice,
-          name: randomName,
-          type: randoomtype,
-        description: description,
-        rate: rate
-
-      ));
-
-    }
-
-    return Future.value(randomItems);
-  }
+  // Future<List<Item>> generateRandomItems(int count) {
+  //   List<Item> randomItems = [];
+  //   for (int i = 0; i < count; i++) {
+  //     String randomImage = images[Random().nextInt(5)];
+  //     String randomPrice = "${Random().nextInt(1000) + 500}DA";
+  //     String randomName = "${Random().nextInt(50)} Item ";
+  //     Type randoomtype = Type.values[Random().nextInt(4)];
+  //
+  //     String description = "Minimal Stand is made of by natural wood. The design that is very simple and minimal. This is truly one of the best furnitures in any family for now. With 3 different colors, you can easily select the best match for your home. ";
+  //     int rate = Random().nextInt(10);
+  //     randomItems.add(Item(
+  //         id: i,
+  //         image: randomImage,
+  //         price: randomPrice,
+  //         name: randomName,
+  //         type: randoomtype,
+  //       description: description,
+  //       rate: rate
+  //
+  //     ));
+  //
+  //   }
+  //
+  //   return Future.value(randomItems);
+  // }
 
   Future<List<Item>> fetchItemsFromFirebase() async {
     try {

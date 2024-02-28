@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +14,9 @@ void main() async{
 
     options: DefaultFirebaseOptions.currentPlatform,
 
+  );
+  FirebaseFirestore.instance.settings= const Settings(
+    persistenceEnabled: true
   );
   runApp(MyApp());
 }

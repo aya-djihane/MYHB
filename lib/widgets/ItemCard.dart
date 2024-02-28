@@ -45,7 +45,7 @@ Get.to(ProductDetails(cardinfo: widget.cardinfo,));
                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15.0),
-                  child: Text(widget.cardinfo.price!,style: const TextStyle(fontFamily: "Nunito",color: AppColors.black,fontSize: 14,fontWeight: FontWeight.w900),),
+                  child: Text(widget.cardinfo.price??"",style: const TextStyle(fontFamily: "Nunito",color: AppColors.black,fontSize: 14,fontWeight: FontWeight.w900),),
       ),
               ],
             ),

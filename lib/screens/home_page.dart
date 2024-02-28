@@ -244,12 +244,13 @@ class _HomePageState extends State<HomePage> {
                 ))),
                                 Expanded(
                                   child: Center(
-                  child: FutureBuilder<List<Item>>(
-                    future:  dashboardController.generateRandomItems(10),
+                  child: StreamBuilder<List<Item>>(
+                    stream:  dashboardController.databaseService.getItems(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();
                       } else if (snapshot.hasError) {
+                        print('Error: ${snapshot.error}');
                         return Text('Error: ${snapshot.error}');
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Text('No data available.');
