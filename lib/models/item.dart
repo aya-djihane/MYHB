@@ -57,7 +57,7 @@ class Item {
       'name': name,
       'rate': rate,
       'image': image,
-      'type': type?.toString().split('.').last, // Convert Type enum to String
+      'type': type?.toString().split('.').last,
       'colors': colors,
       'description': description,
     };

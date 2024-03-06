@@ -49,7 +49,6 @@ class DashboardController extends GetxController {
           await FirebaseFirestore.instance.collection('items').get();
 
       List<Item> items = [];
-
       for (QueryDocumentSnapshot<Map<String, dynamic>> doc
           in querySnapshot.docs) {
         items.add(Item(
