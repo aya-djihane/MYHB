@@ -21,4 +21,7 @@ Stream<List<Item>> getItems() {
 void addItem(Item item) async{
  _todoref.add(item);
  }
+ Future<void> updateItemRecord(Item item )async{
+ await _firestore.collection(ITEMES_COLLECTON_REF).doc(item.id.toString()).update(item.toJson());
+ }
 }

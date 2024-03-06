@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 enum Type { Chair, Table, Armchair, Bed }
 
 class Item {
-  int? id;
+  String? id;
   final String? price;
   final String? name;
   final int? rate;
@@ -13,7 +13,7 @@ class Item {
   final Type? type;
   final List<String>? colors;
   final String? description;
-
+  final bool? isfavorite;
   Item({
     this.price,
     this.name,
@@ -22,7 +22,8 @@ class Item {
     this.colors,
     this.id,
     this.type,
-    this.description
+    this.description,
+    this.isfavorite
   });
   // factory Item.fromJson(Map<String, dynamic> json) {
   //   return Item(
@@ -40,7 +41,7 @@ class Item {
   factory Item.fromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
     return Item(
-      id: data['id'] as int?,
+      id: data['id'] ,
       price: data['price'] as String?,
       name: data['name'] as String?,
       rate: data['rate'] as int?,
@@ -48,6 +49,7 @@ class Item {
       type: _parseType(data['type'] as String?),
       colors: (data['colors'] as List?)?.cast<String>(),
       description: data['description'] as String?,
+      isfavorite: data['isfavorite'] as bool,
     );
   }
   Map<String, Object?> toJson() {
@@ -60,6 +62,8 @@ class Item {
       'type': type?.toString().split('.').last,
       'colors': colors,
       'description': description,
+      'isfavorite': isfavorite
+
     };
   }
   static Type? _parseType(String? typeString) {
@@ -79,11 +83,7 @@ class Item {
         return null;
     }
   }
-
-
 }
-
-
 // List<Item> itemList = generateRandomItemList(15);
 
 // List<Item> generateRandomItemList(int itemCount) {
@@ -104,12 +104,3 @@ class Item {
 //   return items;
 // }
 
-List<String> generateRandomColors() {
-  List<String> colors = [];
-
-  for (int i = 0; i < Random().nextInt(5) + 1; i++) {
-    colors.add("#${Random().nextInt(0xFFFFFF).toRadixString(16).padLeft(6, '0')}");
-  }
-
-  return colors;
-}

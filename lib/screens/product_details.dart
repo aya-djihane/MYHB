@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:myhb_app/appColors.dart';
+import 'package:myhb_app/controller/item_controller.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/widgets/camerascreen.dart';
 import 'package:myhb_app/widgets/custom_button.dart';
@@ -18,6 +19,7 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+   final ItemController  controller = Get.put(ItemController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,26 +48,26 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
         
                     ),
-                    const Positioned(
-                      top: 50,
-                      right: 20,
-                      child:SizedBox(
-                        width:250 ,
-                         height: 250,
-                      child: ModelViewer(
-                        backgroundColor: Colors.transparent,
-                        src: 'images/Wood_Table.glb',
-                        alt: 'A 3D model of an astronaut',
-                        ar: false,
-                        autoRotate: true,
-                        iosSrc: 'images/pellowbrown.glb',
-                        disableZoom: false,
-                        maxFieldOfView: '50deg',
-                        minFieldOfView: '50deg',
-                        cameraOrbit: '0deg 0deg 0.5m',
-                      ),
-                      ),
-                    ),
+                    // const Positioned(
+                    //   top: 50,
+                    //   right: 20,
+                    //   child:SizedBox(
+                    //     width:250 ,
+                    //      height: 250,
+                    //   child: ModelViewer(
+                    //     backgroundColor: Colors.transparent,
+                    //     src: 'images/Wood_Table.glb',
+                    //     alt: 'A 3D model of an astronaut',
+                    //     ar: false,
+                    //     autoRotate: true,
+                    //     iosSrc: 'images/pellowbrown.glb',
+                    //     disableZoom: false,
+                    //     maxFieldOfView: '50deg',
+                    //     minFieldOfView: '50deg',
+                    //     cameraOrbit: '0deg 0deg 0.5m',
+                    //   ),
+                    //   ),
+                    // ),
                     Positioned(
                       top: 50,
                       child:GestureDetector(
@@ -207,7 +209,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Text(
-                        widget.cardinfo.price!,
+                        widget.cardinfo.price??"",
                         style: const TextStyle(
                           fontFamily: "Nunito Sans",
                           fontSize: 30,
@@ -231,7 +233,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                     fontWeight: FontWeight.w300,
                     color: Color(0xff606060),
                   ), ),
-        
                   ],
                 ),
               ),
@@ -248,19 +249,13 @@ class _ProductDetailsState extends State<ProductDetails> {
           const SizedBox(width: 20,),
           GestureDetector(
             onTap: (){
-              Get.bottomSheet(
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height/2,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft:Radius.circular(50),
-                        )
-                      ),
-                      child: Center(child: CameraScreen()),
+              Get.dialog(
+               Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: const BoxDecoration(
+                      color: Colors.transparent,
                     ),
+                    child: Center(child: CameraScreen()),
                   )
               );
             },
@@ -279,9 +274,36 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
             ),
           ),
-
-          const SizedBox(width: 20,),
-          CustomButton(width: 225, value: "Add to cart",color: AppColors.darkGrey,)
+          const SizedBox(width: 10,),
+          CustomButton(width: 180, value: "Add to cart${widget.cardinfo}",color:widget.cardinfo.isfavorite!? AppColors.primaryGreen:AppColors.darkGrey,),
+          const SizedBox(width: 10,),
+          GestureDetector(
+            onTap: (){
+              controller.updateRecode(Item(
+                  id: widget.cardinfo.id,
+                  price: widget.cardinfo.price,
+                  name: widget.cardinfo.name,
+                  description: widget.cardinfo.description,
+                  colors: widget.cardinfo.colors,
+                  type: widget.cardinfo.type,
+                  isfavorite:true
+              ));
+            },
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: ShapeDecoration(
+                color: AppColors.greylight,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child:  Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: SizedBox(height: 90, width: 90, child: SvgPicture.asset("images/heart.svg", color: AppColors.darkGrey,)),
+              ),
+            ),
+          ),
         ],
       ),
     ),
