@@ -250,13 +250,16 @@ class _ProductDetailsState extends State<ProductDetails> {
           GestureDetector(
             onTap: (){
               Get.dialog(
-               Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      color: Colors.transparent,
+               Padding(
+                 padding: const EdgeInsets.only(top: 50.0,bottom: 50),
+                 child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: const BoxDecoration(
+                        color: Colors.transparent,
+                      ),
+                      child: Center(child: CameraScreen()),
                     ),
-                    child: Center(child: CameraScreen()),
-                  )
+               )
               );
             },
             child: Container(
@@ -279,17 +282,17 @@ class _ProductDetailsState extends State<ProductDetails> {
           const SizedBox(width: 10,),
           GestureDetector(
             onTap: (){
-              controller.createfavorate(Item(
-                  id:" widget.cardinfo.id",
-                  price: widget.cardinfo.price,
-                  name: widget.cardinfo.name,
-                  image: widget.cardinfo.image,
-                  description: widget.cardinfo.description,
-                  colors: ["2f110b","e32b06"],
-                  type: widget.cardinfo.type,
-                  rate:widget.cardinfo.rate ,
-                  isfavorite:true
-              ));
+              // controller.createfavorate(Item(
+              //     id:" widget.cardinfo.id",
+              //     price: widget.cardinfo.price,
+              //     name: widget.cardinfo.name,
+              //     image: widget.cardinfo.image,
+              //     description: widget.cardinfo.description,
+              //     colors: ["2f110b","e32b06"],
+              //     type: widget.cardinfo.type,
+              //     rate:widget.cardinfo.rate ,
+              //     isfavorite:true
+              // ));
 
             },
             child: Container(
