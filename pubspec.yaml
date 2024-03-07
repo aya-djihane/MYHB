@@ -30,6 +30,7 @@ dependencies:
   camera:
   model_viewer_plus: ^1.7.0
   image_gallery_saver:
+  firebase_messaging:
 dev_dependencies:
   flutter_test:
     sdk: flutter

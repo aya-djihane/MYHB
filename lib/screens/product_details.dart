@@ -275,19 +275,22 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
           ),
           const SizedBox(width: 10,),
-          CustomButton(width: 180, value: "Add to cart${widget.cardinfo}",color:widget.cardinfo.isfavorite!? AppColors.primaryGreen:AppColors.darkGrey,),
+          CustomButton(width: 180, value: "Add to cart",color: AppColors.darkGrey,),
           const SizedBox(width: 10,),
           GestureDetector(
             onTap: (){
-              controller.updateRecode(Item(
-                  id: widget.cardinfo.id,
+              controller.createfavorate(Item(
+                  id:" widget.cardinfo.id",
                   price: widget.cardinfo.price,
                   name: widget.cardinfo.name,
+                  image: widget.cardinfo.image,
                   description: widget.cardinfo.description,
-                  colors: widget.cardinfo.colors,
+                  colors: ["2f110b","e32b06"],
                   type: widget.cardinfo.type,
+                  rate:widget.cardinfo.rate ,
                   isfavorite:true
               ));
+
             },
             child: Container(
               width: 50,
@@ -300,7 +303,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
               child:  Padding(
                 padding: const EdgeInsets.all(3.0),
-                child: SizedBox(height: 90, width: 90, child: SvgPicture.asset("images/heart.svg", color: AppColors.darkGrey,)),
+                child: SizedBox(height: 90, width: 90, child: SvgPicture.asset("images/heart.svg", color:widget.cardinfo.isfavorite!?Colors.red: AppColors.darkGrey,)),
               ),
             ),
           ),

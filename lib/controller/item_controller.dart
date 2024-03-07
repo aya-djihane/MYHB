@@ -7,5 +7,9 @@ class ItemController extends GetxController {
   Future<void> updateRecode(Item item) async {
     await DatabaseService().updateItemRecord(item);
   }
+  Future<void> createfavorate(Item item) async {
+
+    await DatabaseService().CreatItemFavorateRecord(item);
+  }
 
 }
