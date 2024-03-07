@@ -17,7 +17,6 @@ class ProductDetails extends StatefulWidget {
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
 }
-
 class _ProductDetailsState extends State<ProductDetails> {
    final ItemController  controller = Get.put(ItemController());
   @override
@@ -164,7 +163,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                  widget.cardinfo.name!,
+                  widget.cardinfo.name??"",
                       style: const TextStyle(
                         fontFamily: "Gelasio",
                         fontSize: 24,
@@ -221,7 +220,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                     ),
                 ReadMoreText(
-                  widget.cardinfo.description!,
+                  widget.cardinfo.description??"",
                   trimLines: 5,
                   colorClickableText: AppColors.darkGrey,
                   trimMode: TrimMode.Line,
@@ -282,17 +281,16 @@ class _ProductDetailsState extends State<ProductDetails> {
           const SizedBox(width: 10,),
           GestureDetector(
             onTap: (){
-              // controller.createfavorate(Item(
-              //     id:" widget.cardinfo.id",
-              //     price: widget.cardinfo.price,
-              //     name: widget.cardinfo.name,
-              //     image: widget.cardinfo.image,
-              //     description: widget.cardinfo.description,
-              //     colors: ["2f110b","e32b06"],
-              //     type: widget.cardinfo.type,
-              //     rate:widget.cardinfo.rate ,
-              //     isfavorite:true
-              // ));
+              controller.updateRecode(Item(
+                price: widget.cardinfo.price,
+                image: widget.cardinfo.image,
+                rate:widget.cardinfo.rate,
+                id:widget.cardinfo.id,
+                type: widget.cardinfo.type,
+                description: widget.cardinfo.description,
+                isfavorite:!widget.cardinfo.isfavorite!,
+                name: widget.cardinfo.name,
+              ));
 
             },
             child: Container(
