@@ -19,6 +19,11 @@ class ProductDetails extends StatefulWidget {
 }
 class _ProductDetailsState extends State<ProductDetails> {
    final ItemController  controller = Get.put(ItemController());
+   @override
+  void initState() {
+     controller.isfavorate.value=widget.cardinfo.isfavorite!;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -281,6 +286,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           const SizedBox(width: 10,),
           GestureDetector(
             onTap: (){
+              controller.isfavorate.value=!controller.isfavorate.value;
               controller.updateRecode(Item(
                 price: widget.cardinfo.price,
                 image: widget.cardinfo.image,
@@ -288,12 +294,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                 id:widget.cardinfo.id,
                 type: widget.cardinfo.type,
                 description: widget.cardinfo.description,
-                isfavorite:!widget.cardinfo.isfavorite!,
+                isfavorite: controller.isfavorate.value,
                 name: widget.cardinfo.name,
+                colors: widget.cardinfo.colors
               ));
 
             },
-            child: Container(
+            child: Obx(() => Container(
               width: 50,
               height: 50,
               decoration: ShapeDecoration(
@@ -304,9 +311,9 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
               child:  Padding(
                 padding: const EdgeInsets.all(3.0),
-                child: SizedBox(height: 90, width: 90, child: SvgPicture.asset("images/heart.svg", color:widget.cardinfo.isfavorite!?Colors.red: AppColors.darkGrey,)),
+                child: SizedBox(height: 90, width: 90, child: SvgPicture.asset("images/heart.svg", color:controller.isfavorate.value?Colors.red: AppColors.darkGrey,)),
               ),
-            ),
+            ),)
           ),
         ],
       ),
