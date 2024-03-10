@@ -63,7 +63,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
                       const SizedBox(height: 5),
                       Text(
                        "DZ ${ widget.cardinfo.price!}",
-                        style: const TextStyle( color: AppColors.black, fontSize: 14, fontWeight: FontWeight.bold),
+                        style: const TextStyle( color: AppColors.black, fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),

@@ -60,9 +60,9 @@ class _FavoritePageState extends State<FavoritePage> {
                                 FavoriteCard(cardinfo: Item(image:"https://static8.depositphotos.com/1022715/834/i/450/depositphotos_8346493-stock-photo-wooden-chair-over-white-with.jpg",price: "5000",name: "chair" ),),
                                 FavoriteCard(cardinfo: Item(image:"https://cdn.britannica.com/88/212888-050-6795342C/study-lamp-electrical-cord.jpg",price: "12000",name: "lamp" ),),
                                 FavoriteCard(cardinfo: Item(image:"https://www.shutterstock.com/image-photo/sofa-260nw-277827251.jpg",price: "6000",name: "sofa" ),),
+                                FavoriteCard(cardinfo: Item(image:"https://t4.ftcdn.net/jpg/04/97/02/61/360_F_497026116_0faq77nXSZMr0QdYTCv55y5EqgT9vRMT.jpg",price: "1500",name: "Bed" ),),
                                 FavoriteCard(cardinfo: Item(image:"https://t4.ftcdn.net/jpg/04/97/02/61/360_F_497026116_0faq77nXSZMr0QdYTCv55y5EqgT9vRMT.jpg",price: "15000",name: "Bed" ),),
-                                FavoriteCard(cardinfo: Item(image:"https://t4.ftcdn.net/jpg/04/97/02/61/360_F_497026116_0faq77nXSZMr0QdYTCv55y5EqgT9vRMT.jpg",price: "15000",name: "Bed" ),),
-                                FavoriteCard(cardinfo: Item(image:"https://t4.ftcdn.net/jpg/04/97/02/61/360_F_497026116_0faq77nXSZMr0QdYTCv55y5EqgT9vRMT.jpg",price: "15000",name: "Bed" ),),
+                                FavoriteCard(cardinfo: Item(image:"https://t4.ftcdn.net/jpg/04/97/02/61/360_F_497026116_0faq77nXSZMr0QdYTCv55y5EqgT9vRMT.jpg",price: "5000",name: "Bed" ),),
 
                               ]
                           ),
