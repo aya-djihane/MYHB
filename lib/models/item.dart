@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -60,7 +61,7 @@ class Item {
       'rate': rate,
       'image': image,
       'type': type?.toString().split('.').last,
-      'colors': colors,
+      'colors':colors as List<String>,
       'description': description,
       'isfavorite': isfavorite
 
