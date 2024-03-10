@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/controller/dashboard_controller.dart';
+import 'package:myhb_app/screens/favoritescreen.dart';
 import 'package:myhb_app/screens/home_page.dart';
 import 'package:myhb_app/widgets/buttom_bar.dart';
 class UserDashboard extends StatefulWidget {
@@ -31,7 +32,7 @@ class _UserDashboardState extends State<UserDashboard> {
                 if(dashboardController.pageType.value == PageType.home)
                   const HomePage(),
                 if(dashboardController.pageType.value == PageType.announcements)
-                  const HomePage(),
+                  const FavoritePage(),
                 if(dashboardController.pageType.value == PageType.meet)
                   const HomePage(),
                 if(dashboardController.pageType.value == PageType.account)
