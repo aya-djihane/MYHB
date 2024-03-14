@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/screens/product_details.dart';
@@ -21,7 +22,18 @@ class _ItemCardState extends State<ItemCard> {
       onTap: (){
 Get.to(ProductDetails(cardinfo: widget.cardinfo,));
       },
-      child: SizedBox(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: AppColors.white,
+          boxShadow:  [
+            BoxShadow(
+              color: AppColors.grey.withOpacity(.3),
+              blurRadius: 10,
+              offset: const Offset(4.5,5)
+            )
+          ]
+        ),
         child: Stack(
           children: [
             Column(
@@ -33,10 +45,20 @@ Get.to(ProductDetails(cardinfo: widget.cardinfo,));
                   width: 170.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: NetworkImage(widget.cardinfo.image!), // Fixed Image.network usage
-                      fit: BoxFit.fill, // Added BoxFit.cover for better image display
-                    ),
+
+                  ),
+                  child: ModelViewer(
+                    backgroundColor: Colors.transparent,
+                    loading:Loading.auto ,
+                    src: '${widget.cardinfo.file}',
+                    alt: 'A 3D model of an astronaut',
+                    ar: false,
+                    autoRotate: false,
+                    iosSrc: '${widget.cardinfo.file}',
+                    disableZoom: true,
+                    maxFieldOfView: '100deg',
+                    minFieldOfView: '50deg',
+                    cameraOrbit: '0deg 0deg 0.5m',
                   ),
                 ),
                Padding(

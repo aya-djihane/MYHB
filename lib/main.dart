@@ -4,34 +4,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myhb_app/service/database_service.dart';
+import 'screens/dashbord.dart';
 import 'screens/noInternet_screen.dart';
 import 'screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async{
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+  );
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? userToken = prefs.getString('userToken');
 
-  );
-  DatabaseService().initNotifications();
-  FirebaseFirestore.instance.settings= const Settings(
-    persistenceEnabled: true
-  );
-  runApp(MyApp());
+  runApp(MyApp(isLoggedIn: userToken != null));
 }
+
 class MyApp extends StatelessWidget {
+  final bool isLoggedIn;
+
+  const MyApp({required this.isLoggedIn});
+
   @override
   Widget build(BuildContext context) {
-    return  ScreenUtilInit(
-        builder: (context, child) =>GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ConnectivityWrapper(),
-    )
+    return ScreenUtilInit(
+      builder: (context, child) => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: isLoggedIn ? const UserDashboard() :  ConnectivityWrapper(),
+      ),
     );
   }
 }
+
 class ConnectivityWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

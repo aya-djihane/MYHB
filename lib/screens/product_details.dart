@@ -52,26 +52,26 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
         
                     ),
-                    // const Positioned(
-                    //   top: 50,
-                    //   right: 20,
-                    //   child:SizedBox(
-                    //     width:250 ,
-                    //      height: 250,
-                    //   child: ModelViewer(
-                    //     backgroundColor: Colors.transparent,
-                    //     src: 'images/Wood_Table.glb',
-                    //     alt: 'A 3D model of an astronaut',
-                    //     ar: false,
-                    //     autoRotate: true,
-                    //     iosSrc: 'images/pellowbrown.glb',
-                    //     disableZoom: false,
-                    //     maxFieldOfView: '50deg',
-                    //     minFieldOfView: '50deg',
-                    //     cameraOrbit: '0deg 0deg 0.5m',
-                    //   ),
-                    //   ),
-                    // ),
+                     Positioned(
+                      top: 50,
+                      right: 20,
+                      child:SizedBox(
+                        width:250 ,
+                         height: 250,
+                      child: ModelViewer(
+                        backgroundColor: Colors.transparent,
+                        src: '${widget.cardinfo.file}',
+                        alt: 'A 3D model of an astronaut',
+                        ar: false,
+                        autoRotate: true,
+                        iosSrc: '${widget.cardinfo.file}',
+                        disableZoom: false,
+                        maxFieldOfView: '50deg',
+                        minFieldOfView: '50deg',
+                        cameraOrbit: '0deg 0deg 0.5m',
+                      ),
+                      ),
+                    ),
                     Positioned(
                       top: 50,
                       child:GestureDetector(
@@ -261,7 +261,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       decoration: const BoxDecoration(
                         color: Colors.transparent,
                       ),
-                      child: Center(child: CameraScreen()),
+                      child: Center(child: CameraScreen(file: widget.cardinfo.file!)),
                     ),
                )
               );
@@ -296,6 +296,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 description: widget.cardinfo.description,
                 isfavorite: controller.isfavorate.value,
                 name: widget.cardinfo.name,
+                file: widget.cardinfo.file,
                 colors: widget.cardinfo.colors
               ));
 

@@ -8,6 +8,8 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 
 class CameraScreen extends StatefulWidget {
+  String file ;
+   CameraScreen({required this.file,super.key});
   @override
   _CameraScreenState createState() => _CameraScreenState();
 }
@@ -75,13 +77,13 @@ class _CameraScreenState extends State<CameraScreen> {
                 SizedBox(
                   width: media.width,
                   height: media.height,
-                  child: const ModelViewer(
+                  child:  ModelViewer(
                     backgroundColor: Colors.transparent,
-                    src: 'images/Wood_Table.glb',
+                    src: widget.file,
                     alt: 'A 3D model of an astronaut',
                     ar: false,
                     autoRotate: false,
-                    iosSrc: 'images/Wood_Table.glb',
+                    iosSrc: widget.file,
                     disableZoom: false,
                     maxFieldOfView: '100deg',
                     minFieldOfView: '100deg',

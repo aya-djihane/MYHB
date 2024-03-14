@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-enum Type { Chair, Table, Armchair, Bed }
+enum Type { All,Chair, Table, Armchair, Bed, Lamb }
 
 class Item {
   String? id;
@@ -11,6 +11,7 @@ class Item {
   final String? name;
   final int? rate;
   final String? image;
+  final String?file;
   final Type? type;
   final List<String>? colors;
   final String? description;
@@ -23,6 +24,7 @@ class Item {
     this.colors,
     this.id,
     this.type,
+    this.file,
     this.description,
     this.isfavorite
   });
@@ -45,6 +47,7 @@ class Item {
       id: data['id'] ,
       price: data['price'] as String?,
       name: data['name'] as String?,
+      file: data['file'] as String?,
       rate: data['rate'] as int?,
       image: data['image']!as String,
       type: _parseType(data['type'] as String?),
@@ -60,6 +63,7 @@ class Item {
       'name': name,
       'rate': rate,
       'image': image,
+      'file':file,
       'type': type?.toString().split('.').last,
       'colors':colors as List<String>,
       'description': description,
@@ -78,6 +82,8 @@ class Item {
         return Type.Table;
       case 'Armchair':
         return Type.Armchair;
+        case 'Lamb':
+        return Type.Lamb;
       case 'Bed':
         return Type.Bed;
       default:
