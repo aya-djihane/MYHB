@@ -45,21 +45,12 @@ Get.to(ProductDetails(cardinfo: widget.cardinfo,));
                   width: 170.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: NetworkImage(widget.cardinfo.image!),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
 
-                  ),
-                  child: ModelViewer(
-                    backgroundColor: Colors.transparent,
-                    loading:Loading.auto ,
-                    src: '${widget.cardinfo.file}',
-                    alt: 'A 3D model of an astronaut',
-                    ar: false,
-                    autoRotate: false,
-                    iosSrc: '${widget.cardinfo.file}',
-                    disableZoom: true,
-                    maxFieldOfView: '100deg',
-                    minFieldOfView: '50deg',
-                    cameraOrbit: '0deg 0deg 0.5m',
-                  ),
                 ),
                Padding(
                  padding: const EdgeInsets.only(left: 15.0),

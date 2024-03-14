@@ -17,6 +17,7 @@ import 'package:myhb_app/models/item.dart';
 class DashboardController extends GetxController {
   late DatabaseService _databaseService;
   var choosenType = Type.All.obs;
+  RxBool loadingFavorite = false.obs;
   var pageType = PageType.home.obs;
   RxList<Item> globalItems = <Item>[].obs;
   RxList<Item> filteredItems = <Item>[].obs;
@@ -56,9 +57,11 @@ class DashboardController extends GetxController {
     _filteredItemsController.add(filteredItems);
   }
   void fetchFavoriteItems() {
+
     favoriteItems.assignAll(globalItems.where((item) {
       return item.isfavorite == true;
     }).toList());
+    loadingFavorite.value=false;
   }
 
 

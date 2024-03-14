@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 enum Type { All,Chair, Table, Armchair, Bed, Lamb }
-
 class Item {
   String? id;
   final String? price;
@@ -65,7 +62,7 @@ class Item {
       'image': image,
       'file':file,
       'type': type?.toString().split('.').last,
-      'colors':colors as List<String>,
+      'colors':colors as List<String?>,
       'description': description,
       'isfavorite': isfavorite
 

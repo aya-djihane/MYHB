@@ -46,35 +46,42 @@ class FavoritePage extends StatelessWidget {
                       Container(
                         color: Colors.white,
                         height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: controller.favoriteItems.isEmpty?Column(
-                              children: controller.favoriteItems.map((item) {
-                                return FavoriteCard(cardinfo: item);
-                              }).toList(),
-                            ):
-                              const Padding(
-                              padding: EdgeInsets.only(top: 150.0),
-                          child: Text('No favorites available yet'),
-                        ),
+                            child:
+                           Obx(() =>  controller.loadingFavorite.value?const Center(child:Padding(
+                             padding: EdgeInsets.only(top: 150.0),
+                             child: CircularProgressIndicator( ),
+                           ),): controller.favoriteItems.isNotEmpty?Column(
+                             children: controller.favoriteItems.map((item) {
+                               return FavoriteCard(cardinfo: item);
+                             }).toList(),
+                           ):
+                           const Center(
+                             child: Padding(
+                               padding: EdgeInsets.only(top: 150.0),
+                               child: Text('No favorites available yet'),
+                             ),
+                           ),)
                           ),
                         ),
                       ),
-                      Positioned(
-                        bottom: 20,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 55.w),
-                          child: Center(
-                            child: CustomButton(
-                              width: MediaQuery.of(context).size.width.w / 1.45,
-                              color: Colors.black,
-                              value: 'Add to my cart',
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Positioned(
+                      //   bottom: 20,
+                      //   child: Padding(
+                      //     padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 55.w),
+                      //     child: Center(
+                      //       child: CustomButton(
+                      //         width: MediaQuery.of(context).size.width.w / 1.45,
+                      //         color: Colors.black,
+                      //         value: 'Add to my cart',
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
