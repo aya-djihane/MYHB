@@ -25,10 +25,7 @@ class DashboardController extends GetxController {
   StreamController<List<Item>>.broadcast();
   Stream<List<Item>> get filteredItemsStream =>
       _filteredItemsController.stream;
-  final StreamController<List<Item>> _favoriteItemsController =
-  StreamController<List<Item>>.broadcast();
-  Stream<List<Item>> get favoriteItemsStream =>
-      _favoriteItemsController .stream;
+
 
   @override
   void onInit() {
@@ -58,19 +55,13 @@ class DashboardController extends GetxController {
     }).toList());
     _filteredItemsController.add(filteredItems);
   }
-
   void fetchFavoriteItems() {
     favoriteItems.assignAll(globalItems.where((item) {
-        return item.isfavorite == true;
+      return item.isfavorite == true;
     }).toList());
-    _favoriteItemsController.add(favoriteItems);
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-    _filteredItemsController.close();
-  }
+
 }
 
 

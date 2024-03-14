@@ -32,7 +32,7 @@ class _UserDashboardState extends State<UserDashboard> {
                 if(dashboardController.pageType.value == PageType.home)
                   const HomePage(),
                 if(dashboardController.pageType.value == PageType.announcements)
-                  const FavoritePage(),
+                   FavoritePage(),
                 if(dashboardController.pageType.value == PageType.meet)
                   const HomePage(),
                 if(dashboardController.pageType.value == PageType.account)

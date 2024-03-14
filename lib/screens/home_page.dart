@@ -16,6 +16,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final DashboardController dashboardController = Get.put(DashboardController());
+  @override
+  void initState() {
+    dashboardController.  fetchItems();
+    dashboardController.fetchFavoriteItems();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
