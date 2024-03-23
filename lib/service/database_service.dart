@@ -11,8 +11,6 @@ const String ITEMES_COLLECTON_REF="items";
 const String FIVORATE_COLLECTON_REF="favorate";
 const String USER_COLLECTON_REF="users";
 Future<void> handleBackgroundMessage(RemoteMessage message)async{
-print(message.notification?.body);
-print(message.notification?.title);
 }
 class DatabaseService{
 final _firestore=FirebaseFirestore.instance;
@@ -43,7 +41,6 @@ Stream<List<Item>> getItems() {
   }).toList();
  });
 }
-
 Future<void> initNotifications( )async{
  await _firebaseMessaging.requestPermission();
  final fCMToken = await _firebaseMessaging.getToken();
@@ -51,13 +48,14 @@ Future<void> initNotifications( )async{
  FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
  FirebaseMessaging.onMessage.listen((event) {
   final notification = event.notification;
-  if(notification==null)return;
+  if(notification==null) return;
   _localNotification.show(notification.hashCode, notification.title, notification.body, NotificationDetails(
    android:  AndroidNotificationDetails(
    _androidChannel.id,
     _androidChannel.name,
     channelDescription: _androidChannel.description,
-    icon: '@drawable/group',
+                 icon: 'resource://drawable/launcher_icon'
+    ,
    ),
   ),
    payload: jsonEncode(event.toMap())
@@ -77,21 +75,20 @@ Future initLocalNotification()async{
  final platform=_localNotification.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
 await platform?.createNotificationChannel(_androidChannel);
 }
+
+
 void addItem(Item item) async{
  _todoref.add(item);
  }
 Future<void> updateItemRecord(Item item )async{
  await _firestore.collection(ITEMES_COLLECTON_REF).doc(item.id.toString()).update(item.toJson());
  }
-
 void addUser(Users item) async{
  _usertodo.add(item);
 }
-
 Future<void> CreatItemFavorateRecord(Item item )async{
  await _firestore.collection(FIVORATE_COLLECTON_REF).doc(item.id).set(item.toJson());
 }
-
 Future<void> CreatUserRecord(Users item )async{
  await _firestore.collection(USER_COLLECTON_REF).doc(item.id).set(item.toJson());
 }

@@ -36,7 +36,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
                 color: Colors.white,
                 border: const Border(bottom: BorderSide(color: AppColors.darkGrey)),
                 boxShadow: [
-                  BoxShadow(color: AppColors.darkGrey.withOpacity(.4),blurRadius: 5,offset: Offset(-4, 3)),
+                  BoxShadow(color: AppColors.darkGrey.withOpacity(.4),blurRadius: 5,offset: const Offset(-4, 3)),
                 ],
               ),
               height: 124,
@@ -98,7 +98,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
                   description: widget.cardinfo.description,
                   isfavorite: false,
                   name: widget.cardinfo.name,
-                  file: widget.cardinfo.file,
+                  files: widget.cardinfo.files,
                   colors: widget.cardinfo.colors
               ));
               dashboardController.fetchFavoriteItems() ;

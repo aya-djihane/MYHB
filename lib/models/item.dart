@@ -1,16 +1,16 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-enum Type { All,Chair, Table, Armchair, Bed, Lamb }
+enum Type { All,Chair, Table ,Sofa, Bed, Lamb }
 class Item {
   String? id;
   final String? price;
   final String? name;
   final int? rate;
   final String? image;
-  final String?file;
   final Type? type;
   final List<String>? colors;
+  final List<String>? files;
   final String? description;
   final bool? isfavorite;
   Item({
@@ -21,7 +21,7 @@ class Item {
     this.colors,
     this.id,
     this.type,
-    this.file,
+    this.files,
     this.description,
     this.isfavorite
   });
@@ -44,11 +44,11 @@ class Item {
       id: data['id'] ,
       price: data['price'] as String?,
       name: data['name'] as String?,
-      file: data['file'] as String?,
       rate: data['rate'] as int?,
       image: data['image']!as String,
       type: _parseType(data['type'] as String?),
       colors: (data['colors'] as List?)?.cast<String>(),
+      files: (data['files'] as List?)?.cast<String>(),
       description: data['description'] as String?,
       isfavorite: data['isfavorite'] as bool,
     );
@@ -60,9 +60,9 @@ class Item {
       'name': name,
       'rate': rate,
       'image': image,
-      'file':file,
       'type': type?.toString().split('.').last,
       'colors':colors as List<String?>,
+      'files':files as List<String?>,
       'description': description,
       'isfavorite': isfavorite
 
@@ -78,7 +78,7 @@ class Item {
       case 'Table':
         return Type.Table;
       case 'Armchair':
-        return Type.Armchair;
+        return Type.Sofa;
         case 'Lamb':
         return Type.Lamb;
       case 'Bed':

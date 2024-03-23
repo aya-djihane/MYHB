@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                       ? Icons.chair
                       : type == Type.Table
                       ? Icons.table_bar_outlined
-                      : type == Type.Armchair
+                      : type == Type.Sofa
                       ? Icons.chair_outlined
                       : type == Type.Bed
                       ? Icons.bed_outlined
@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
       stream: dashboardController.filteredItemsStream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const SizedBox(width:40,height:40,child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           print('Error: ${snapshot.error}');
           return Text('Error: ${snapshot.error}');
