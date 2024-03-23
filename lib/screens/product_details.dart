@@ -392,8 +392,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width / 1.4,
-                    height: MediaQuery.of(context).size.height / 2.3,
+                    width: MediaQuery.of(context).size.width / 1.2,
+                    height: MediaQuery.of(context).size.height / 2.05,
                     child: PageView.builder(
                       scrollDirection: Axis.horizontal,
                       controller: _pageController, // Set the controller here
@@ -423,10 +423,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                         );
                       },
                     ),
+
                   ),
 
                   Positioned(
                     top: 140,
+
                     child: Container(
                       decoration: ShapeDecoration(
                         color: AppColors.white,
@@ -442,15 +444,20 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ],
                       ),
                       child: Column(
-                        children: widget.cardinfo.colors!.map((item) {
+                        children: widget.cardinfo.colors!.asMap().entries.map((entry) {
+                          final int index = entry.key;
+                          final String item = entry.value;
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: () {
-                                int selectedIndex =
-                                    widget.cardinfo.colors!.indexOf(item);
-                                controller.choosenItem.value = selectedIndex;
-                                 print("the file name path ${widget.cardinfo.files?[controller.choosenItem.value ]}");
+                                controller.choosenItem.value = index;
+                                _pageController.animateToPage(
+                                  index,
+                                  duration: Duration(milliseconds: 500),
+                                  curve: Curves.ease,
+                                );
+                                print("the file name path ${widget.cardinfo.files?[controller.choosenItem.value]}");
                               },
                               child: Container(
                                 width: 25,
@@ -466,6 +473,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           );
                         }).toList(),
                       ),
+
                     ),
                   ),
                 ],
