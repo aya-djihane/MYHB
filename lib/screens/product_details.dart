@@ -371,6 +371,44 @@ class _ProductDetailsState extends State<ProductDetails> {
     var media= MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title:  Text(
+          "${widget.cardinfo.name} detail" ?? "",
+          style: const TextStyle(
+            fontFamily: "Gelasio",
+            fontSize: 15,
+            fontWeight: FontWeight.w300,
+            color: Color(0xff494646),
+            height: 30 / 24,
+          ),
+          textAlign: TextAlign.left,
+        ),
+        backgroundColor: AppColors.white,
+        leading:
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0,top: 8,bottom: 8),
+            child: GestureDetector(
+              onTap: (){
+                Get.back();
+              },
+              child: Container(
+                width: 50,
+                height: 50,
+                decoration: ShapeDecoration(
+                  color: AppColors.greylight,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child:  const Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: Icon(Icons.arrow_back_ios_new_outlined,color: AppColors.darkGrey,size: 20,),
+                ),
+              ),
+            ),
+          ),
+
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -484,6 +522,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                     ),
                   ),
+
                 ],
               ),
             ),
