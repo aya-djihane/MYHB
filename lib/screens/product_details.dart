@@ -339,6 +339,8 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
@@ -346,6 +348,7 @@ import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/controller/item_controller.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/widgets/camerascreen.dart';
+import 'package:myhb_app/widgets/costumformfield.dart';
 import 'package:myhb_app/widgets/custom_button.dart';
 import 'package:readmore/readmore.dart';
 
@@ -362,8 +365,10 @@ class _ProductDetailsState extends State<ProductDetails> {
   final ItemController controller = Get.put(ItemController());
   final PageController _pageController = PageController();
 
+
   @override
   Widget build(BuildContext context) {
+    var media= MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -425,10 +430,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
 
                   ),
-
                   Positioned(
                     top: 140,
-
                     child: Container(
                       decoration: ShapeDecoration(
                         color: AppColors.white,
@@ -437,7 +440,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                         shadows: [
                           BoxShadow(
-                            color: AppColors.black.withOpacity(.1),
+                            color: AppColors.black.withOpacity(.2),
                             blurRadius: 2,
                             offset: const Offset(-2, 2),
                           ),
@@ -454,19 +457,24 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 controller.choosenItem.value = index;
                                 _pageController.animateToPage(
                                   index,
-                                  duration: Duration(milliseconds: 500),
+                                  duration: const Duration(milliseconds: 500),
                                   curve: Curves.ease,
                                 );
-                                print("the file name path ${widget.cardinfo.files?[controller.choosenItem.value]}");
                               },
                               child: Container(
                                 width: 25,
                                 height: 25,
-                                decoration: ShapeDecoration(
+                                decoration: BoxDecoration(
                                   color: Color(int.parse("0xFF$item")),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
+                                 borderRadius: BorderRadius.circular(50),
+                                  // border: Border.all(color: Colors.black),
+                                  boxShadow:[
+                                    BoxShadow(
+                                      color: AppColors.black.withOpacity(.5),
+                                      blurRadius: 2,
+                                      offset: const Offset(-1, 2),
+                                    ),
+                                  ]
                                 ),
                               ),
                             ),
@@ -480,8 +488,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40),
+              padding: const EdgeInsets.only(bottom: 70,top: 20,left: 20,right: 20),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Column(
@@ -560,6 +567,206 @@ class _ProductDetailsState extends State<ProductDetails> {
                         color: Color(0xff606060),
                       ),
                     ),
+                    const SizedBox(height: 20), // Add some space between description and reviews
+                    const Text(
+                      "Reviews",
+                      style: TextStyle(
+                        fontFamily: "Nunito Sans",
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+                     CustomButton(width: media.width, value: "Add Review",color: AppColors.darkGrey,onTap: (){
+                       showDialog(
+                           context: context,
+                           barrierDismissible: false,
+
+                           builder: (context) {
+                             return AlertDialog(
+                               backgroundColor: AppColors.greylight,
+                               content: Container(
+                                 width: 310.w,
+                                 height: 320.h,
+
+                                 decoration: ShapeDecoration(
+                                   shape: RoundedRectangleBorder(
+                                       borderRadius: BorderRadius
+                                           .circular(3)),
+                                 ),
+                                 child: SingleChildScrollView(
+                                   child: Column(
+                                     crossAxisAlignment: CrossAxisAlignment
+                                         .center,
+                                     mainAxisAlignment: MainAxisAlignment
+                                         .start,
+                                     children: [
+                                       Row(
+                                         mainAxisAlignment: MainAxisAlignment
+                                             .spaceBetween,
+                                         crossAxisAlignment: CrossAxisAlignment
+                                             .start,
+                                         children: [
+                                           SizedBox(
+                                             width: 99.w,
+                                             height: 18.h,
+                                             child: const Text(
+                                               'Review',
+                                               style: TextStyle(
+                                                 color: Color(
+                                                     0xFF1A1818),
+                                                 fontSize: 16,
+                                                 fontFamily: 'Calibri',
+                                                 fontWeight: FontWeight
+                                                     .w400,
+                                                 height: 0,
+                                               ),
+                                             ),
+                                           ),
+                                           GestureDetector(
+                                             onTap: () {
+                                               Navigator.pop(context);
+                                             },
+                                             child: Container(
+                                               width: 36.w,
+                                               height: 30.h,
+                                               decoration: const ShapeDecoration(
+                                                 color: Colors.white,
+                                                 shape: OvalBorder(
+                                                   side: BorderSide(
+                                                       width: 0.50,
+                                                       color: Color(
+                                                           0xFFE5E5E5)),
+                                                 ),
+                                               ),
+                                               child: const Icon(
+                                                 Icons.close,
+                                                 color: Colors.red,
+                                                 size: 20,),
+                                             ),
+                                           )
+                                         ],
+                                       ),
+                                       Column(
+                                         children: [
+                                           Container(
+                                             width: 70,
+                                             height: 70,
+                                             decoration: ShapeDecoration(
+                                               image: DecorationImage(
+                                                 image: NetworkImage(
+                                                     widget.cardinfo.image!),
+                                                 fit: BoxFit.fill,
+                                               ),
+                                               shape: const OvalBorder(),
+                                             ),
+                                           ),
+
+                                         ],
+                                       ),
+                                       const SizedBox(height: 10,),
+                                       Column(
+                                         mainAxisAlignment: MainAxisAlignment
+                                             .start,
+                                         crossAxisAlignment: CrossAxisAlignment
+                                             .start,
+                                         children: [
+                                           const Text(
+                                             'Rate to Item',
+                                             style: TextStyle(
+                                               color: Color(0xFF1A1818),
+                                               fontSize: 14,
+                                               fontFamily: 'Calibri',
+                                               fontWeight: FontWeight
+                                                   .w400,
+                                               height: 0,
+                                             ),
+                                           ),
+                                           // **********
+                                           RatingBar.builder(
+                                             initialRating: 1,
+                                             glowColor: AppColors.white,
+                                             unratedColor: AppColors.darkGrey
+                                                 .withOpacity(.4),
+                                             itemSize: 35,
+                                             minRating: 1,
+                                             direction: Axis.horizontal,
+                                             allowHalfRating: true,
+                                             itemCount: 5,
+                                             itemPadding: const EdgeInsets
+                                                 .symmetric(
+                                                 horizontal: 4.0),
+                                             itemBuilder: (context, _) =>
+                                             const Icon(
+                                               Icons.star,
+                                               color: AppColors
+                                                   .darkGrey,
+                                             ),
+                                             onRatingUpdate: (rating) {
+                                               controller.reviewInt
+                                                   .value =
+                                                   rating.toInt();
+                                             },
+                                           ),
+                                         ],
+                                       ),
+                                       const SizedBox(height: 10,),
+                                       Column(
+                                         mainAxisAlignment: MainAxisAlignment
+                                             .start,
+                                         crossAxisAlignment: CrossAxisAlignment
+                                             .start,
+                                         children: [
+                                           const SizedBox(
+                                             width: 84,
+                                             height: 18,
+                                             child: Text(
+                                               'Rate the Item',
+                                               style: TextStyle(
+                                                 color: Color(
+                                                     0xFF1A1818),
+                                                 fontSize: 14,
+                                                 fontFamily: 'Calibri',
+                                                 fontWeight: FontWeight
+                                                     .w400,
+                                                 height: 0,
+                                               ),
+                                             ),
+                                           ),
+                                           const SizedBox(height: 10,),
+                                           CustomFormMultiline(
+                                             hintText: 'Write here',
+                                             labelText: '',
+                                             textSize: 10,
+                                             isTextArea: true,
+                                             onChange: (value) {
+                                               controller.message.value =
+                                                   value;
+                                             },),
+                                         ],
+                                       ),
+                                       Padding(
+                                         padding: const EdgeInsets.only(
+                                             top: 10.0),
+                                         child: CustomButton(
+
+                                           onTap: () {
+                                             // controller.addReview();
+                                             Navigator.pop(context);
+                                             // controller.detectReview();
+                                           },
+                                        color: AppColors.darkGrey,
+                                           width: 310.w, value: 'SUBMIT',),
+                                       )
+                                     ],
+                                   ),
+                                 ),
+                               ),
+                             );
+                           });
+                     },)
                   ],
                 ),
               ),
@@ -583,7 +790,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         color: Colors.transparent,
                       ),
                       child: Center(
-                          child: CameraScreen(file: widget.cardinfo.files![controller.choosenItem.value]!)),
+                          child: CameraScreen(file: widget.cardinfo.files![controller.choosenItem.value])),
                     ),
                   ),
                 );
@@ -603,7 +810,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       height: 90,
                       width: 90,
                       child: Image.asset("images/augmentedreality.png",
-                          color: AppColors.black)),
+                          color: AppColors.darkGrey)),
                 ),
               ),
             ),

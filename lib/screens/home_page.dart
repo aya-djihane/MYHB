@@ -156,33 +156,36 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildItemsGridView() {
-    return StreamBuilder<List<Item>>(
-      stream: dashboardController.filteredItemsStream,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SizedBox(width:40,height:40,child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          print('Error: ${snapshot.error}');
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Padding(
-            padding: EdgeInsets.only(top: 150.0),
-            child: Text('No data available.'),
-          );
-        } else {
-          return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10.0,
-              mainAxisSpacing: 10.0,
-            ),
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              return ItemCard(cardinfo: snapshot.data![index]);
-            },
-          );
-        }
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: StreamBuilder<List<Item>>(
+        stream: dashboardController.filteredItemsStream,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SizedBox(width:40,height:40,child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            print('Error: ${snapshot.error}');
+            return Text('Error: ${snapshot.error}');
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Padding(
+              padding: EdgeInsets.only(top: 150.0),
+              child: Text('No data available.'),
+            );
+          } else {
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+              ),
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                return ItemCard(cardinfo: snapshot.data![index]);
+              },
+            );
+          }
+        },
+      ),
     );
   }
 }

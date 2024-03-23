@@ -26,8 +26,6 @@ class DashboardController extends GetxController {
   StreamController<List<Item>>.broadcast();
   Stream<List<Item>> get filteredItemsStream =>
       _filteredItemsController.stream;
-
-
   @override
   void onInit() {
     super.onInit();

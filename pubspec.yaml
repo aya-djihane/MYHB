@@ -33,7 +33,7 @@ dependencies:
   firebase_messaging:
   uuid:
   flutter_local_notifications:
-
+  flutter_rating_bar: ^4.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
