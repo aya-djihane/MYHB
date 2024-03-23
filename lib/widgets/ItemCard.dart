@@ -57,14 +57,14 @@ Get.to(ProductDetails(cardinfo: widget.cardinfo,));
                  child: Text(widget.cardinfo.name??"",style: const TextStyle(fontFamily: "Nunito",color: AppColors.grey,fontSize: 14,fontWeight: FontWeight.w500),),
                ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Text(widget.cardinfo.price??"",style: const TextStyle(fontFamily: "Nunito",color: AppColors.black,fontSize: 14,fontWeight: FontWeight.w900),),
+                  padding: const EdgeInsets.only(left: 15.0,bottom: 0),
+                  child: Text(  "${widget.cardinfo.price} DA"??"",style: const TextStyle(fontFamily: "Nunito",color: AppColors.black,fontSize: 14,fontWeight: FontWeight.w900),),
       ),
               ],
             ),
             Positioned(
-              bottom: 70,
-              right: 20,
+              bottom: 50,
+              right: 10,
               child: Container(
                 height: 30.h,
                 width: 30.w,

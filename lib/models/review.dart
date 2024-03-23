@@ -20,7 +20,7 @@ class Review {
       name: data['name'] as String?,
       rating: data['rating']??0,
       review: data['review'] as String?,
-      review: data['images'] as String?,
+      images: data['images'] as String?,
     );
   }
   Map<String, Object?> toJson() {

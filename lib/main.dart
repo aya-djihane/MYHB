@@ -3,6 +3,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/service/database_service.dart';
 import 'screens/dashbord.dart';
 import 'screens/noInternet_screen.dart';
@@ -33,6 +34,13 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       builder: (context, child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme
+            (
+            backgroundColor: AppColors.primaryGreen,
+            foregroundColor: AppColors.blue,
+          )
+        ),
         home: isLoggedIn ? const UserDashboard() :  ConnectivityWrapper(),
       ),
     );

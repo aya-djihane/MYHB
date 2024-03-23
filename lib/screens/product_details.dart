@@ -373,7 +373,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title:  Text(
-          "${widget.cardinfo.name} detail" ?? "",
+          "${widget.cardinfo.name??"Item"} details" ?? "",
           style: const TextStyle(
             fontFamily: "Gelasio",
             fontSize: 15,
@@ -459,8 +459,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                               iosSrc: widget.cardinfo.files![index],
                               disableZoom: false,
                               maxFieldOfView: '50deg',
-                              minFieldOfView: '50deg',
-                              cameraOrbit: '0deg 0deg 0.5m',
+                              minFieldOfView: '60deg',
+                              cameraOrbit: '42deg 90deg 0.5m',
                             ),
                           ),
                         );
@@ -581,7 +581,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Text(
-                        widget.cardinfo.price ?? "",
+                        "${widget.cardinfo.price} DA" ?? "",
                         style: const TextStyle(
                           fontFamily: "Nunito Sans",
                           fontSize: 30,
@@ -616,7 +616,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                         color: Colors.black,
                       ),
                     ),
-
                     const SizedBox(height: 20),
                      CustomButton(width: media.width, value: "Add Review",color: AppColors.darkGrey,onTap: (){
                        showDialog(
