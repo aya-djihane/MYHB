@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:myhb_app/models/review.dart';
-
 class ReviewItem extends StatelessWidget {
   final Review review;
-
   const ReviewItem({
     Key? key,
     required this.review,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +19,7 @@ class ReviewItem extends StatelessWidget {
               const Icon(Icons.person),
               const SizedBox(width: 8),
               Text(
-                review.name??"",
+                review.item!.name!??"",
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),

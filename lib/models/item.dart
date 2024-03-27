@@ -1,7 +1,7 @@
-import 'dart:convert';
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-enum Type { All,Chair, Table ,Sofa, Bed, Lamb }
+
+enum Type { All, Chair, Table, Sofa, Bed, Lamb }
+
 class Item {
   String? id;
   final String? price;
@@ -13,6 +13,7 @@ class Item {
   final List<String>? files;
   final String? description;
   final bool? isfavorite;
+
   Item({
     this.price,
     this.name,
@@ -23,29 +24,17 @@ class Item {
     this.type,
     this.files,
     this.description,
-    this.isfavorite
+    this.isfavorite,
   });
-  // factory Item.fromJson(Map<String, dynamic> json) {
-  //   return Item(
-  //     id: json['id'] as int?,
-  //     price: json['price'] as String?,
-  //     name: json['name'] as String?,
-  //     rate: json['rate'] as int?,
-  //     // 'image' is a DocumentReference
-  //     image: json['image'] as String?,
-  //     type: _parseType(json['type'] as String?),
-  //     colors: (json['colors'] as List?)?.cast<String>(),
-  //     description: json['description'] as String?,
-  //   );
-  // }
+
   factory Item.fromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
     return Item(
-      id: data['id'] ,
+      id: data['id'],
       price: data['price'] as String?,
       name: data['name'] as String?,
       rate: data['rate'] as int?,
-      image: data['image']!as String,
+      image: data['image']! as String,
       type: _parseType(data['type'] as String?),
       colors: (data['colors'] as List?)?.cast<String>(),
       files: (data['files'] as List?)?.cast<String>(),
@@ -53,6 +42,21 @@ class Item {
       isfavorite: data['isfavorite'] as bool,
     );
   }
+  factory Item.fromMap(Map<String, dynamic> data) {
+    return Item(
+      id: data['id'],
+      price: data['price'] as String?,
+      name: data['name'] as String?,
+      rate: data['rate'] as int?,
+      image: data['image'] as String?,
+      type: _parseType(data['type'] as String?),
+      colors: (data['colors'] as List?)?.cast<String>(),
+      files: (data['files'] as List?)?.cast<String>(),
+      description: data['description'] as String?,
+      isfavorite: data['isfavorite'] as bool,
+    );
+  }
+
   Map<String, Object?> toJson() {
     return {
       'id': id,
@@ -61,13 +65,13 @@ class Item {
       'rate': rate,
       'image': image,
       'type': type?.toString().split('.').last,
-      'colors':colors as List<String?>,
-      'files':files as List<String?>,
+      'colors': colors as List<String?>,
+      'files': files as List<String?>,
       'description': description,
       'isfavorite': isfavorite
-
     };
   }
+
   static Type? _parseType(String? typeString) {
     if (typeString == null) {
       return null;
@@ -77,9 +81,9 @@ class Item {
         return Type.Chair;
       case 'Table':
         return Type.Table;
-      case 'Armchair':
+      case 'Sofa':
         return Type.Sofa;
-        case 'Lamb':
+      case 'Lamb':
         return Type.Lamb;
       case 'Bed':
         return Type.Bed;
@@ -88,23 +92,3 @@ class Item {
     }
   }
 }
-// List<Item> itemList = generateRandomItemList(15);
-
-// List<Item> generateRandomItemList(int itemCount) {
-//   List<Item> items = [];
-//
-//   for (int i = 1; i <= itemCount; i++) {
-//     items.add(Item(
-//       id: i,
-//       price: "${Random().nextInt(100) + 50} DZ",
-//       name: "Item $i",
-//       rate: Random().nextInt(5) + 1,
-//       image: "https://example.com/image$i.jpg",
-//       type: Type.values[Random().nextInt(Type.values.length)],
-//       colors: generateRandomColors(),
-//     ));
-//   }
-//
-//   return items;
-// }
-

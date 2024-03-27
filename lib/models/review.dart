@@ -1,36 +1,38 @@
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:myhb_app/models/item.dart';
+import 'package:myhb_app/models/user.dart';
+
 class Review {
+  Users? user;
   String? id;
-  final String? name;
-  final String? images;
+  Item? item;
   final int? rating;
   final String? review;
-  Review( {
-    this.name,
-    this.rating,
-    this.images,
+
+  Review({
     this.id,
+    this.item,
+    this.user,
+    this.rating,
     this.review,
   });
   factory Review.fromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
     return Review(
-      id: data['id'] ,
-      name: data['name'] as String?,
-      rating: data['rating']??0,
+      id: data['id'],
+      item: Item.fromMap(data['item']),
+      user: Users.fromMap(data['user']),
+      rating: data['rating'] as int?,
       review: data['review'] as String?,
-      images: data['images'] as String?,
     );
   }
+
   Map<String, Object?> toJson() {
     return {
       'id': id,
-      'name': name,
+      'item': item?.toJson(),
+      'rating': rating,
       'review': review,
-      'rating': rating
-
     };
   }
 }
-

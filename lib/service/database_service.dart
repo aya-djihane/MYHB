@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:myhb_app/models/item.dart';
+import 'package:myhb_app/models/review.dart';
 import 'package:myhb_app/models/user.dart';
-
 const String ITEMES_COLLECTON_REF="items";
 const String FIVORATE_COLLECTON_REF="favorate";
+const String REVIEW_COLLECTON_REF="reviewes";
 const String USER_COLLECTON_REF="users";
 Future<void> handleBackgroundMessage(RemoteMessage message)async{
 }
@@ -75,8 +75,6 @@ Future initLocalNotification()async{
  final platform=_localNotification.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
 await platform?.createNotificationChannel(_androidChannel);
 }
-
-
 void addItem(Item item) async{
  _todoref.add(item);
  }
@@ -89,8 +87,10 @@ void addUser(Users item) async{
 Future<void> CreatItemFavorateRecord(Item item )async{
  await _firestore.collection(FIVORATE_COLLECTON_REF).doc(item.id).set(item.toJson());
 }
+Future<void> CreatItemReviwRecord(Review item) async {
+ await _firestore.collection(REVIEW_COLLECTON_REF).add(item.toJson());
+}
 Future<void> CreatUserRecord(Users item )async{
  await _firestore.collection(USER_COLLECTON_REF).doc(item.id).set(item.toJson());
 }
-
 }

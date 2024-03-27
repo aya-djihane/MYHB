@@ -22,6 +22,14 @@ class Users {
 
     );
   }
+  factory Users.fromMap(Map<String, dynamic> data) {
+    return Users(
+      id: data['id'] ,
+      name: data['name'] as String?,
+      profil: data['email']!as String,
+
+    );
+  }
   Map<String, Object?> toJson() {
     return {
       'id': id,

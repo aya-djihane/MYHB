@@ -35,11 +35,6 @@ class MyApp extends StatelessWidget {
       builder: (context, child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          appBarTheme: const AppBarTheme
-            (
-            backgroundColor: AppColors.primaryGreen,
-            foregroundColor: AppColors.blue,
-          )
         ),
         home: isLoggedIn ? const UserDashboard() :  ConnectivityWrapper(),
       ),
@@ -56,7 +51,6 @@ class ConnectivityWrapper extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         }
-
         final hasConnection = snapshot.data != ConnectivityResult.none;
 
         return hasConnection ? const SplashScreen() : const NoInternetScreen();

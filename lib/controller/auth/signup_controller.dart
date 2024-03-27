@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myhb_app/appColors.dart';
@@ -20,19 +21,15 @@ class SigninController extends GetxController {
   void validateName(String value) {
     isNameValid.value = value.isNotEmpty;
   }
-
   void validateEmail(String value) {
     isEmailValid.value = value.isNotEmpty;
   }
-
   void validatePassword(String value) {
     isPasswordValid.value = value.isNotEmpty;
   }
-
   void validateConfirmPassword(String value) {
     isConfirmPasswordValid.value = value.isNotEmpty;
   }
-
   bool get isValidForm =>
       isNameValid.value && isEmailValid.value && isPasswordValid.value && isConfirmPasswordValid.value;
   Future<void> signup(String email, String password) async {
@@ -46,21 +43,20 @@ class SigninController extends GetxController {
       await DatabaseService().CreatUserRecord(Users(
         id: uuid.v1(),
         name: name.value,
-      email: userCredential.user!.email,
-
+       email: userCredential.user!.email,
       profil:"",));
       loading.value==false;
       Get.to(const LoginScreen());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        Get.snackbar('Error', 'weak-password',backgroundColor: Colors.red);
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        Get.snackbar('Error', 'The account already exists for that email.',backgroundColor: Colors.red);
       } else {
-        print('Error: ${e.message}');
+        Get.snackbar('Error', "${e.message}",backgroundColor: Colors.red);
       }
     } catch (e) {
-      print('Error: $e');
+      Get.snackbar('Error', "$e",backgroundColor: Colors.red);
     }
   }
 }

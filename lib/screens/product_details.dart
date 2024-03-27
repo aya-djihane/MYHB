@@ -360,12 +360,14 @@ class ProductDetails extends StatefulWidget {
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
 }
-
 class _ProductDetailsState extends State<ProductDetails> {
   final ItemController controller = Get.put(ItemController());
   final PageController _pageController = PageController();
-
-
+  @override
+  void initState() {
+    controller.isfavorate.value=widget.cardinfo.isfavorite!;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var media= MediaQuery.of(context).size;
@@ -407,7 +409,6 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
             ),
           ),
-
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -522,7 +523,6 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -606,7 +606,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         color: Color(0xff606060),
                       ),
                     ),
-                    const SizedBox(height: 20), // Add some space between description and reviews
+                    const SizedBox(height: 20),
                     const Text(
                       "Reviews",
                       style: TextStyle(
@@ -621,14 +621,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                        showDialog(
                            context: context,
                            barrierDismissible: false,
-
                            builder: (context) {
                              return AlertDialog(
                                backgroundColor: AppColors.greylight,
                                content: Container(
                                  width: 310.w,
                                  height: 320.h,
-
                                  decoration: ShapeDecoration(
                                    shape: RoundedRectangleBorder(
                                        borderRadius: BorderRadius
@@ -789,9 +787,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                          padding: const EdgeInsets.only(
                                              top: 10.0),
                                          child: CustomButton(
-
                                            onTap: () {
-                                             // controller.addReview();
+                                             controller.addreview(widget.cardinfo);
                                              Navigator.pop(context);
                                              // controller.detectReview();
                                            },

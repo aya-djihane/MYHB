@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:myhb_app/models/user.dart';
 import 'package:myhb_app/screens/dashbord.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,6 +21,7 @@ class AuthController extends GetxController {
   void onInit() {
     super.onInit();
   }
+
   Future<void> login(String email, String password) async {
     try {
       if (email.isEmpty || !isEmailValid.value) {
@@ -29,12 +32,11 @@ class AuthController extends GetxController {
         isPasswordValid.value = false;
         return;
       }
-
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
-
-      await saveUserToken(userCredential.user!.uid);
-
-      Get.snackbar('Success', 'User exists!',backgroundColor: AppColors.primaryGreen.withOpacity(.2));
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      await saveUserInfo(userCredential.user!);
+      Get.snackbar('Success', 'User exists!',
+          backgroundColor: AppColors.primaryGreen.withOpacity(.2));
       Get.to(const UserDashboard());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -50,10 +52,10 @@ class AuthController extends GetxController {
       Get.snackbar('Error', 'Failed to sign in: $e');
     }
   }
-
-  Future<void> saveUserToken(String token) async {
+  Future<void> saveUserInfo(User user) async {
+    Users userInfo = Users(id: user.uid, name: user.displayName, email: user.email);
+    Map<String, Object?> userInfoJson = userInfo.toJson();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('userToken', token);
+    await prefs.setString('userInfo', jsonEncode(userInfoJson));
   }
-
 }
