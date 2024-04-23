@@ -21,9 +21,9 @@ class ItemController extends GetxController {
   Stream<List<Review>> get filteredItemsStream =>
       _filteredItemsController.stream;
 @override
-  void onInit() {
+  void onInit() async{
   _databaseService = DatabaseService();
- fetchItems();
+ await fetchItems();
   super.onInit();
   }
   late DatabaseService _databaseService;
@@ -39,11 +39,9 @@ class ItemController extends GetxController {
     String? userData = prefs.getString('userInfo');
 
     if(userData != null) {
-      // Deserialize the JSON string into a Users object
       Map<String, dynamic> userInfoJson = jsonDecode(userData);
       Users user = Users.fromMap(userInfoJson);
 
-      // Now you can use the user object to create the review
       choosenreview.value = Review(
         id: item.id,
         review: message.value,
@@ -58,17 +56,19 @@ class ItemController extends GetxController {
       return false;
     }
   }
-  void fetchItems() {
+  Future<void>  fetchItems() async{
     _databaseService.getReviews().listen((items) {
       globalReview.value.assignAll(items);
-      print("the global list lenght is globalReview.value.length${globalReview.value.length}");
+      print("the global list lenght is ${globalReview.value.length}");
     });
   }
   void chooseitem(String id ) {
     selectedreviews.clear();
     selectedreviews.addAll(globalReview.where((p0) => p0.item!.id==id));
+    print("the selected items freviews lenght == ${selectedreviews.length}");
   }
   Future<void> createitemReview() async {
     await DatabaseService().CreatItemReviwRecord(choosenreview.value);
+    fetchItems();
   }
 }

@@ -8,12 +8,14 @@ class Review {
   Item? item;
   final int? rating;
   final String? review;
+  final String? profil;
   Review({
     this.id,
     this.item,
     this.user,
     this.rating,
     this.review,
+    this .profil
   });
   factory Review.fromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
@@ -23,6 +25,7 @@ class Review {
       user: Users.fromMap(data['user']),
       rating: data['rating'] as int?,
       review: data['review'] as String?,
+      profil:data['profil'] as String?,
     );
   }
 
@@ -33,6 +36,7 @@ class Review {
       'item': item?.toJson(),
       'rating': rating,
       'review': review,
+      "profil":profil
     };
   }
 }

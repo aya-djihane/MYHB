@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,7 +8,12 @@ import 'package:ionicons/ionicons.dart';
 import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/controller/dashboard_controller.dart';
 import 'package:myhb_app/models/item.dart';
+import 'package:myhb_app/models/user.dart';
 import 'package:myhb_app/widgets/ItemCard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../controller/item_controller.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -16,9 +23,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final DashboardController dashboardController = Get.put(DashboardController());
+  final ItemController Controller = Get.put(ItemController());
   @override
   void initState() {
-    dashboardController.  fetchItems();
+
+    dashboardController. fetchItems();
     dashboardController.fetchFavoriteItems();
     super.initState();
   }
@@ -42,10 +51,19 @@ class _HomePageState extends State<HomePage> {
   AppBar buildAppBar() {
     return AppBar(
       backgroundColor: AppColors.white,
-      actions: const [
+      actions:  [
         Padding(
-          padding: EdgeInsets.only(right: 20.0),
-          child: Icon(Ionicons.cart_outline, size: 30, color: Colors.grey),
+          padding: const EdgeInsets.only(right: 20.0),
+          child: GestureDetector(onTap: ()async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            String? userData = prefs.getString('userInfo');
+            if (userData != null) {
+              Map<String, dynamic> userInfoJson = jsonDecode(userData);
+              Users user = Users.fromMap(userInfoJson);
+              print("user Email${user.profil} ");
+            }
+          }
+    ,child: const Icon(Ionicons.cart_outline, size: 30, color: Colors.grey)),
         ),
       ],
       leading: const Icon(Icons.search, size: 30, color: Colors.grey),

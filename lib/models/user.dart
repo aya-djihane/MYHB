@@ -19,14 +19,13 @@ class Users {
       id: data['id'] ,
       name: data['name'] as String?,
       profil: data['email']as String,
-
     );
   }
   factory Users.fromMap(Map<String, dynamic> data) {
     return Users(
       id: data['id'] ,
       name: data['name'] as String?,
-      profil: data['email']??""as String,
+      profil: data['email']??"",
 
     );
   }
