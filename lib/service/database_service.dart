@@ -17,6 +17,7 @@ final _firestore=FirebaseFirestore.instance;
 final _firebaseMessaging=FirebaseMessaging.instance;
 late final CollectionReference  _todoref;
 late final CollectionReference  _usertodo;
+late final CollectionReference  _reviewref;
 final _androidChannel = const AndroidNotificationChannel(
     "test",
  "test",
@@ -28,6 +29,10 @@ DatabaseService(){
  _todoref = _firestore.collection(ITEMES_COLLECTON_REF).withConverter<Item>(
   fromFirestore: (snapshots, _) => Item.fromSnapshot(snapshots),
   toFirestore: (item, _) => item.toJson(),
+ );
+ _reviewref = _firestore.collection(REVIEW_COLLECTON_REF).withConverter<Review>(
+  fromFirestore: (snapshots, _) => Review.fromSnapshot(snapshots),
+  toFirestore: (Review, _) => Review.toJson(),
  );
 _usertodo = _firestore.collection(USER_COLLECTON_REF).withConverter<Users>(
 fromFirestore: (snapshots, _) => Users.fromSnapshot(snapshots),
@@ -84,10 +89,19 @@ Future<void> updateItemRecord(Item item )async{
 void addUser(Users item) async{
  _usertodo.add(item);
 }
+
 Future<void> CreatItemFavorateRecord(Item item )async{
  await _firestore.collection(FIVORATE_COLLECTON_REF).doc(item.id).set(item.toJson());
 }
+Stream<List<Review>> getReviews() {
+ return _reviewref.snapshots().map((querySnapshot) {
+  return querySnapshot.docs.map((doc) {
+   return doc.data() as Review;
+  }).toList();
+ });
+}
 Future<void> CreatItemReviwRecord(Review item) async {
+ print(" the Review ADDED");
  await _firestore.collection(REVIEW_COLLECTON_REF).add(item.toJson());
 }
 Future<void> CreatUserRecord(Users item )async{

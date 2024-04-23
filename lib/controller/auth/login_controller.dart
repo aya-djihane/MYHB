@@ -1,27 +1,21 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myhb_app/models/user.dart';
 import 'package:myhb_app/screens/dashbord.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../appColors.dart';
-
 class AuthController extends GetxController {
   RxBool ckiked = false.obs;
   RxBool isEmailValid = true.obs;
   RxBool isPasswordValid = true.obs;
-
   final formKey = GlobalKey<FormState>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
   @override
   void onInit() {
     super.onInit();
   }
-
   Future<void> login(String email, String password) async {
     try {
       if (email.isEmpty || !isEmailValid.value) {

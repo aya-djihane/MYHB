@@ -22,7 +22,6 @@ class _HomePageState extends State<HomePage> {
     dashboardController.fetchFavoriteItems();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;

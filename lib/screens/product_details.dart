@@ -347,6 +347,7 @@ import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/controller/item_controller.dart';
 import 'package:myhb_app/models/item.dart';
+import 'package:myhb_app/models/review.dart';
 import 'package:myhb_app/widgets/camerascreen.dart';
 import 'package:myhb_app/widgets/costumformfield.dart';
 import 'package:myhb_app/widgets/custom_button.dart';
@@ -366,6 +367,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   void initState() {
     controller.isfavorate.value=widget.cardinfo.isfavorite!;
+    controller.chooseitem(widget.cardinfo.id!);
     super.initState();
   }
   @override
@@ -617,7 +619,28 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                     CustomButton(width: media.width, value: "Add Review",color: AppColors.darkGrey,onTap: (){
+                SizedBox(
+                  height: 50,
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10.0,
+                      mainAxisSpacing: 10.0,
+                    ),
+                    itemCount: controller.globalReview.value.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          Text(controller.globalReview.value[index].user?.email ?? "test"),
+
+                          Text(controller.globalReview.value[index].review ?? ""),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+
+                CustomButton(width: media.width, value: "Add Review",color: AppColors.darkGrey,onTap: (){
                        showDialog(
                            context: context,
                            barrierDismissible: false,

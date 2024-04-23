@@ -18,7 +18,7 @@ class Users {
     return Users(
       id: data['id'] ,
       name: data['name'] as String?,
-      profil: data['email']!as String,
+      profil: data['email']as String,
 
     );
   }
@@ -26,7 +26,7 @@ class Users {
     return Users(
       id: data['id'] ,
       name: data['name'] as String?,
-      profil: data['email']!as String,
+      profil: data['email']??""as String,
 
     );
   }

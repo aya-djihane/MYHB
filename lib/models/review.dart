@@ -8,7 +8,6 @@ class Review {
   Item? item;
   final int? rating;
   final String? review;
-
   Review({
     this.id,
     this.item,
@@ -30,6 +29,7 @@ class Review {
   Map<String, Object?> toJson() {
     return {
       'id': id,
+      'user':user?.toJson(),
       'item': item?.toJson(),
       'rating': rating,
       'review': review,

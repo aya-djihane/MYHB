@@ -1,9 +1,11 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/models/review.dart';
 import 'package:myhb_app/models/user.dart';
 import 'package:myhb_app/service/database_service.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ItemController extends GetxController {
@@ -12,7 +14,18 @@ class ItemController extends GetxController {
   RxInt reviewInt = 0.obs;
   RxString message = "".obs;
   Rx<Review> choosenreview = Review().obs;
-
+  RxList<Review> globalReview = <Review>[].obs;
+  RxList<Review> selectedreviews = <Review>[].obs;
+  final StreamController<List<Review>> _filteredItemsController =
+  StreamController<List<Review>>.broadcast();
+  Stream<List<Review>> get filteredItemsStream =>
+      _filteredItemsController.stream;
+@override
+  void onInit() {
+  _databaseService = DatabaseService();
+ fetchItems();
+  super.onInit();
+  }
   late DatabaseService _databaseService;
   Future<void> updateRecode(Item item) async {
     await DatabaseService().updateItemRecord(item);
@@ -23,19 +36,37 @@ class ItemController extends GetxController {
   Future<bool> addreview(Item item) async {
     // Fetch user information from SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userId');
-    String? userName = prefs.getString('userName');
-    String? userEmail = prefs.getString('userEmail');
-    Users user = Users(id: userId, name: userName, email: userEmail);
-    choosenreview.value = Review(
-      id: item.id,
-      review: message.value,
-      item: item,
-      user: user,
-      rating: reviewInt.value,
-    );
-    await createitemReview();
-    return true;
+    String? userData = prefs.getString('userInfo');
+
+    if(userData != null) {
+      // Deserialize the JSON string into a Users object
+      Map<String, dynamic> userInfoJson = jsonDecode(userData);
+      Users user = Users.fromMap(userInfoJson);
+
+      // Now you can use the user object to create the review
+      choosenreview.value = Review(
+        id: item.id,
+        review: message.value,
+        item: item,
+        user: user,
+        rating: reviewInt.value,
+      );
+
+      await createitemReview();
+      return true;
+    } else {
+      return false;
+    }
+  }
+  void fetchItems() {
+    _databaseService.getReviews().listen((items) {
+      globalReview.value.assignAll(items);
+      print("the global list lenght is globalReview.value.length${globalReview.value.length}");
+    });
+  }
+  void chooseitem(String id ) {
+    selectedreviews.clear();
+    selectedreviews.addAll(globalReview.where((p0) => p0.item!.id==id));
   }
   Future<void> createitemReview() async {
     await DatabaseService().CreatItemReviwRecord(choosenreview.value);
