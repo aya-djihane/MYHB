@@ -13,7 +13,6 @@ class Item {
   final List<String>? files;
   final String? description;
   final bool? isfavorite;
-
   Item({
     this.price,
     this.name,

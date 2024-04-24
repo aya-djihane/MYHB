@@ -27,8 +27,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     super.initState();
     controller.isfavorate.value = widget.cardinfo.isfavorite!;
       controller.chooseitem(widget.cardinfo.id!);
+    controller.choosenID.value=widget.cardinfo.id??"";
   }
-
   @override
   Widget build(BuildContext context) {
     var media= MediaQuery.of(context).size;
@@ -104,7 +104,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       height: MediaQuery.of(context).size.height / 2.05,
                       child: PageView.builder(
                         scrollDirection: Axis.horizontal,
-                        controller: _pageController, // Set the controller here
+                        controller: _pageController,
                         itemCount: widget.cardinfo.files!.length,
                         onPageChanged: (index) {
                           controller.choosenItem.value = index;
@@ -230,9 +230,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                               )
                             ],
                           ),
-                          const Text(
-                            "(50 reviews)",
-                            style: TextStyle(
+                           Text(
+                            "(${controller.selectedreviews.length} reviews)",
+                            style: const TextStyle(
                               fontFamily: "Nunito Sans",
                               fontSize: 14,
                               fontWeight: FontWeight.w300,
@@ -271,27 +271,71 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      const Text(
-                        "Reviews",
-                        style: TextStyle(
-                          fontFamily: "Nunito Sans",
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Column(
-                        children: controller.selectedreviews.value.map((review) => Column(
-                          children: [
-                            Container(
-                                color: Colors.white,
-                                child: Center(child: Text(review.user!.profil!,))),
-                            Text(review.review ?? ""),
-                          ],
-                        )).toList(),
-                      ),
-
+                      controller.selectedreviews.isNotEmpty?Column(
+                        children: [
+                          const Text(
+                            "Reviews",
+                            style: TextStyle(
+                              fontFamily: "Nunito Sans",
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                           Column(
+                            children: controller.selectedreviews.map((review) => Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        color: Colors.white,
+                                        child: Row(
+                                          children: [
+                                           SizedBox(
+                                               height: 30,
+                                               width: 30,
+                                               child: Image.network("https://cdn-icons-png.flaticon.com/512/3870/3870822.png")),const SizedBox(width: 20,),
+                                            Text('${review.profil!.substring(0, 2)}${'*' * (review.profil!.length - 10)}.com'),
+                                          ],
+                                        )),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 40),
+                                        child: ReadMoreText(
+                                          review.review ?? "",
+                                          trimLines: 2,
+                                          style:const TextStyle(
+                                            fontFamily: "Nunito Sans",
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color: Color(0xff606060),
+                                          ),
+                                          colorClickableText: AppColors.grey,
+                                          trimMode: TrimMode.Line,
+                                          trimCollapsedText: 'Show more',
+                                          trimExpandedText: 'Show less',
+                                          moreStyle: const TextStyle(
+                                            fontFamily: "Nunito Sans",
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color: Colors.black,
+                                          ),
+                                          lessStyle: const TextStyle(
+                                          fontFamily: "Nunito Sans",
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.black,
+                                        ),
+                                        ),
+                                      ),
+                                  ]
+                              ),
+                            )).toList(),
+                          )
+                        ],
+                      ):const SizedBox.shrink(),
                       CustomButton(width: media.width, value: "Add Review",color: AppColors.darkGrey,onTap: (){
                         showDialog(
                             context: context,

@@ -2,16 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/models/review.dart';
 import 'package:myhb_app/models/user.dart';
 import 'package:myhb_app/service/database_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 class ItemController extends GetxController {
   RxBool isfavorate = false.obs;
   RxInt choosenItem = 0.obs;
   RxInt reviewInt = 0.obs;
+  Rx choosenID = "".obs;
   RxString message = "".obs;
   Rx<Review> choosenreview = Review().obs;
   RxList<Review> globalReview = <Review>[].obs;
@@ -34,20 +35,20 @@ class ItemController extends GetxController {
     await DatabaseService().CreatItemFavorateRecord(item);
   }
   Future<bool> addreview(Item item) async {
-    // Fetch user information from SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userData = prefs.getString('userInfo');
-
+    DateTime dateObj = DateTime.now();
+    String formattedDate = DateFormat('MM/dd/yyyy').format(dateObj);
     if(userData != null) {
       Map<String, dynamic> userInfoJson = jsonDecode(userData);
       Users user = Users.fromMap(userInfoJson);
-
       choosenreview.value = Review(
         id: item.id,
         review: message.value,
         item: item,
-        user: user,
         rating: reviewInt.value,
+        profil: user.profil,
+        date: formattedDate,
       );
 
       await createitemReview();
