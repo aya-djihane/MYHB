@@ -22,6 +22,7 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   final ItemController controller = Get.find();
   final PageController _pageController = PageController();
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +33,13 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     var media= MediaQuery.of(context).size;
+    Widget buildStarRating(int rating,) {
+      List<Widget> stars = [];
+      for (int i = 0; i < rating; i++) {
+        stars.add(const Icon(Icons.star, color: Colors.yellow,size: 13,));
+      }
+      return Row(children: stars);
+    }
     return GetX<ItemController>(
         init: controller,
         builder: (controller) {
@@ -293,16 +301,27 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     Container(
                                         color: Colors.white,
                                         child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                           SizedBox(
-                                               height: 30,
-                                               width: 30,
-                                               child: Image.network("https://cdn-icons-png.flaticon.com/512/3870/3870822.png")),const SizedBox(width: 20,),
-                                            Text('${review.profil!.substring(0, 2)}${'*' * (review.profil!.length - 10)}.com'),
+                                            Row(
+                                              children: [
+                                               SizedBox(
+                                                   height: 30,
+                                                   width: 30,
+                                                   child: Image.network("https://cdn-icons-png.flaticon.com/512/3870/3870822.png")),const SizedBox(width: 20,),
+                                                Text('${review.profil!.substring(0, 2)}${'*' * (review.profil!.length - 10)}.com'),
+                                              ],
+                                            ),
+
+                                            Text('${review.date}'),
                                           ],
                                         )),
+                                    Padding(
+                                      padding:  EdgeInsets.only(left: 50.w,bottom: 10.h),
+                                      child: buildStarRating(review.rating!),
+                                    ),
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 40),
+                                        padding:  EdgeInsets.only(left: 40.w),
                                         child: ReadMoreText(
                                           review.review ?? "",
                                           trimLines: 2,
@@ -441,8 +460,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             RatingBar.builder(
                                               initialRating: 1,
                                               glowColor: AppColors.white,
-                                              unratedColor: AppColors.darkGrey
-                                                  .withOpacity(.4),
+                                              unratedColor: AppColors.darkGrey.withOpacity(.4),
                                               itemSize: 35,
                                               minRating: 1,
                                               direction: Axis.horizontal,
