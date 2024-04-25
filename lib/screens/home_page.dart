@@ -6,11 +6,13 @@ import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:myhb_app/appColors.dart';
+import 'package:myhb_app/controller/app_controller.dart';
 import 'package:myhb_app/controller/dashboard_controller.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/models/user.dart';
 import 'package:myhb_app/widgets/ItemCard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 import '../controller/item_controller.dart';
 
@@ -36,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     var media = MediaQuery.of(context).size;
     return Scaffold(
       appBar: buildAppBar(),
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: Column(
         children: [
           buildTypeSelector(),
@@ -50,7 +52,7 @@ class _HomePageState extends State<HomePage> {
 
   AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: AppColors.white,
+      // backgroundColor: AppColors.white,
       actions:  [
         Padding(
           padding: const EdgeInsets.only(right: 20.0),
@@ -63,20 +65,34 @@ class _HomePageState extends State<HomePage> {
               print("user Email${user.profil} ");
             }
           }
-    ,child: const Icon(Ionicons.cart_outline, size: 30, color: Colors.grey)),
+    ,child:  Icon(Ionicons.cart_outline, size: 30, color:  Theme.of(context).brightness == Brightness.light
+    ? AppColors.grey
+        : AppColors.yellow)),
         ),
       ],
-      leading: const Icon(Icons.search, size: 30, color: Colors.grey),
-      title: const SizedBox(
-        width: 200,
+      leading: GestureDetector(
+        onTap: () {
+          print("Leading icon tapped");
+          final uiProvider = Provider.of<UiProvider>(context, listen: false);
+          uiProvider.changeThem();
+        },
+        child:  Icon(Icons.search, size: 30, color:  Theme.of(context).brightness == Brightness.light
+            ? AppColors.grey
+            : AppColors.yellow),
+      ),
+
+      title:  SizedBox(
+        width: 400.w,
         child: Column(
           children: [
-            Text(
+             Text(
               "Make home ",
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
-                color: AppColors.darkGrey,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? AppColors.darkGrey
+                    : AppColors.white,
                 fontFamily: "Merriweather",
               ),
               textAlign: TextAlign.center,
@@ -87,7 +103,10 @@ class _HomePageState extends State<HomePage> {
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
                 fontFamily: "Gelasio",
-              ),
+                 color:  Theme.of(context).brightness == Brightness.light
+                  ? AppColors.black
+                  : AppColors.yellow),
+
               textAlign: TextAlign.center,
             )
           ],
@@ -131,8 +150,10 @@ class _HomePageState extends State<HomePage> {
               height: 44,
               decoration: ShapeDecoration(
                 color: type == dashboardController.choosenType.value
-                    ? Colors.black
-                    : AppColors.greylight,
+                    ? Theme.of(context).brightness == Brightness.light
+                    ? AppColors.black:AppColors.yellow
+                    : Theme.of(context).brightness == Brightness.light
+                    ? AppColors.mark:AppColors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -156,15 +177,19 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Text(
-              type.toString().split('.').last,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: AppColors.darkGrey,
-                fontFamily: "Merriweather",
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(
+                type.toString().split('.').last,
+                style:  TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? AppColors.darkGrey:AppColors.white ,
+                  fontFamily: "Merriweather",
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
           ],
         ),
@@ -179,7 +204,9 @@ class _HomePageState extends State<HomePage> {
         stream: dashboardController.filteredItemsStream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const SizedBox(width:40,height:40,child: CircularProgressIndicator());
+            return  Center(child: SizedBox(width:40,height:40,child: CircularProgressIndicator(color: Theme.of(context).brightness == Brightness.light
+                ? AppColors.darkGrey
+                : AppColors.yellow,)));
           } else if (snapshot.hasError) {
             print('Error: ${snapshot.error}');
             return Text('Error: ${snapshot.error}');

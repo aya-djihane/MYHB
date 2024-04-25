@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
               onTap: ()=>Get.to(LoginScreen()),
               width: media.width / 2,
               value: "Get Started",
-              color: AppColors.lightblack,
+              color: AppColors.lightBlack,
             ),
           ),
           const Positioned(
@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     fontSize: 25,
                     fontFamily: "Gelasio",
                     fontWeight: FontWeight.bold,
-                    color: AppColors.greydark,
+                    color: AppColors.darkGrey,
                   ),
                 ),
                 Text(
@@ -73,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       fontSize: 15,
                       fontFamily: "NunitoSans",
                       fontWeight: FontWeight.w400,
-                      color: AppColors.greydark,
+                      color: AppColors.darkGrey,
                     ),
                   ),
                 ),

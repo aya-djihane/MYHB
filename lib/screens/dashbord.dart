@@ -26,7 +26,6 @@ class _UserDashboardState extends State<UserDashboard> {
         init: dashboardController,
         builder: (controller) {
           return Scaffold(
-            backgroundColor: AppColors.background,
             body: Stack(
               children: [
                 if(dashboardController.pageType.value == PageType.home)

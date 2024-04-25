@@ -34,9 +34,12 @@ class _BottomBarState extends State<BottomBar> {
       width: media.width,
       height: media.height*0.0849753694581281,
       alignment: Alignment.center,
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.grey, width: 1)),
-        color: Colors.white,
+      decoration:  BoxDecoration(
+        border:  Border(top: BorderSide(color:Theme.of(context).brightness == Brightness.light
+            ? AppColors.grey:AppColors.lightBlack , width: 1)),
+        color:  Theme.of(context).brightness == Brightness.light
+          ? AppColors.white
+          : AppColors.lightBlack,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,7 +50,9 @@ class _BottomBarState extends State<BottomBar> {
             child: _customIconTap(
               icon: widget.pageType == PageType.home ? Iconsax.home_1:  Iconsax.home ,
               text: 'Home',
-              color: widget.pageType == PageType.home ? AppColors.lightblack:AppColors.grey,
+              color: widget.pageType == PageType.home ? Theme.of(context).brightness == Brightness.light
+                  ? AppColors.black:AppColors.yellow :Theme.of(context).brightness == Brightness.light
+                  ?AppColors.grey:AppColors.yellow,
               onTap: widget.onTapHome,
             ),
           ),
@@ -56,7 +61,9 @@ class _BottomBarState extends State<BottomBar> {
             child: _customIconTap(
               icon: widget.pageType == PageType.announcements ? Iconsax.save_2:  Iconsax.save_add_copy ,
               text: 'Home',
-              color: widget.pageType == PageType.announcements? AppColors.blacklight:AppColors.grey,
+              color: widget.pageType == PageType.announcements?  Theme.of(context).brightness == Brightness.light
+                ? AppColors.black:AppColors.yellow :Theme.of(context).brightness == Brightness.light
+              ?AppColors.grey:AppColors.yellow,
               onTap: widget.onTapAnnouncements,
             ),
           ),
@@ -71,10 +78,11 @@ class _BottomBarState extends State<BottomBar> {
                     Icon(
                       widget.pageType == PageType.meet ? Iconsax.notification:Iconsax.notification_copy,
                       size: 28.sp,
-                      color: widget.pageType == PageType.meet ? AppColors.lightblack:AppColors.grey,
+                      color: widget.pageType == PageType.meet ? Theme.of(context).brightness == Brightness.light
+                          ? AppColors.black:AppColors.yellow :Theme.of(context).brightness == Brightness.light
+                          ?AppColors.grey:AppColors.yellow,
 
                     ),
-
                   ],
                 ),
               )
@@ -84,7 +92,9 @@ class _BottomBarState extends State<BottomBar> {
             child: _customIconTap(
               icon: widget.pageType == PageType.account ? IconlyBold.profile : IconlyLight.profile,
               text: 'Account',
-              color: widget.pageType == PageType.account ? AppColors.lightblack:AppColors.grey,
+              color: widget.pageType == PageType.account ? Theme.of(context).brightness == Brightness.light
+                  ? AppColors.black:AppColors.yellow :Theme.of(context).brightness == Brightness.light
+                  ?AppColors.grey:AppColors.yellow,
               onTap: widget.onTapAccount,
             ),
           ),

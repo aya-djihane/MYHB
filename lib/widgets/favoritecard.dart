@@ -33,8 +33,10 @@ class _FavoriteCardState extends State<FavoriteCard> {
             child: Container(
               width: media.width,
               decoration:  BoxDecoration(
-                color: Colors.white,
-                border: const Border(bottom: BorderSide(color: AppColors.darkGrey)),
+                color: Theme.of(context).brightness == Brightness.light
+    ? AppColors.white // Use light mode color
+        : AppColors.lightBlack,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
                 boxShadow: [
                   BoxShadow(color: AppColors.darkGrey.withOpacity(.4),blurRadius: 5,offset: const Offset(-4, 3)),
                 ],
@@ -67,12 +69,16 @@ class _FavoriteCardState extends State<FavoriteCard> {
                           const SizedBox(height: 10,),
                           Text(
                             widget.cardinfo.name??"",
-                            style: const TextStyle(fontFamily: "Nunito", color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w900),
+                            style:  TextStyle(fontFamily: "Nunito", color: Theme.of(context).brightness == Brightness.light
+                                ? AppColors.black
+                                : AppColors.yellow, fontSize: 18,fontWeight: FontWeight.w900),
                           ),
                           const SizedBox(height: 5),
                           Text(
                            "DZ ${ widget.cardinfo.price!}",
-                            style: const TextStyle( color: AppColors.black, fontSize: 15, fontWeight: FontWeight.bold),
+                            style:  TextStyle(color: Theme.of(context).brightness == Brightness.light
+                                ? AppColors.black
+                                : AppColors.yellow, fontSize: 15, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -85,7 +91,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
           ),
         ),
         Positioned(
-          right: 5,
+          right: 3,
           child: GestureDetector(
             onTap: ()async{
               dashboardController.loadingFavorite.value=false;
@@ -107,7 +113,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
               width: 28,
               height: 28,
               decoration:  BoxDecoration(
-                  color: Colors.red,
+                  color: Colors.red.withOpacity(0.5),
                   border: Border.all(color: AppColors.darkGrey,width: 1),
                   borderRadius: BorderRadius.circular(50)
               ),

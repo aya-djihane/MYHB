@@ -50,7 +50,8 @@ class ItemController extends GetxController {
         profil: user.profil,
         date: formattedDate,
       );
-
+      await fetchItems();
+      chooseitem(choosenID.value);
       await createitemReview();
       return true;
     } else {
@@ -60,7 +61,7 @@ class ItemController extends GetxController {
   Future<void>  fetchItems() async{
     _databaseService.getReviews().listen((items) {
       globalReview.value.assignAll(items);
-      print("the global list lenght is ${globalReview.value.length}");
+      print("the global list lenght is ${globalReview.length}");
     });
   }
   void chooseitem(String id ) {

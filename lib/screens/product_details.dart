@@ -100,7 +100,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.black.withOpacity(.1),
+                            color: Colors.black.withOpacity(.1),
                             blurRadius: 2,
                             offset: const Offset(5, 5),
                           ),
@@ -151,7 +151,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                           shadows: [
                             BoxShadow(
-                              color: AppColors.black.withOpacity(.2),
+                              color: Colors.black.withOpacity(.1),
                               blurRadius: 2,
                               offset: const Offset(-2, 2),
                             ),
@@ -181,7 +181,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       // border: Border.all(color: Colors.black),
                                       boxShadow:[
                                         BoxShadow(
-                                          color: AppColors.black.withOpacity(.5),
+                                          color: Colors.black.withOpacity(.1),
                                           blurRadius: 2,
                                           offset: const Offset(-1, 2),
                                         ),
@@ -222,20 +222,34 @@ class _ProductDetailsState extends State<ProductDetails> {
                         children: [
                           Row(
                             children: [
-                              const Icon(Icons.star, color: Colors.yellow),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  widget.cardinfo.rate.toString(),
-                                  style: const TextStyle(
-                                    fontFamily: "Nunito Sans",
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w900,
-                                    color: AppColors.black,
-                                  ),
-                                  textAlign: TextAlign.justify,
-                                ),
-                              )
+                              // const Padding(
+                              //   padding: EdgeInsets.all(8.0),
+                              //   child: Text(
+                              //     "raiting :",
+                              //     style: TextStyle(
+                              //       fontFamily: "Nunito Sans",
+                              //       fontSize: 12,
+                              //       fontWeight: FontWeight.w900,
+                              //       color: AppColors.black,
+                              //     ),
+                              //     textAlign: TextAlign.justify,
+                              //   ),
+                              // ),
+                              buildStarRating(widget.cardinfo.rate!),
+                              // const Icon(Icons.star, ),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   child: Text(
+                              //     widget.cardinfo.rate.toString(),
+                              //     style: const TextStyle(
+                              //       fontFamily: "Nunito Sans",
+                              //       fontSize: 18,
+                              //       fontWeight: FontWeight.w900,
+                              //       color: AppColors.black,
+                              //     ),
+                              //     textAlign: TextAlign.justify,
+                              //   ),
+                              // )
                             ],
                           ),
                            Text(

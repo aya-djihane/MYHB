@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontSize: 30,
                           fontFamily: "RubikLines",
                           fontWeight: FontWeight.bold,
-                          color: AppColors.greydark,
+                          color: AppColors.darkGrey,
                         ),
                       ),
                     ],
@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     decoration: const InputDecoration(
                       hintText: 'Email',
-                      hintStyle: TextStyle(color: AppColors.blacklight),
+                      hintStyle: TextStyle(color: AppColors.lightBlack),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: AppColors.grey),
                       ),
@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
         const Icon(Ionicons.eye_off, color: AppColors.darkGrey):const Icon(Ionicons.eye, color: AppColors.darkGrey),
                       ),
                       hintText: 'Password',
-                      hintStyle: const TextStyle(color: AppColors.blacklight),
+                      hintStyle: const TextStyle(color: AppColors.lightBlack),
                       enabledBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(color: AppColors.grey),
                       ),

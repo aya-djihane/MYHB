@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myhb_app/appColors.dart';
+import 'package:myhb_app/controller/app_controller.dart';
 import 'package:myhb_app/service/database_service.dart';
 import 'screens/dashbord.dart';
 import 'screens/noInternet_screen.dart';
@@ -11,6 +12,7 @@ import 'screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 
 void main() async {
@@ -32,11 +34,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      builder: (context, child) => GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
+      builder: (context, child) => ChangeNotifierProvider<UiProvider>(
+        create: (context) => UiProvider(),
+        child: Consumer<UiProvider>(
+          builder: (context, uiProvider, _) => GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primaryColor: Colors.yellow[700],
+              drawerTheme: const DrawerThemeData(
+                backgroundColor: Colors.black,
+              ),
+              brightness: uiProvider.isDark ? Brightness.dark : Brightness.light,
+            ),
+            home: isLoggedIn ? const UserDashboard() : ConnectivityWrapper(),
+          ),
         ),
-        home: isLoggedIn ? const UserDashboard() :  ConnectivityWrapper(),
       ),
     );
   }

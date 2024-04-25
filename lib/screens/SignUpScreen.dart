@@ -62,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.greydark,
+                            color: AppColors.darkGrey,
                           ),
                         ),
                       ],
@@ -78,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                       decoration: const InputDecoration(
                         hintText: 'Name',
-                        hintStyle: TextStyle(color: AppColors.blacklight),
+                        hintStyle: TextStyle(color: AppColors.lightBlack),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: AppColors.grey),
                         ),
@@ -96,7 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onChanged: (value) => controller.validateEmail(value),
                       decoration: const InputDecoration(
                         hintText: 'Email',
-                        hintStyle: TextStyle(color: AppColors.blacklight),
+                        hintStyle: TextStyle(color: AppColors.lightBlack),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: AppColors.grey),
                         ),
@@ -122,7 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: controller.ckiked.value?
                           const Icon(Ionicons.eye_off, color: AppColors.darkGrey):const Icon(Ionicons.eye, color: AppColors.darkGrey),
                         ),
-                        hintStyle: const TextStyle(color: AppColors.blacklight),
+                        hintStyle: const TextStyle(color: AppColors.lightBlack),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: AppColors.grey),
                         ),
@@ -148,7 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: controller.ckikedConfirm.value?
                           const Icon(Ionicons.eye_off, color: AppColors.darkGrey):const Icon(Ionicons.eye, color: AppColors.darkGrey),
                         ),
-                        hintStyle: const TextStyle(color: AppColors.blacklight),
+                        hintStyle: const TextStyle(color: AppColors.lightBlack),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: AppColors.grey),
                         ),
@@ -156,7 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderSide: BorderSide(color: AppColors.primaryGreen),
                         ),
                       ),
-                      style: const TextStyle(color: AppColors.blacklight),
+                      style: const TextStyle(color: AppColors.lightBlack),
                     ),
                   ),
                   Center(
@@ -173,7 +173,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       padding: EdgeInsets.only(left: media.width / 4.5, top: 0),
                       child: const Text(
                         'Already have an account? Sign In',
-                        style: TextStyle(fontSize: 14, fontFamily: "Merriweather", fontWeight: FontWeight.w600, color: AppColors.blacklight),
+                        style: TextStyle(fontSize: 14, fontFamily: "Merriweather", fontWeight: FontWeight.w600, color: AppColors.lightBlack),
                       ),
                     ),
                   ),

@@ -55,7 +55,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.greydark,
+                        color: AppColors.darkGrey,
                       ),
                     ),
                   ],
@@ -67,7 +67,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   onChanged: (value) => controller.validateEmail(value),
                   decoration:  InputDecoration(
                     hintText: 'Email',
-                    hintStyle: const TextStyle(color: AppColors.blacklight),
+                    hintStyle: const TextStyle(color: AppColors.lightBlack),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color:controller.isEmailValid.value? AppColors.grey:AppColors.grey),
                     ),

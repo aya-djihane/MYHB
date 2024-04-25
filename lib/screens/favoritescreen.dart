@@ -11,27 +11,33 @@ class FavoritePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.white,
-        actions: const [
+        actions:  [
           Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: Icon(Ionicons.cart_outline, size: 30, color: Colors.grey),
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Icon(Ionicons.cart_outline, size: 30, color: Theme.of(context).brightness == Brightness.light
+                ? AppColors.black // Use light mode color
+                : AppColors.yellow,),
           ),
         ],
-        leading: const Icon(Icons.search, size: 30, color: Colors.grey),
-        title: const SizedBox(
+        leading:  Icon(Icons.search, size: 30, color: Theme.of(context).brightness == Brightness.light
+            ? AppColors.black // Use light mode color
+            : AppColors.yellow,),
+        title:  SizedBox(
           width: 200,
           child: Text(
             "Favorites ",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w400,
-              color: AppColors.black,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? AppColors.black // Use light mode color
+                  : AppColors.yellow, // Use dark mode color
               fontFamily: "Merriweather",
             ),
             textAlign: TextAlign.center,
           ),
         ),
+
       ),
       body: GetBuilder<DashboardController>(
         builder: (controller) {
@@ -43,8 +49,7 @@ class FavoritePage extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 70.0),
                   child: Stack(
                     children: [
-                      Container(
-                        color: Colors.white,
+                      SizedBox(
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
                         child: SingleChildScrollView(
