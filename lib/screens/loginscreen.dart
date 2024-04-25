@@ -145,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 40),
                     child: Column(
                       children: [
-                        CustomButton(width: media.width, value: 'Log In', onTap: () => controller.login(emailController.text, passwordController.text)),
+                        CustomButton(width: media.width, value: 'Log In', onTap: () =>  !controller.stop.value?controller.login(emailController.text, passwordController.text):null),
                         SizedBox(height: 16),
                         CustomButton(width: media.width, value: 'SIGN UP', onTap: () => Get.to(SignUpScreen())),
                       ],
