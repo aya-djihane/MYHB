@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,13 +19,16 @@ final _firebaseMessaging=FirebaseMessaging.instance;
 late final CollectionReference  _todoref;
 late final CollectionReference  _usertodo;
 late final CollectionReference  _reviewref;
+late final CollectionReference  _userref;
 final _androidChannel = const AndroidNotificationChannel(
     "test",
  "test",
  description: "test",
  importance: Importance.defaultImportance
     );
+
 final _localNotification = FlutterLocalNotificationsPlugin();
+
 DatabaseService(){
  _todoref = _firestore.collection(ITEMES_COLLECTON_REF).withConverter<Item>(
   fromFirestore: (snapshots, _) => Item.fromSnapshot(snapshots),
@@ -39,6 +43,7 @@ fromFirestore: (snapshots, _) => Users.fromSnapshot(snapshots),
 toFirestore: (user, _) => user.toJson(),
 );
 }
+
 Stream<List<Item>> getItems() {
  return _todoref.snapshots().map((querySnapshot) {
   return querySnapshot.docs.map((doc) {
@@ -46,6 +51,7 @@ Stream<List<Item>> getItems() {
   }).toList();
  });
 }
+
 Future<void> initNotifications( )async{
  await _firebaseMessaging.requestPermission();
  final fCMToken = await _firebaseMessaging.getToken();
@@ -68,6 +74,7 @@ Future<void> initNotifications( )async{
  });
  initLocalNotification();
 }
+
 Future initLocalNotification()async{
  const android =AndroidInitializationSettings('@drawable/group');
  const setting = InitializationSettings(android: android);
@@ -80,16 +87,17 @@ Future initLocalNotification()async{
  final platform=_localNotification.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
 await platform?.createNotificationChannel(_androidChannel);
 }
+
 void addItem(Item item) async{
  _todoref.add(item);
  }
+
 Future<void> updateItemRecord(Item item )async{
  await _firestore.collection(ITEMES_COLLECTON_REF).doc(item.id.toString()).update(item.toJson());
  }
 void addUser(Users item) async{
  _usertodo.add(item);
 }
-
 Future<void> CreatItemFavorateRecord(Item item )async{
  await _firestore.collection(FIVORATE_COLLECTON_REF).doc(item.id).set(item.toJson());
 }
@@ -100,11 +108,44 @@ Stream<List<Review>> getReviews() {
   }).toList();
  });
 }
+Stream<List<Users>> getUsers() {
+ return _usertodo.snapshots().map((querySnapshot) {
+  return querySnapshot.docs.map((doc) {
+   return doc.data() as Users;
+  }).toList();
+ });
+}
+Future<Users?> fetchUsersAndCheckEmail() async {
+ Completer<Users?> completer = Completer<Users?>();
+ try {
+  Stream<List<Users>> usersStream = getUsers();
+  usersStream.listen((List<Users> users) {
+   try {
+    Users userWithEmail = users.firstWhere(
+         (user) => user.email == 'aichouneaya@gmail.com',
+    );
+    completer.complete(userWithEmail);
+   } catch (e) {
+    print('User with email aichouneaya@gmail.com not found.');
+    completer.complete(null);
+   }
+  });
+ } catch (e) {
+  print('Error fetching users: $e');
+  completer.completeError(e);
+ }
+
+ return completer.future;
+}
 Future<void> CreatItemReviwRecord(Review item) async {
  print(" the Review ADDED");
  await _firestore.collection(REVIEW_COLLECTON_REF).add(item.toJson());
 }
+
 Future<void> CreatUserRecord(Users item )async{
  await _firestore.collection(USER_COLLECTON_REF).doc(item.id).set(item.toJson());
 }
+
+
+
 }

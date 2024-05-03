@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 abstract class AppColors {
   AppColors._();
-
   // Light mode colors
   static const Color golden = Color(0xffCAAC59);
   static const Color buttonColor = Color(0xFF303030);
@@ -17,17 +16,17 @@ abstract class AppColors {
   static const Color mark = Color.fromRGBO(171, 171, 171, 1.0);
   static const Color white = Color(0xFFFFFFFF);
   static const Color darkGrey = Color(0xFF7A7575);
+  // Color(0xFF7A7575);
   static const Color black = Color(0xFF050505);
   static const Color lightBlack = Color(0xFF333333);
   static const Color background = Color(0xFFEBEBEB);
-  static const Color yellow = Color(0xFFF2B200);
+  static const Color yellow = Color(0xFFDBC483);
   static const Color green = Color(0xFF6CBB1D);
   static const Color blue = Color(0xFF1B8989);
   static const Color greylight = Color(0xFFABABAB);
   static const Color darkgrey  = Color(0xFF5E5959);
-
   // Dark mode colors
-  static const Color goldenDark = Color(0xffCAAC59);
+  static const Color goldenDark = Color(0xffa48b49);
   static const Color buttonColorDark = Color(0xFF303030);
   static const Color dangerDark = Color(0xffFF6262);
   static const Color greyblack = Color(0xffBDBDBD);

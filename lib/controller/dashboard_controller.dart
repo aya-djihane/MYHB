@@ -7,13 +7,6 @@ import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/service/database_service.dart';
 import 'package:myhb_app/widgets/buttom_bar.dart';
 
-import 'dart:async';
-import 'package:get/get.dart';
-import 'package:myhb_app/models/item.dart';
-
-
-
-
 class DashboardController extends GetxController {
   late DatabaseService _databaseService;
   var choosenType = Type.All.obs;

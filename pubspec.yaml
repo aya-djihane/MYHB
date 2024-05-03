@@ -42,7 +42,8 @@ dev_dependencies:
   shared_preferences:
   intl:
   provider:
-
+  flutter_tflite:
+  image_picker:
 flutter_icons:
   android: true
   ios: true
@@ -56,6 +57,7 @@ flutter:
   assets:
     - images/
     - svgfiles/
+    - assets/
 
 
 

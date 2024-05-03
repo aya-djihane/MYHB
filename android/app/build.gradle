@@ -3,7 +3,6 @@ plugins {
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
-
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -11,27 +10,27 @@ if (localPropertiesFile.exists()) {
         localProperties.load(reader)
     }
 }
-
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
     flutterVersionCode = '1'
 }
-
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
-
 android {
     namespace "com.example.myhb_app"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
+    aaptOptions {
+        noCompress 'tflite'
+        noCompress 'lite'
+    }
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -44,7 +43,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 21
-        targetSdkVersion flutter.targetSdkVersion
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
@@ -58,11 +57,9 @@ android {
         }
     }
 }
-
 flutter {
     source '../..'
 }
-
 dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 }

@@ -13,9 +13,7 @@ import 'package:myhb_app/models/user.dart';
 import 'package:myhb_app/widgets/ItemCard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
-
 import '../controller/item_controller.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -53,6 +51,7 @@ class _HomePageState extends State<HomePage> {
   AppBar buildAppBar() {
     return AppBar(
       // backgroundColor: AppColors.white,
+      centerTitle: true,
       actions:  [
         Padding(
           padding: const EdgeInsets.only(right: 20.0),
@@ -69,6 +68,7 @@ class _HomePageState extends State<HomePage> {
     ? AppColors.grey
         : AppColors.yellow)),
         ),
+
       ],
       leading: GestureDetector(
         onTap: () {
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
       ),
 
       title:  SizedBox(
-        width: 400.w,
+        // width: 400.w,
         child: Column(
           children: [
              Text(
@@ -114,7 +114,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
   Widget buildTypeSelector() {
     return SizedBox(
       height: 80.h,
@@ -132,7 +131,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
   Widget buildTypeButton(Type type) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),

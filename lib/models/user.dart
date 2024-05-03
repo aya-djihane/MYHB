@@ -14,18 +14,24 @@ class Users {
   });
 
   factory Users.fromSnapshot(DocumentSnapshot snapshot) {
-    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?; // Cast to Map<String, dynamic>?
+    if (data == null) {
+      throw Exception('DocumentSnapshot data was null');
+    }
     return Users(
-      id: data['id'] ,
+      id: data['id'] as String,
       name: data['name'] as String?,
-      profil: data['email']as String,
+      email:data['email'] as String?,
+      profil: data['profile'] as String?,
     );
   }
+
   factory Users.fromMap(Map<String, dynamic> data) {
     return Users(
       id: data['id'] ,
       name: data['name'] as String?,
-      profil: data['email']??"",
+      email:data['email'] as String?,
+      profil: data['profile'] as String,
 
     );
   }
@@ -34,7 +40,7 @@ class Users {
       'id': id,
       'name': name,
       'email': email,
-      'profil': profil
+      'profile': profil
 
     };
   }
