@@ -114,8 +114,8 @@ class _AccountPageState extends State<AccountPage> {
                        ),
                      )
                          : SizedBox(
-                       width: 70,
-                       height: 80,
+                       width: 80,
+                       height: 70,
                        child: controller.currentUser.value!.profil!.isNotEmpty
                            ? buildProfileImage()
                            : Image.asset("images/images-removebg-preview.png"),
@@ -124,12 +124,12 @@ class _AccountPageState extends State<AccountPage> {
                  ),
                  Positioned(
                    bottom: -10,
-                   right: -10,
+                   right: -12,
                    child: IconButton(
                      icon: Icon(
                        Icons.add_a_photo,
                        color: Theme.of(context).brightness == Brightness.light
-                           ? AppColors.black
+                           ? AppColors.blackDark
                            : AppColors.yellow,
                      ),
                      onPressed: _pickImage,
@@ -215,8 +215,8 @@ class _AccountPageState extends State<AccountPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Container(
+            padding: const EdgeInsets.only(bottom: 20.0,left: 20,right: 20),
+            child: Container (
               decoration: BoxDecoration(
                   color: Theme.of(context).brightness == Brightness.light
                       ? AppColors.white
@@ -226,12 +226,14 @@ class _AccountPageState extends State<AccountPage> {
                     BoxShadow(),
                   ]),
               height: 69.h,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10.0,right: 20,top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0,left: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
                           value:'My Orders '
@@ -241,22 +243,142 @@ class _AccountPageState extends State<AccountPage> {
                               ? AppColors.darkGrey
                               : AppColors.yellow,
                         ),
+                        const SizedBox(height: 10,),
                         CustomText(
-                          value:'My Orders '
-                             ,
+                          value:'Already have 10 orders',
                           type: TypeText.subsubtext2,
+                          color: Theme.of(context).brightness == Brightness.light
+                              ? AppColors.grey
+                              : AppColors.yellow,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Icon(
+
+
+                      Icons.arrow_forward_ios,
+
+                      size: 17,
+                      color:Theme.of(context).brightness == Brightness.light
+                        ? AppColors.darkGrey
+                        : AppColors.yellow,),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20.0,left: 20,right: 20),
+            child: Container (
+              decoration: BoxDecoration(
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? AppColors.white
+                      : AppColors.lightBlackDark,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(),
+                  ]),
+              height: 69.h,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0,left: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          value:'My reviews '
+                          ,
+                          type: TypeText.text,
                           color: Theme.of(context).brightness == Brightness.light
                               ? AppColors.darkGrey
                               : AppColors.yellow,
                         ),
-
+                        const SizedBox(height: 10,),
+                        CustomText(
+                          value:'Reviews for 5 items',
+                          type: TypeText.subsubtext2,
+                          color: Theme.of(context).brightness == Brightness.light
+                              ? AppColors.grey
+                              : AppColors.yellow,
+                        ),
                       ],
                     ),
-                    Icon(Icons.arrow_forward_ios,color:Theme.of(context).brightness == Brightness.light
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Icon(
+
+
+                      Icons.arrow_forward_ios,
+
+                      size: 17,
+                      color:Theme.of(context).brightness == Brightness.light
                         ? AppColors.darkGrey
-                        : AppColors.yellow,)
-                  ],
-                ),
+                        : AppColors.yellow,),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20.0,left: 20,right: 20),
+            child: Container (
+              decoration: BoxDecoration(
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? AppColors.white
+                      : AppColors.lightBlackDark,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(),
+                  ]),
+              height: 69.h,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0,left: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          value:'Setting'
+                          ,
+                          type: TypeText.text,
+                          color: Theme.of(context).brightness == Brightness.light
+                              ? AppColors.darkGrey
+                              : AppColors.yellow,
+                        ),
+                        const SizedBox(height: 10,),
+                        CustomText(
+                          value:'Update , FAQ , Contact ',
+                          type: TypeText.subsubtext2,
+                          color: Theme.of(context).brightness == Brightness.light
+                              ? AppColors.grey
+                              : AppColors.yellow,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Icon(
+
+
+                      Icons.arrow_forward_ios,
+
+                      size: 17,
+                      color:Theme.of(context).brightness == Brightness.light
+                        ? AppColors.darkGrey
+                        : AppColors.yellow,),
+                  ),
+                ],
               ),
             ),
           ),
@@ -264,7 +386,6 @@ class _AccountPageState extends State<AccountPage> {
       ),
     );
   }
-
   AppBar buildAppBar() {
     return AppBar(
       centerTitle: true,
@@ -289,7 +410,7 @@ class _AccountPageState extends State<AccountPage> {
           },
           child: const Icon(Icons.logout, color: Colors.red),
         ),
-        SizedBox(width: 10,),
+        const SizedBox(width: 10,),
       ],
     );
   }
