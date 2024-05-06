@@ -8,6 +8,7 @@ import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/controller/item_controller.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/models/review.dart';
+import 'package:myhb_app/widgets/Ai%20screen.dart';
 import 'package:myhb_app/widgets/camerascreen.dart';
 import 'package:myhb_app/widgets/costumformfield.dart';
 import 'package:myhb_app/widgets/custom_button.dart';
@@ -44,7 +45,6 @@ class _ProductDetailsState extends State<ProductDetails> {
         init: controller,
         builder: (controller) {
          return  Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           title:  Text(
             "${widget.cardinfo.name??"Item"} details" ?? "",
@@ -52,12 +52,11 @@ class _ProductDetailsState extends State<ProductDetails> {
               fontFamily: "Gelasio",
               fontSize: 15,
               fontWeight: FontWeight.w300,
-              color: Color(0xff494646),
+
               height: 30 / 24,
             ),
             textAlign: TextAlign.left,
           ),
-          backgroundColor: AppColors.white,
           leading:
           Padding(
             padding: const EdgeInsets.only(left: 10.0,top: 8,bottom: 8),
@@ -65,18 +64,21 @@ class _ProductDetailsState extends State<ProductDetails> {
               onTap: (){
                 Get.back();
               },
-              child: Container(
-                width: 50,
-                height: 50,
-                decoration: ShapeDecoration(
-                  color: AppColors.greylight,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: Container(
+                  width: 10,
+                  height: 50,
+                  decoration: ShapeDecoration(
+                    color: AppColors.yellow,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
-                ),
-                child:  const Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: Icon(Icons.arrow_back_ios_new_outlined,color: AppColors.darkGrey,size: 20,),
+                  child:  const Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: Icon(Icons.arrow_back_ios_new_outlined,color: AppColors.white,size: 20,),
+                  ),
                 ),
               ),
             ),
@@ -94,13 +96,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                       width: MediaQuery.of(context).size.width - 60,
                       height: MediaQuery.of(context).size.height / 2,
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? AppColors.white
+                            : AppColors.lightBlack,
                         borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(50),
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(.1),
+                            color: Theme.of(context).brightness == Brightness.light
+                                ? Colors.black.withOpacity(.1):AppColors.grey.withOpacity(.2),
                             blurRadius: 2,
                             offset: const Offset(5, 5),
                           ),
@@ -139,21 +144,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                           );
                         },
                       ),
-
                     ),
                     Positioned(
-                      top: 140,
+                      top: 140.h,
                       child: Container(
                         decoration: ShapeDecoration(
-                          color: AppColors.white,
+                          color: Theme.of(context).brightness == Brightness.light
+                              ? AppColors.white:AppColors.lightBlack,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
                           ),
                           shadows: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(.1),
+                              color: Theme.of(context).brightness == Brightness.light
+                                  ? Colors.black.withOpacity(.1):AppColors.grey.withOpacity(.2),
                               blurRadius: 2,
-                              offset: const Offset(-2, 2),
+                              offset: const Offset(5, 5),
                             ),
                           ],
                         ),
@@ -212,7 +218,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           fontFamily: "Gelasio",
                           fontSize: 24,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xff303030),
+                          color:AppColors.yellow,
                           height: 30 / 24,
                         ),
                         textAlign: TextAlign.left,
@@ -258,7 +264,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               fontFamily: "Nunito Sans",
                               fontSize: 14,
                               fontWeight: FontWeight.w300,
-                              color: Color(0xff606060),
+                              color:AppColors.yellow,
                             ),
                             textAlign: TextAlign.justify,
                           )
@@ -272,7 +278,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             fontFamily: "Nunito Sans",
                             fontSize: 30,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xff303030),
+                            color: AppColors.white,
                             height: 41 / 30,
                           ),
                           textAlign: TextAlign.left,
@@ -281,27 +287,30 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ReadMoreText(
                         widget.cardinfo.description ?? "",
                         trimLines: 5,
-                        colorClickableText: AppColors.darkGrey,
+                        colorClickableText: Theme.of(context).brightness == Brightness.light
+                            ? AppColors.darkGrey:AppColors.yellow,
                         trimMode: TrimMode.Line,
                         trimCollapsedText: 'Show more',
                         trimExpandedText: 'Show less',
-                        moreStyle: const TextStyle(
+                        moreStyle:  TextStyle(
                           fontFamily: "Nunito Sans",
                           fontSize: 14,
                           fontWeight: FontWeight.w300,
-                          color: Color(0xff606060),
+                          color: Theme.of(context).brightness == Brightness.light
+                              ? AppColors.darkGrey:AppColors.white,
                         ),
                       ),
                       const SizedBox(height: 20),
                       controller.selectedreviews.isNotEmpty?Column(
                         children: [
-                          const Text(
+                           Text(
                             "Reviews",
                             style: TextStyle(
                               fontFamily: "Nunito Sans",
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color:Theme.of(context).brightness == Brightness.light
+                                  ? AppColors.yellow:AppColors.yellow,
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -312,54 +321,54 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                        color: Colors.white,
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
                                           children: [
-                                            Row(
-                                              children: [
-                                               SizedBox(
-                                                   height: 30,
-                                                   width: 30,
-                                                   child: Image.network("https://cdn-icons-png.flaticon.com/512/3870/3870822.png")),const SizedBox(width: 20,),
-                                                Text('${review.profil!.substring(0, 2)}${'*' * (review.profil!.length - 10)}.com'),
-                                              ],
-                                            ),
-
-                                            Text('${review.date}'),
+                                           SizedBox(
+                                               height: 30,
+                                               width: 30,
+                                               child: Image.network("https://cdn-icons-png.flaticon.com/512/3870/3870822.png")),const SizedBox(width: 20,),
+                                            Text('${review.profil!.substring(0, 2)}${'*' * (review.profil!.length - 10)}.com'),
                                           ],
-                                        )),
+                                        ),
+                                        Text('${review.date}'),
+                                      ],
+                                    ),
                                     Padding(
                                       padding:  EdgeInsets.only(left: 50.w,bottom: 10.h),
                                       child: buildStarRating(review.rating!),
                                     ),
                                       Padding(
-                                        padding:  EdgeInsets.only(left: 40.w),
+                                        padding:  EdgeInsets.only(left: 50.w),
                                         child: ReadMoreText(
                                           review.review ?? "",
                                           trimLines: 2,
-                                          style:const TextStyle(
+                                          style: TextStyle(
                                             fontFamily: "Nunito Sans",
                                             fontSize: 12,
                                             fontWeight: FontWeight.w300,
-                                            color: Color(0xff606060),
+                                            color: Theme.of(context).brightness == Brightness.light
+                                                ? AppColors.darkGrey:AppColors.white,
                                           ),
                                           colorClickableText: AppColors.grey,
                                           trimMode: TrimMode.Line,
                                           trimCollapsedText: 'Show more',
                                           trimExpandedText: 'Show less',
-                                          moreStyle: const TextStyle(
+                                          moreStyle:  TextStyle(
                                             fontFamily: "Nunito Sans",
                                             fontSize: 12,
                                             fontWeight: FontWeight.w300,
-                                            color: Colors.black,
+                                            color: Theme.of(context).brightness == Brightness.light
+                                                ? AppColors.darkGrey:AppColors.white,
                                           ),
-                                          lessStyle: const TextStyle(
+                                          lessStyle:  TextStyle(
                                           fontFamily: "Nunito Sans",
                                           fontSize: 12,
                                           fontWeight: FontWeight.w300,
-                                          color: Colors.black,
+                                          color:Theme.of(context).brightness == Brightness.light
+                                              ? AppColors.darkGrey:AppColors.white,
                                         ),
                                         ),
                                       ),
@@ -369,13 +378,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                           )
                         ],
                       ):const SizedBox.shrink(),
-                      CustomButton(width: media.width, value: "Add Review",color: AppColors.darkGrey,onTap: (){
+                      const SizedBox(height: 20,),
+                      CustomButton(width: media.width, value: "Add Review",color: AppColors.yellow,onTap: (){
                         showDialog(
                             context: context,
                             barrierDismissible: false,
                             builder: (context) {
                               return AlertDialog(
-                                backgroundColor: AppColors.greylight,
+
                                 content: Container(
                                   width: 310.w,
                                   height: 320.h,
@@ -401,12 +411,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               child: const Text(
                                                 'Review',
                                                 style: TextStyle(
-                                                  color: Color(
-                                                      0xFF1A1818),
-                                                  fontSize: 16,
+                                                  color: AppColors.yellow,
+                                                  fontSize: 18,
                                                   fontFamily: 'Calibri',
                                                   fontWeight: FontWeight
-                                                      .w400,
+                                                      .w900,
                                                   height: 0,
                                                 ),
                                               ),
@@ -444,7 +453,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                 image: DecorationImage(
                                                   image: NetworkImage(
                                                       widget.cardinfo.image!),
-                                                  fit: BoxFit.fill,
+                                                  fit: BoxFit.cover,
                                                 ),
                                                 shape: const OvalBorder(),
                                               ),
@@ -462,7 +471,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             const Text(
                                               'Rate to Item',
                                               style: TextStyle(
-                                                color: Color(0xFF1A1818),
                                                 fontSize: 14,
                                                 fontFamily: 'Calibri',
                                                 fontWeight: FontWeight
@@ -473,8 +481,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             // **********
                                             RatingBar.builder(
                                               initialRating: 1,
-                                              glowColor: AppColors.white,
-                                              unratedColor: AppColors.darkGrey.withOpacity(.4),
+                                              glowColor: AppColors.yellow,
+                                              unratedColor: AppColors.yellow.withOpacity(.4),
                                               itemSize: 35,
                                               minRating: 1,
                                               direction: Axis.horizontal,
@@ -487,7 +495,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               const Icon(
                                                 Icons.star,
                                                 color: AppColors
-                                                    .darkGrey,
+                                                    .yellow,
                                               ),
                                               onRatingUpdate: (rating) {
                                                 controller.reviewInt
@@ -510,8 +518,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               child: Text(
                                                 'Rate the Item',
                                                 style: TextStyle(
-                                                  color: Color(
-                                                      0xFF1A1818),
+
                                                   fontSize: 14,
                                                   fontFamily: 'Calibri',
                                                   fontWeight: FontWeight
@@ -541,7 +548,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               Navigator.pop(context);
                                               // controller.detectReview();
                                             },
-                                            color: AppColors.darkGrey,
+                                            color: AppColors.yellow,
                                             width: 310.w, value: 'SUBMIT',),
                                         )
                                       ],
@@ -559,8 +566,9 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
         ),
         floatingActionButton: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SizedBox(width: 20),
               GestureDetector(
@@ -583,7 +591,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   width: 50,
                   height: 50,
                   decoration: ShapeDecoration(
-                    color: AppColors.greylight,
+                    color: AppColors.yellow,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -594,13 +602,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                         height: 90,
                         width: 90,
                         child: Image.asset("images/augmentedreality.png",
-                            color: AppColors.darkGrey)),
+                            color: AppColors.white)),
                   ),
                 ),
               ),
               const SizedBox(width: 10),
               CustomButton(
-                  width: 180, value: "Add to cart", color: AppColors.darkGrey),
+                  width: 180, value: "Add to cart", color: AppColors.yellow),
               const SizedBox(width: 10),
               GestureDetector(
                 onTap: () {
@@ -624,7 +632,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   width: 50,
                   height: 50,
                   decoration: ShapeDecoration(
-                    color: AppColors.greylight,
+                    color: AppColors.yellow,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

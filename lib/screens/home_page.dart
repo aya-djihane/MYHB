@@ -43,6 +43,7 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: buildItemsGridView(),
           ),
+          const SizedBox(height: 65,)
         ],
       ),
     );
@@ -65,21 +66,55 @@ class _HomePageState extends State<HomePage> {
             }
           }
     ,child:  Icon(Ionicons.cart_outline, size: 30, color:  Theme.of(context).brightness == Brightness.light
-    ? AppColors.grey
+    ? AppColors.yellow
         : AppColors.yellow)),
         ),
 
       ],
+      // leading: GestureDetector(
+      //   onTap: () {
+      //   },
+      //   child:  Icon(Icons.search, size: 30, color:  Theme.of(context).brightness == Brightness.light
+      //       ? AppColors.yellow
+      //       : AppColors.yellow),
+      // ),
+      // Inside your build method or wherever you're using the search icon
       leading: GestureDetector(
         onTap: () {
-          print("Leading icon tapped");
-          final uiProvider = Provider.of<UiProvider>(context, listen: false);
-          uiProvider.changeThem();
+          // Step 3: Show text field when search icon is clicked
+          showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+              title: Text("Search"),
+              content: TextField(
+                controller: dashboardController.searchController,
+                onChanged: (value) {
+                  dashboardController.updateFilteredItems();
+                },
+                decoration: InputDecoration(
+                  hintText: "Search...",
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Close'),
+                ),
+              ],
+            ),
+          );
         },
-        child:  Icon(Icons.search, size: 30, color:  Theme.of(context).brightness == Brightness.light
-            ? AppColors.grey
-            : AppColors.yellow),
+        child: Icon(
+          Icons.search,
+          size: 30,
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.yellow
+              : AppColors.yellow,
+        ),
       ),
+
 
       title:  SizedBox(
         // width: 400.w,
@@ -104,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.w400,
                 fontFamily: "Gelasio",
                  color:  Theme.of(context).brightness == Brightness.light
-                  ? AppColors.black
+                  ? AppColors.yellow
                   : AppColors.yellow),
 
               textAlign: TextAlign.center,
@@ -149,9 +184,9 @@ class _HomePageState extends State<HomePage> {
               decoration: ShapeDecoration(
                 color: type == dashboardController.choosenType.value
                     ? Theme.of(context).brightness == Brightness.light
-                    ? AppColors.black:AppColors.yellow
+                    ? AppColors.yellow:AppColors.yellow
                     : Theme.of(context).brightness == Brightness.light
-                    ? AppColors.mark:AppColors.white,
+                    ? AppColors.yellow.withOpacity(.5):AppColors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -171,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                       : Icons.star,
                   color: type == dashboardController.choosenType.value
                       ? Colors.white
-                      : AppColors.darkGrey,
+                      : AppColors.blackDark,
                 ),
               ),
             ),

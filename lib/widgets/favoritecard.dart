@@ -29,7 +29,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
             Get.to(ProductDetails(cardinfo: widget.cardinfo));
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             child: Container(
               width: media.width,
               decoration:  BoxDecoration(
@@ -70,7 +70,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
                           Text(
                             widget.cardinfo.name??"",
                             style:  TextStyle(fontFamily: "Nunito", color: Theme.of(context).brightness == Brightness.light
-                                ? AppColors.black
+                                ? AppColors.yellow
                                 : AppColors.yellow, fontSize: 18,fontWeight: FontWeight.w900),
                           ),
                           const SizedBox(height: 5),
@@ -130,7 +130,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
             width: 120,
             height: 28,
             decoration:  BoxDecoration(
-                color: AppColors.greylight,
+                color: AppColors.yellow,
                 border: Border.all(color: AppColors.darkGrey,width: 1),
                 borderRadius: BorderRadius.circular(10)
             ),

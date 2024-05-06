@@ -14,7 +14,6 @@ class BottomBar extends StatefulWidget {
   final Function () onTapAnnouncements;
   final Function() onTapAccount;
   final PageType pageType;
-
   const BottomBar({
     Key? key,
     required this.onTapHome,
@@ -36,7 +35,7 @@ class _BottomBarState extends State<BottomBar> {
       alignment: Alignment.center,
       decoration:  BoxDecoration(
         border:  Border(top: BorderSide(color:Theme.of(context).brightness == Brightness.light
-            ? AppColors.grey:AppColors.lightBlack , width: 1)),
+            ? AppColors.yellow.withOpacity(.5):AppColors.yellow , width: 1)),
         color:  Theme.of(context).brightness == Brightness.light
           ? AppColors.white
           : AppColors.lightBlack,
@@ -51,8 +50,8 @@ class _BottomBarState extends State<BottomBar> {
               icon: widget.pageType == PageType.home ? Iconsax.home_1:  Iconsax.home ,
               text: 'Home',
               color: widget.pageType == PageType.home ? Theme.of(context).brightness == Brightness.light
-                  ? AppColors.black:AppColors.yellow :Theme.of(context).brightness == Brightness.light
-                  ?AppColors.grey:AppColors.yellow,
+                  ? AppColors.yellow:AppColors.yellow :Theme.of(context).brightness == Brightness.light
+                  ?AppColors.yellow.withOpacity(.5):AppColors.yellow,
               onTap: widget.onTapHome,
             ),
           ),
@@ -62,8 +61,8 @@ class _BottomBarState extends State<BottomBar> {
               icon: widget.pageType == PageType.announcements ? Iconsax.save_2:  Iconsax.save_add_copy ,
               text: 'Home',
               color: widget.pageType == PageType.announcements?  Theme.of(context).brightness == Brightness.light
-                ? AppColors.black:AppColors.yellow :Theme.of(context).brightness == Brightness.light
-              ?AppColors.grey:AppColors.yellow,
+                ? AppColors.yellow:AppColors.yellow :Theme.of(context).brightness == Brightness.light
+              ?AppColors.yellow.withOpacity(.5):AppColors.yellow,
               onTap: widget.onTapAnnouncements,
             ),
           ),
@@ -79,8 +78,8 @@ class _BottomBarState extends State<BottomBar> {
                       widget.pageType == PageType.meet ? Iconsax.notification:Iconsax.notification_copy,
                       size: 28.sp,
                       color: widget.pageType == PageType.meet ? Theme.of(context).brightness == Brightness.light
-                          ? AppColors.black:AppColors.yellow :Theme.of(context).brightness == Brightness.light
-                          ?AppColors.grey:AppColors.yellow,
+                          ? AppColors.yellow:AppColors.yellow :Theme.of(context).brightness == Brightness.light
+                          ?AppColors.yellow.withOpacity(.5):AppColors.yellow,
 
                     ),
                   ],
@@ -93,8 +92,8 @@ class _BottomBarState extends State<BottomBar> {
               icon: widget.pageType == PageType.account ? IconlyBold.profile : IconlyLight.profile,
               text: 'Account',
               color: widget.pageType == PageType.account ? Theme.of(context).brightness == Brightness.light
-                  ? AppColors.black:AppColors.yellow :Theme.of(context).brightness == Brightness.light
-                  ?AppColors.grey:AppColors.yellow,
+                  ? AppColors.yellow:AppColors.yellow :Theme.of(context).brightness == Brightness.light
+                  ?AppColors.yellow.withOpacity(.5):AppColors.yellow,
               onTap: widget.onTapAccount,
             ),
           ),

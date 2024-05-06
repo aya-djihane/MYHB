@@ -35,10 +35,10 @@ class _SplashScreenState extends State<SplashScreen> {
               onTap: ()=>Get.to(LoginScreen()),
               width: media.width / 2,
               value: "Get Started",
-              color: AppColors.lightBlack,
+              color: AppColors.yellow,
             ),
           ),
-          const Positioned(
+           Positioned(
             top: 200,
             left: 20,
             child:   Column(
@@ -51,20 +51,20 @@ class _SplashScreenState extends State<SplashScreen> {
                     fontSize: 25,
                     fontFamily: "Gelasio",
                     fontWeight: FontWeight.bold,
-                    color: AppColors.darkGrey,
+                    color: AppColors.black.withOpacity(.5),
                   ),
                 ),
-                Text(
+                const Text(
                   'HOME BEAUTIFUL',
                   style: TextStyle(
                     fontSize: 24,
                     fontFamily: "Gelasio",
                     fontWeight: FontWeight.bold,
-                    color: AppColors.black,
+                    color: AppColors.yellow,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                   child: Text(
                     'The best simple place where you\n '
                         'discover most wonderful furnitures\n '

@@ -31,7 +31,7 @@ Get.to(ProductDetails(cardinfo: widget.cardinfo,));
           boxShadow:  [
             BoxShadow(
               color: Theme.of(context).brightness == Brightness.light
-                  ?AppColors.grey.withOpacity(.3)
+                    ?AppColors.grey.withOpacity(.3)
                   : AppColors.lightBlack,
               blurRadius:  Theme.of(context).brightness == Brightness.light
                   ?10:2,
@@ -60,7 +60,7 @@ Get.to(ProductDetails(cardinfo: widget.cardinfo,));
                Padding(
                  padding: const EdgeInsets.only(left: 15.0,top: 2),
                  child: Text(widget.cardinfo.name??"",style:  TextStyle(fontFamily: "Nunito",color: Theme.of(context).brightness == Brightness.light
-                     ? AppColors.grey:AppColors.white,fontSize: 14,fontWeight: FontWeight.w700),),
+                     ? AppColors.yellow:AppColors.white,fontSize: 14,fontWeight: FontWeight.w700),),
                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15.0,bottom: 0),
@@ -79,7 +79,7 @@ Get.to(ProductDetails(cardinfo: widget.cardinfo,));
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: Theme.of(context).brightness == Brightness.light
-                    ? AppColors.grey
+                    ? AppColors.yellow
                     : AppColors.yellow.withOpacity(0.8)
                 ),
                 child: const Center(

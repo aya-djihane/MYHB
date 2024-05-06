@@ -5,11 +5,14 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
+import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/controller/item_controller.dart';
+import 'package:myhb_app/widgets/Ai%20screen.dart';
 class CameraScreen extends StatefulWidget {
   final String file;
   final List<String>? colors;
@@ -28,10 +31,7 @@ class _CameraScreenState extends State<CameraScreen> {
   bool _isDetecting = false;
   Color _containerColor = Colors.grey;
   int colorIndex = 0;
-  Color _containerColorMatching = Colors.grey;
-  bool _isMatchingColorDetectionEnabled = true;
   Timer? _timer;
-
   @override
   void initState() {
     super.initState();
@@ -47,7 +47,7 @@ class _CameraScreenState extends State<CameraScreen> {
     _controller.setExposureMode(ExposureMode.locked);
     _controller.setFocusMode(FocusMode.locked);
     _initializeControllerFuture = _controller.initialize().then((_) {
-      _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      _timer = Timer.periodic(const Duration(seconds: 3), (_) {
         if (!_isDetecting) {
           _captureImage();
         }
@@ -58,6 +58,7 @@ class _CameraScreenState extends State<CameraScreen> {
   void dispose() {
     _controller.dispose();
     _timer?.cancel();
+    Tflite.close();
     super.dispose();
   }
   Future<void> _captureImage() async {
@@ -102,14 +103,11 @@ class _CameraScreenState extends State<CameraScreen> {
       );
       if (recognitions != null && recognitions.isNotEmpty) {
         final labelIndex = recognitions[0]['index'];
-        print(_containerColor);
-        print(getColorForLabel(labelIndex));
         if( _containerColor != getColorForLabel(labelIndex)){
           setState(() {
             _containerColor = getColorForLabel(labelIndex);
             colorIndex = labelIndex;
-            _containerColorMatching = getColorForLabel(findMatchingColors(labelIndex).first);
-            print("detecting objects: $_containerColor");
+              print("detecting objects: $_containerColor");
             String text = "Hello,Iman Good Morning You can ask the company for more colors. ";
             double volume = 1.0;
             // tts.setVolume(volume);
@@ -118,7 +116,6 @@ class _CameraScreenState extends State<CameraScreen> {
           });
           isMatchingColorFound(widget.colors!,matchingColors);
         }
-
       }
     } catch (e) {
       print("Error detecting objects: $e");
@@ -135,28 +132,127 @@ class _CameraScreenState extends State<CameraScreen> {
             children: [
               CameraPreview(_controller),
               Positioned(
-                top: 100,
-                right: 20,
-                child: Column(
-                  children: [
-                    // const Text("detecting Color"),
-                    Container(
-                      width: 30,
-                      height: 30,
-                      color: _containerColor,
+                top: 5,
+                left: media.width/2-75.w,
+                child:  Container(width: 150.w,height: 20.h,decoration:  BoxDecoration(color: AppColors.yellow,borderRadius: BorderRadius.circular(20)),child: const Center(
+                  child: Text("Local AR View",
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontFamily: 'Roboto',
+                      color: Colors.black,
+                      fontWeight: FontWeight.w900,
+                      decoration: TextDecoration.none,
                     ),
-                  ],
-                ),
+                  ),
+                ),),
               ),
               Positioned(
-                top: 100,
-                left: 20,
+             right: 10.w,
+             bottom: 55.h,
+        child: Container(
+          width: 100.w,height: 20.h,decoration:  BoxDecoration(color: AppColors.yellow,borderRadius: BorderRadius.circular(20)),
+          child: const Center(
+            child: Text("AR Services",
+            style: TextStyle(
+            fontSize: 13,
+            color: Colors.black,
+            fontWeight: FontWeight.w900,
+            decoration: TextDecoration.none,
+            ),
+            ),
+          ),
+        ),
+          ),
+              Positioned(
+                left: 10.w,
+                bottom: 10.h,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // const Text("Predicting Matching Color"),
-                    ...findMatchingColors(colorIndex),
+                         Container(
+                      width: 100.w,height: 20.h,decoration:  BoxDecoration(color: AppColors.yellow,borderRadius: BorderRadius.circular(20)),
+                      child: const Center(
+                        child: Text(" AI Matching Colors ",
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.black,
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.w900,
+                            decoration: TextDecoration.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height:5),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 2.0),
+                      child: Row(children: [ ...findMatchingColors(colorIndex),],),
+                    ),
+                    const SizedBox(height:5),
+                    Container(
+                      width: 100.w,height: 20.h,decoration:  BoxDecoration(color: AppColors.yellow,borderRadius: BorderRadius.circular(20)),
+                      child: const Center(
+                        child: Text("Available Colors ",
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.black,
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.w900,
+                            decoration: TextDecoration.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height:5),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: Row(
+                        children: widget.colors!.asMap().entries.map((entry) {
+                          final String item = entry.value;
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: Container(
+                                width: 20.w,height: 17.h,
+                              decoration: BoxDecoration(
+                                  color: Color(int.parse("0xFF$item")),
+                                  borderRadius: BorderRadius.circular(50),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(.1),
+                                      blurRadius: 2,
+                                      offset: const Offset(-1, 2),
+                                    ),
+                                  ]
+                              ),
+                            ),
+                          );
+                        }
+                        ).toList(),
+                      ),
+                    ),
+                    SizedBox(height: 3.h,),
+                    Container(
+                      width: 100.w,height: 20.h,decoration:  BoxDecoration(color: AppColors.yellow,borderRadius: BorderRadius.circular(20)),
+                      child: const Center(
+                        child: Text("Detecting BG",
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.black,
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                         Padding(
+                          padding: const EdgeInsets.only(left:25.0,top: 5),
+                          child: Container(width: 40.w,height: 35.h,decoration:  BoxDecoration(color:_containerColor,borderRadius: BorderRadius.circular(50)),),
+                        )
                   ],
                 ),
+
               ),
               SizedBox(
                 width: media.width,
@@ -171,7 +267,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   disableZoom: false,
                   maxFieldOfView: '100deg',
                   minFieldOfView: '100deg',
-                  cameraOrbit: '0deg 0deg 0.5m',
+                  cameraOrbit: '42deg 90deg 0.5m',
                 ),
               ),
             ],
@@ -196,10 +292,10 @@ bool isMatchingColorFound(List<String> cardColors, List<String> matchingColors) 
   for (String cardColor in cardColorNames) {
     if (matchingColors.contains(cardColor.toLowerCase())) {
       print ("exist ");
-      Get.snackbar("exist", "exist");
+
       return true;
     }else{
-      Get.snackbar("dosent exist", "dosent exist");
+
       print ("dosent exist ");
     }
   }
@@ -268,7 +364,7 @@ String getColorNameFromCode(String colorCode) {
     return "unknown";
   }
 }
-List<Container> findMatchingColors(int labelIndex) {
+List<Padding> findMatchingColors(int labelIndex) {
   final Map<int, List<String>> colorAssociations = {
     0: ["blue", "beige", "white"],
     1: ["yellow", "blue", "red", "black"],
@@ -285,11 +381,12 @@ List<Container> findMatchingColors(int labelIndex) {
   matchingColors.removeWhere((color) => color.toLowerCase() == getColorName(labelIndex).toLowerCase());
   matchingColors = matchingColors.toSet().toList();
   matchingColors = matchingColors;
-  return matchingColors.map((e) => Container(
-      width: 20,
-      height: 50,
-      color: getColorForLabel(e),
-    ),
+  return matchingColors.map((e) => Padding(
+    padding: const EdgeInsets.only(left: 2.0),
+    child: Container(
+      width: 20.w,height: 17.h,decoration:  BoxDecoration(color: getColorForLabel(e),borderRadius: BorderRadius.circular(50)),
+      ),
+  ),
   ).toList();
 }
 String getColorName(int labelIndex) {
