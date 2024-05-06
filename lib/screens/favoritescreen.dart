@@ -5,7 +5,6 @@ import 'package:ionicons/ionicons.dart';
 import 'package:myhb_app/controller/dashboard_controller.dart';
 import 'package:myhb_app/widgets/favoritecard.dart';
 import '../appColors.dart';
-import '../widgets/custom_button.dart';
 class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -15,12 +14,12 @@ class FavoritePage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: Icon(Ionicons.cart_outline, size: 30, color: Theme.of(context).brightness == Brightness.light
-                ? AppColors.black // Use light mode color
+                ? AppColors.yellow
                 : AppColors.yellow,),
           ),
         ],
         leading:  Icon(Icons.search, size: 30, color: Theme.of(context).brightness == Brightness.light
-            ? AppColors.black // Use light mode color
+            ? AppColors.yellow
             : AppColors.yellow,),
         title:  SizedBox(
           width: 200,

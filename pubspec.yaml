@@ -44,6 +44,8 @@ dev_dependencies:
   provider:
   flutter_tflite:
   image_picker:
+  share_plus:
+  share_files_and_screenshot_widgets:
 flutter_icons:
   android: true
   ios: true

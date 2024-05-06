@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: buildItemsGridView(),
           ),
-          const SizedBox(height: 65,)
+          SizedBox(height: 65,)
         ],
       ),
     );

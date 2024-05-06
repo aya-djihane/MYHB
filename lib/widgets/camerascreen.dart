@@ -1,37 +1,45 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui' as ui;
+import 'dart:typed_data';
+import 'dart:ui'as ui;
+import 'package:flutter/widgets.dart';
+import 'package:myhb_app/models/item.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tflite/flutter_tflite.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/controller/item_controller.dart';
-import 'package:myhb_app/widgets/Ai%20screen.dart';
+
 class CameraScreen extends StatefulWidget {
   final String file;
   final List<String>? colors;
-
-
-  CameraScreen({required this.file, required this.colors, Key? key}) : super(key: key);
+  final Type type ;
+  CameraScreen({required this.file, required this.colors,required this.type, Key? key})
+      : super(key: key);
 
   @override
   _CameraScreenState createState() => _CameraScreenState();
 }
+
 class _CameraScreenState extends State<CameraScreen> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
+  final GlobalKey _screenshotKey = GlobalKey();
   final ItemController controller = Get.find();
-  List<String> matchingColors=[];
+  List<String> matchingColors = [];
   bool _isDetecting = false;
   Color _containerColor = Colors.grey;
   int colorIndex = 0;
   Timer? _timer;
+
   @override
   void initState() {
     super.initState();
@@ -54,6 +62,7 @@ class _CameraScreenState extends State<CameraScreen> {
       });
     });
   }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -61,6 +70,7 @@ class _CameraScreenState extends State<CameraScreen> {
     Tflite.close();
     super.dispose();
   }
+
   Future<void> _captureImage() async {
     if (!_controller.value.isInitialized) {
       return;
@@ -82,6 +92,7 @@ class _CameraScreenState extends State<CameraScreen> {
       });
     }
   }
+
   Future<void> _detectObjects(String imagePath) async {
     try {
       final interpreter = await Tflite.loadModel(
@@ -103,25 +114,51 @@ class _CameraScreenState extends State<CameraScreen> {
       );
       if (recognitions != null && recognitions.isNotEmpty) {
         final labelIndex = recognitions[0]['index'];
-        if( _containerColor != getColorForLabel(labelIndex)){
+        if (_containerColor != getColorForLabel(labelIndex)) {
           setState(() {
             _containerColor = getColorForLabel(labelIndex);
             colorIndex = labelIndex;
-              print("detecting objects: $_containerColor");
-            String text = "Hello,Iman Good Morning You can ask the company for more colors. ";
-            double volume = 1.0;
-            // tts.setVolume(volume);
-            // tts.speak(text);
-
+            print("detecting objects: $_containerColor");
+            isMatchingColorFound(widget.colors!, matchingColors);
           });
-          isMatchingColorFound(widget.colors!,matchingColors);
         }
       }
     } catch (e) {
       print("Error detecting objects: $e");
     }
   }
-  @override
+
+
+
+
+  Future<void> _takeScreenshotAndSaveToGallery(GlobalKey _screenshotKey) async {
+    try {
+      // Find the RenderRepaintBoundary associated with the given GlobalKey
+      RenderRepaintBoundary boundary = _screenshotKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+
+      // Capture the image using the boundary
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0); // Adjust pixel ratio as needed
+
+      // Convert the captured image to bytes in PNG format
+      ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      Uint8List pngBytes = byteData!.buffer.asUint8List();
+
+      // Get the directory for the device's pictures
+      final directory = await getExternalStorageDirectory();
+      final imagePath = '${directory!.path}/screenshot.png';
+      File(imagePath).writeAsBytesSync(pngBytes);
+      final result = await ImageGallerySaver.saveFile(imagePath);
+      if (result != null && result.isNotEmpty) {
+        print("Image saved to gallery: $result");
+        await Share.shareFiles([imagePath], text: 'Check out this ${widget.type.toString().replaceAll("Type.", "")} available ${widget.colors!.length} colors what do you think',);
+        print("image shared  ");
+      } else {
+        print("Failed to save image to gallery");
+      }
+    } catch (e) {
+      print("Error taking screenshot and saving to gallery: $e");
+    }
+  }  @override
   Widget build(BuildContext context) {
     final Size media = MediaQuery.of(context).size;
     return FutureBuilder<void>(
@@ -129,40 +166,55 @@ class _CameraScreenState extends State<CameraScreen> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Stack(
+
             children: [
               CameraPreview(_controller),
               Positioned(
                 top: 5,
-                left: media.width/2-75.w,
-                child:  Container(width: 150.w,height: 20.h,decoration:  BoxDecoration(color: AppColors.yellow,borderRadius: BorderRadius.circular(20)),child: const Center(
-                  child: Text("Local AR View",
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontFamily: 'Roboto',
-                      color: Colors.black,
-                      fontWeight: FontWeight.w900,
-                      decoration: TextDecoration.none,
+                left: media.width / 2 - 75.w,
+                child: Container(
+                  width: 150.w,
+                  height: 20.h,
+                  decoration: BoxDecoration(
+                      color: AppColors.yellow,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: const Center(
+                    child: Text(
+                      "Local AR View",
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontFamily: 'Roboto',
+                        color: Colors.black,
+                        fontWeight: FontWeight.w900,
+                        decoration: TextDecoration.none,
+                      ),
                     ),
                   ),
-                ),),
+                ),
               ),
               Positioned(
-             right: 10.w,
-             bottom: 55.h,
-        child: Container(
-          width: 100.w,height: 20.h,decoration:  BoxDecoration(color: AppColors.yellow,borderRadius: BorderRadius.circular(20)),
-          child: const Center(
-            child: Text("AR Services",
-            style: TextStyle(
-            fontSize: 13,
-            color: Colors.black,
-            fontWeight: FontWeight.w900,
-            decoration: TextDecoration.none,
-            ),
-            ),
-          ),
-        ),
-          ),
+                right: 10.w,
+                bottom: 55.h,
+                child: Container(
+                  width: 100.w,
+                  height: 20.h,
+                  decoration: BoxDecoration(
+                      color: AppColors.yellow,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: const Center(
+                    child: Text(
+                      "AR Service",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w900,
+                        decoration: TextDecoration.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Positioned(
                 left: 10.w,
                 bottom: 10.h,
@@ -170,10 +222,15 @@ class _CameraScreenState extends State<CameraScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                         Container(
-                      width: 100.w,height: 20.h,decoration:  BoxDecoration(color: AppColors.yellow,borderRadius: BorderRadius.circular(20)),
+                    Container(
+                      width: 100.w,
+                      height: 20.h,
+                      decoration: BoxDecoration(
+                          color: AppColors.yellow,
+                          borderRadius: BorderRadius.circular(20)),
                       child: const Center(
-                        child: Text(" AI Matching Colors ",
+                        child: Text(
+                          " AI Matching Colors ",
                           style: TextStyle(
                             fontSize: 10,
                             color: Colors.black,
@@ -184,16 +241,23 @@ class _CameraScreenState extends State<CameraScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height:5),
+                    const SizedBox(height: 5),
                     Padding(
                       padding: const EdgeInsets.only(left: 2.0),
-                      child: Row(children: [ ...findMatchingColors(colorIndex),],),
+                      child: Row(
+                        children: [...findMatchingColors(colorIndex)],
+                      ),
                     ),
-                    const SizedBox(height:5),
+                    const SizedBox(height: 5),
                     Container(
-                      width: 100.w,height: 20.h,decoration:  BoxDecoration(color: AppColors.yellow,borderRadius: BorderRadius.circular(20)),
+                      width: 100.w,
+                      height: 20.h,
+                      decoration: BoxDecoration(
+                          color: AppColors.yellow,
+                          borderRadius: BorderRadius.circular(20)),
                       child: const Center(
-                        child: Text("Available Colors ",
+                        child: Text(
+                          "Available Colors ",
                           style: TextStyle(
                             fontSize: 10,
                             color: Colors.black,
@@ -204,7 +268,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height:5),
+                    const SizedBox(height: 5),
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: Row(
@@ -213,7 +277,8 @@ class _CameraScreenState extends State<CameraScreen> {
                           return Padding(
                             padding: const EdgeInsets.only(left: 5.0),
                             child: Container(
-                                width: 20.w,height: 17.h,
+                              width: 20.w,
+                              height: 17.h,
                               decoration: BoxDecoration(
                                   color: Color(int.parse("0xFF$item")),
                                   borderRadius: BorderRadius.circular(50),
@@ -223,19 +288,24 @@ class _CameraScreenState extends State<CameraScreen> {
                                       blurRadius: 2,
                                       offset: const Offset(-1, 2),
                                     ),
-                                  ]
-                              ),
+                                  ]),
                             ),
                           );
-                        }
-                        ).toList(),
+                        }).toList(),
                       ),
                     ),
-                    SizedBox(height: 3.h,),
+                    SizedBox(
+                      height: 3.h,
+                    ),
                     Container(
-                      width: 100.w,height: 20.h,decoration:  BoxDecoration(color: AppColors.yellow,borderRadius: BorderRadius.circular(20)),
+                      width: 100.w,
+                      height: 20.h,
+                      decoration: BoxDecoration(
+                          color: AppColors.yellow,
+                          borderRadius: BorderRadius.circular(20)),
                       child: const Center(
-                        child: Text("Detecting BG",
+                        child: Text(
+                          "Detecting BG",
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black,
@@ -246,28 +316,82 @@ class _CameraScreenState extends State<CameraScreen> {
                         ),
                       ),
                     ),
-                         Padding(
-                          padding: const EdgeInsets.only(left:25.0,top: 5),
-                          child: Container(width: 40.w,height: 35.h,decoration:  BoxDecoration(color:_containerColor,borderRadius: BorderRadius.circular(50)),),
-                        )
+                    Padding(
+                      padding: const EdgeInsets.only(left: 25.0, top: 5),
+                      child: Container(
+                        width: 40.w,
+                        height: 35.h,
+                        decoration: BoxDecoration(
+                            color: _containerColor,
+                            borderRadius: BorderRadius.circular(50)),
+                      ),
+                    )
                   ],
                 ),
-
               ),
+
               SizedBox(
                 width: media.width,
                 height: media.height,
-                child: ModelViewer(
-                  backgroundColor: Colors.transparent,
-                  src: widget.file,
-                  alt: 'A 3D model of an astronaut',
-                  ar: true,
-                  autoRotate: false,
-                  iosSrc: widget.file,
-                  disableZoom: false,
-                  maxFieldOfView: '100deg',
-                  minFieldOfView: '100deg',
-                  cameraOrbit: '42deg 90deg 0.5m',
+                child: RepaintBoundary(
+                  key: _screenshotKey,
+                  child: ModelViewer(
+                    backgroundColor: Colors.transparent,
+                    src: widget.file,
+                    alt: 'A 3D model of an astronaut',
+                    ar: true,
+                    autoRotate: false,
+                    iosSrc: widget.file,
+                    disableZoom: false,
+                    maxFieldOfView: '100deg',
+                    minFieldOfView: '100deg',
+                    cameraOrbit: '42deg 90deg 0.5m',
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 80.h,
+                right: 10.w,
+                child:  Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+
+                    Container(
+                      width: 100.w,
+                      height: 20.h,
+                      decoration: BoxDecoration(
+                          color: AppColors.yellow,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: const Center(
+                        child: Text(
+                          "Share Element",
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.black,
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.w900,
+                            decoration: TextDecoration.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 6,),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 6.0),
+                      child: Container(
+                      width: 40.w,
+                              height: 35.h,
+                              decoration: BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(50)),
+                              child:   Center(
+                                    child: IconButton(onPressed: ()async{
+                      _takeScreenshotAndSaveToGallery(_screenshotKey);
+                                    },    icon:const Icon(Icons.share,color: AppColors.black,),),
+                              ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -279,6 +403,7 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 }
+
 bool isMatchingColorFound(List<String> cardColors, List<String> matchingColors) {
   List<String> cardColorNames = cardColors.map((colorCode) =>
       getColorNameFromCode(colorCode)).toList();
