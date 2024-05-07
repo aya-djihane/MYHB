@@ -133,17 +133,10 @@ class _CameraScreenState extends State<CameraScreen> {
 
   Future<void> _takeScreenshotAndSaveToGallery(GlobalKey _screenshotKey) async {
     try {
-      // Find the RenderRepaintBoundary associated with the given GlobalKey
       RenderRepaintBoundary boundary = _screenshotKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-
-      // Capture the image using the boundary
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0); // Adjust pixel ratio as needed
-
-      // Convert the captured image to bytes in PNG format
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
       ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       Uint8List pngBytes = byteData!.buffer.asUint8List();
-
-      // Get the directory for the device's pictures
       final directory = await getExternalStorageDirectory();
       final imagePath = '${directory!.path}/screenshot.png';
       File(imagePath).writeAsBytesSync(pngBytes);
@@ -166,7 +159,6 @@ class _CameraScreenState extends State<CameraScreen> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Stack(
-
             children: [
               CameraPreview(_controller),
               Positioned(
@@ -178,11 +170,11 @@ class _CameraScreenState extends State<CameraScreen> {
                   decoration: BoxDecoration(
                       color: AppColors.yellow,
                       borderRadius: BorderRadius.circular(20)),
-                  child: const Center(
+                  child:  Center(
                     child: Text(
                       "Local AR View",
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 12.sp,
                         fontFamily: 'Roboto',
                         color: Colors.black,
                         fontWeight: FontWeight.w900,
@@ -201,11 +193,11 @@ class _CameraScreenState extends State<CameraScreen> {
                   decoration: BoxDecoration(
                       color: AppColors.yellow,
                       borderRadius: BorderRadius.circular(20)),
-                  child: const Center(
+                  child:  Center(
                     child: Text(
                       "AR Service",
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         color: Colors.black,
                         fontFamily: "Roboto",
                         fontWeight: FontWeight.w900,
@@ -228,11 +220,11 @@ class _CameraScreenState extends State<CameraScreen> {
                       decoration: BoxDecoration(
                           color: AppColors.yellow,
                           borderRadius: BorderRadius.circular(20)),
-                      child: const Center(
+                      child:  Center(
                         child: Text(
                           " AI Matching Colors ",
                           style: TextStyle(
-                            fontSize: 10,
+                            fontSize: 8.sp,
                             color: Colors.black,
                             fontFamily: "Roboto",
                             fontWeight: FontWeight.w900,
@@ -329,24 +321,20 @@ class _CameraScreenState extends State<CameraScreen> {
                   ],
                 ),
               ),
-
               SizedBox(
                 width: media.width,
                 height: media.height,
-                child: RepaintBoundary(
-                  key: _screenshotKey,
-                  child: ModelViewer(
-                    backgroundColor: Colors.transparent,
-                    src: widget.file,
-                    alt: 'A 3D model of an astronaut',
-                    ar: true,
-                    autoRotate: false,
-                    iosSrc: widget.file,
-                    disableZoom: false,
-                    maxFieldOfView: '100deg',
-                    minFieldOfView: '100deg',
-                    cameraOrbit: '42deg 90deg 0.5m',
-                  ),
+                child: ModelViewer(
+                  backgroundColor: Colors.transparent,
+                  src: widget.file,
+                  alt: 'A 3D model of an astronaut',
+                  ar: true,
+                  autoRotate: true,
+                  iosSrc:    widget.file,
+                  disableZoom: false,
+                  maxFieldOfView: '50deg',
+                  minFieldOfView: '60deg',
+                  cameraOrbit: '42deg 90deg 0.5m',
                 ),
               ),
               Positioned(
@@ -355,18 +343,17 @@ class _CameraScreenState extends State<CameraScreen> {
                 child:  Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-
                     Container(
                       width: 100.w,
                       height: 20.h,
                       decoration: BoxDecoration(
                           color: AppColors.yellow,
                           borderRadius: BorderRadius.circular(20)),
-                      child: const Center(
+                      child:  Center(
                         child: Text(
                           "Share Element",
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: 8.sp,
                             color: Colors.black,
                             fontFamily: "Roboto",
                             fontWeight: FontWeight.w900,

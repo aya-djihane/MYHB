@@ -37,7 +37,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     Widget buildStarRating(int rating,) {
       List<Widget> stars = [];
       for (int i = 0; i < rating; i++) {
-        stars.add(const Icon(Icons.star, color: Colors.yellow,size: 13,));
+        stars.add(const Icon(Icons.star, color: AppColors.yellow,size: 16,));
       }
       return Row(children: stars);
     }
@@ -52,7 +52,6 @@ class _ProductDetailsState extends State<ProductDetails> {
               fontFamily: "Gelasio",
               fontSize: 15,
               fontWeight: FontWeight.w300,
-
               height: 30 / 24,
             ),
             textAlign: TextAlign.left,
@@ -278,7 +277,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             fontFamily: "Nunito Sans",
                             fontSize: 30,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.white,
+                            color: AppColors.black,
                             height: 41 / 30,
                           ),
                           textAlign: TextAlign.left,
@@ -301,9 +300,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      controller.selectedreviews.isNotEmpty?Column(
+                      Obx(() =>controller.selectedreviews.isNotEmpty?Column(
                         children: [
-                           Text(
+                          Text(
                             "Reviews",
                             style: TextStyle(
                               fontFamily: "Nunito Sans",
@@ -314,7 +313,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                           Column(
+                          Column(
                             children: controller.selectedreviews.map((review) => Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Column(
@@ -326,10 +325,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       children: [
                                         Row(
                                           children: [
-                                           SizedBox(
-                                               height: 30,
-                                               width: 30,
-                                               child: Image.network("https://cdn-icons-png.flaticon.com/512/3870/3870822.png")),const SizedBox(width: 20,),
+                                            SizedBox(
+                                                height: 30,
+                                                width: 30,
+                                                child: Image.network("https://cdn-icons-png.flaticon.com/512/3870/3870822.png")),const SizedBox(width: 20,),
                                             Text('${review.profil!.substring(0, 2)}${'*' * (review.profil!.length - 10)}.com'),
                                           ],
                                         ),
@@ -337,47 +336,48 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       ],
                                     ),
                                     Padding(
-                                      padding:  EdgeInsets.only(left: 50.w,bottom: 10.h),
+                                      padding:  EdgeInsets.only(left: 50.w,top: 20.h),
                                       child: buildStarRating(review.rating!),
                                     ),
-                                      Padding(
-                                        padding:  EdgeInsets.only(left: 50.w),
-                                        child: ReadMoreText(
-                                          review.review ?? "",
-                                          trimLines: 2,
-                                          style: TextStyle(
-                                            fontFamily: "Nunito Sans",
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300,
-                                            color: Theme.of(context).brightness == Brightness.light
-                                                ? AppColors.darkGrey:AppColors.white,
-                                          ),
-                                          colorClickableText: AppColors.grey,
-                                          trimMode: TrimMode.Line,
-                                          trimCollapsedText: 'Show more',
-                                          trimExpandedText: 'Show less',
-                                          moreStyle:  TextStyle(
-                                            fontFamily: "Nunito Sans",
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300,
-                                            color: Theme.of(context).brightness == Brightness.light
-                                                ? AppColors.darkGrey:AppColors.white,
-                                          ),
-                                          lessStyle:  TextStyle(
+                                    Padding(
+                                      padding:  EdgeInsets.only(left: 50.w),
+                                      child: ReadMoreText(
+                                        review.review ?? "",
+                                        trimLines: 2,
+                                        style: TextStyle(
+                                          fontFamily: "Nunito Sans",
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w300,
+                                          color: Theme.of(context).brightness == Brightness.light
+                                              ? AppColors.darkGrey:AppColors.white,
+                                        ),
+                                        colorClickableText: AppColors.grey,
+                                        trimMode: TrimMode.Line,
+                                        trimCollapsedText: 'Show more',
+                                        trimExpandedText: 'Show less',
+                                        moreStyle:  TextStyle(
+                                          fontFamily: "Nunito Sans",
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w300,
+                                          color: Theme.of(context).brightness == Brightness.light
+                                              ? AppColors.darkGrey:AppColors.white,
+                                        ),
+                                        lessStyle:  TextStyle(
                                           fontFamily: "Nunito Sans",
                                           fontSize: 12,
                                           fontWeight: FontWeight.w300,
                                           color:Theme.of(context).brightness == Brightness.light
                                               ? AppColors.darkGrey:AppColors.white,
                                         ),
-                                        ),
                                       ),
+                                    ),
                                   ]
                               ),
                             )).toList(),
                           )
                         ],
                       ):const SizedBox.shrink(),
+                      ),
                       const SizedBox(height: 20,),
                       CustomButton(width: media.width, value: "Add Review",color: AppColors.yellow,onTap: (){
                         showDialog(
@@ -557,6 +557,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ),
                               );
                             });
+                        controller.fetchItems();
+
                       },)
                     ],
                   ),

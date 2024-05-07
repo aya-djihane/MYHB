@@ -41,7 +41,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
                   BoxShadow(color: AppColors.darkGrey.withOpacity(.4),blurRadius: 5,offset: const Offset(-4, 3)),
                 ],
               ),
-              height: 124,
+              height: 124.h,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -70,20 +70,16 @@ class _FavoriteCardState extends State<FavoriteCard> {
                           Text(
                             widget.cardinfo.name??"",
                             style:  TextStyle(fontFamily: "Nunito", color: Theme.of(context).brightness == Brightness.light
-                                ? AppColors.yellow
-                                : AppColors.yellow, fontSize: 18,fontWeight: FontWeight.w900),
+                                ? AppColors.yellow : AppColors.white, fontSize: 18,fontWeight: FontWeight.w900),
                           ),
                           const SizedBox(height: 5),
-                          Text(
-                           "DZ ${ widget.cardinfo.price!}",
-                            style:  TextStyle(color: Theme.of(context).brightness == Brightness.light
+                          Text("DZ ${ widget.cardinfo.price!}",style:  TextStyle(color: Theme.of(context).brightness == Brightness.light
                                 ? AppColors.black
                                 : AppColors.yellow, fontSize: 15, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -127,8 +123,8 @@ class _FavoriteCardState extends State<FavoriteCard> {
         Positioned(
         bottom: 20,right: 30,
           child: Container(
-            width: 120,
-            height: 28,
+            width: 122.w,
+            height: 30.h,
             decoration:  BoxDecoration(
                 color: AppColors.yellow,
                 border: Border.all(color: AppColors.darkGrey,width: 1),

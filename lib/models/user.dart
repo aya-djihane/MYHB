@@ -2,9 +2,9 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 class Users {
   String? id;
-  final String? name;
+  late final String? name;
   final String? profil;
-  final String? email;
+  late final String? email;
   Users( {
     this.name,
     this.profil,
@@ -31,7 +31,7 @@ class Users {
       id: data['id'] ,
       name: data['name'] as String?,
       email:data['email'] as String?,
-      profil: data['profile'] as String,
+      profil: data['profile'] ??""as String,
 
     );
   }

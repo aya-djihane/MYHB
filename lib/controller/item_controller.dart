@@ -47,7 +47,7 @@ class ItemController extends GetxController {
         review: message.value,
         item: item,
         rating: reviewInt.value,
-        profil: user.profil,
+        profil: user.email,
         date: formattedDate,
       );
       await fetchItems();
@@ -60,7 +60,7 @@ class ItemController extends GetxController {
   }
   Future<void>  fetchItems() async{
     _databaseService.getReviews().listen((items) {
-      globalReview.value.assignAll(items);
+      globalReview.assignAll(items);
       print("the global list lenght is ${globalReview.length}");
     });
   }

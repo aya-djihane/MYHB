@@ -9,6 +9,9 @@ import 'package:get/get.dart';
 import 'package:myhb_app/appColors.dart';
 import 'package:myhb_app/controller/account_controller.dart';
 import 'package:myhb_app/controller/app_controller.dart';
+import 'package:myhb_app/screens/My_reviews.dart';
+import 'package:myhb_app/screens/messageScreen.dart';
+import 'package:myhb_app/screens/stetting_screen.dart';
 import 'package:myhb_app/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -129,7 +132,7 @@ class _AccountPageState extends State<AccountPage> {
                      icon: Icon(
                        Icons.add_a_photo,
                        color: Theme.of(context).brightness == Brightness.light
-                           ? AppColors.blackDark
+                           ? AppColors.yellow
                            : AppColors.yellow,
                      ),
                      onPressed: _pickImage,
@@ -236,8 +239,7 @@ class _AccountPageState extends State<AccountPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
-                          value:'My Orders '
-                          ,
+                          value:'My Orders ',
                           type: TypeText.text,
                           color: Theme.of(context).brightness == Brightness.light
                               ? AppColors.darkGrey
@@ -257,10 +259,7 @@ class _AccountPageState extends State<AccountPage> {
                   Padding(
                     padding: const EdgeInsets.only(right: 10.0),
                     child: Icon(
-
-
                       Icons.arrow_forward_ios,
-
                       size: 17,
                       color:Theme.of(context).brightness == Brightness.light
                         ? AppColors.darkGrey
@@ -272,113 +271,123 @@ class _AccountPageState extends State<AccountPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 20.0,left: 20,right: 20),
-            child: Container (
-              decoration: BoxDecoration(
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? AppColors.white
-                      : AppColors.lightBlackDark,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(),
-                  ]),
-              height: 69.h,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0,left: 20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomText(
-                          value:'My reviews '
-                          ,
-                          type: TypeText.text,
-                          color: Theme.of(context).brightness == Brightness.light
-                              ? AppColors.darkGrey
-                              : AppColors.yellow,
-                        ),
-                        const SizedBox(height: 10,),
-                        CustomText(
-                          value:'Reviews for 5 items',
-                          type: TypeText.subsubtext2,
-                          color: Theme.of(context).brightness == Brightness.light
-                              ? AppColors.grey
-                              : AppColors.yellow,
-                        ),
-                      ],
+            child: GestureDetector(
+              onTap: (){
+                Get.to(MyReviews());
+              },
+              child: Container (
+                decoration: BoxDecoration(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? AppColors.white
+                        : AppColors.lightBlackDark,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: const [
+                      BoxShadow(),
+                    ]),
+                height: 69.h,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0,left: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            value:'My reviews '
+                            ,
+                            type: TypeText.text,
+                            color: Theme.of(context).brightness == Brightness.light
+                                ? AppColors.darkGrey
+                                : AppColors.yellow,
+                          ),
+                          const SizedBox(height: 10,),
+                          CustomText(
+                            value:'Reviews for 5 items',
+                            type: TypeText.subsubtext2,
+                            color: Theme.of(context).brightness == Brightness.light
+                                ? AppColors.grey
+                                : AppColors.yellow,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: Icon(
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: Icon(
 
 
-                      Icons.arrow_forward_ios,
+                        Icons.arrow_forward_ios,
 
-                      size: 17,
-                      color:Theme.of(context).brightness == Brightness.light
-                        ? AppColors.darkGrey
-                        : AppColors.yellow,),
-                  ),
-                ],
+                        size: 17,
+                        color:Theme.of(context).brightness == Brightness.light
+                          ? AppColors.darkGrey
+                          : AppColors.yellow,),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 20.0,left: 20,right: 20),
-            child: Container (
-              decoration: BoxDecoration(
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? AppColors.white
-                      : AppColors.lightBlackDark,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(),
-                  ]),
-              height: 69.h,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0,left: 20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomText(
-                          value:'Setting'
-                          ,
-                          type: TypeText.text,
-                          color: Theme.of(context).brightness == Brightness.light
-                              ? AppColors.darkGrey
-                              : AppColors.yellow,
-                        ),
-                        const SizedBox(height: 10,),
-                        CustomText(
-                          value:'Update , FAQ , Contact ',
-                          type: TypeText.subsubtext2,
-                          color: Theme.of(context).brightness == Brightness.light
-                              ? AppColors.grey
-                              : AppColors.yellow,
-                        ),
-                      ],
+            child: GestureDetector(
+              onTap: (){
+Get.to(Setting());
+              },
+              child: Container (
+                decoration: BoxDecoration(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? AppColors.white
+                        : AppColors.lightBlackDark,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: const [
+                      BoxShadow(),
+                    ]),
+                height: 69.h,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0,left: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            value:'Setting'
+                            ,
+                            type: TypeText.text,
+                            color: Theme.of(context).brightness == Brightness.light
+                                ? AppColors.darkGrey
+                                : AppColors.yellow,
+                          ),
+                          const SizedBox(height: 10,),
+                          CustomText(
+                            value:'Update , FAQ , Contact ',
+                            type: TypeText.subsubtext2,
+                            color: Theme.of(context).brightness == Brightness.light
+                                ? AppColors.grey
+                                : AppColors.yellow,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: Icon(
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: Icon(
 
 
-                      Icons.arrow_forward_ios,
+                        Icons.arrow_forward_ios,
 
-                      size: 17,
-                      color:Theme.of(context).brightness == Brightness.light
-                        ? AppColors.darkGrey
-                        : AppColors.yellow,),
-                  ),
-                ],
+                        size: 17,
+                        color:Theme.of(context).brightness == Brightness.light
+                          ? AppColors.darkGrey
+                          : AppColors.yellow,),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
