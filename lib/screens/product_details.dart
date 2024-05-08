@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:myhb_app/appColors.dart';
+import 'package:myhb_app/controller/account_controller.dart';
 import 'package:myhb_app/controller/item_controller.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/models/review.dart';
@@ -23,7 +25,7 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   final ItemController controller = Get.find();
   final PageController _pageController = PageController();
-
+  final AccountController accountController = Get.find();
   @override
   void initState() {
     super.initState();
@@ -379,7 +381,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ):const SizedBox.shrink(),
                       ),
                       const SizedBox(height: 20,),
-                      CustomButton(width: media.width, value: "Add Review",color: AppColors.yellow,onTap: (){
+                      CustomButton(width: media.width, withOpacity: false,value: "Add Review",color: AppColors.yellow,onTap: (){
                         showDialog(
                             context: context,
                             barrierDismissible: false,
@@ -567,7 +569,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             ],
           ),
         ),
-        floatingActionButton: Padding(
+     floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -584,7 +586,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           color: Colors.transparent,
                         ),
                         child: Center(
-                            child: CameraScreen(file: widget.cardinfo.files![controller.choosenItem.value],colors: widget.cardinfo.colors,type: widget.cardinfo.type!!,)),
+                            child: CameraScreen(file: widget.cardinfo.files![controller.choosenItem.value],colors: widget.cardinfo.colors,type: widget.cardinfo.type!,)),
                       ),
                     ),
                   );
@@ -610,6 +612,42 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
               const SizedBox(width: 10),
               CustomButton(
+                withOpacity: false,
+                  onTap:() {
+                    FirebaseFirestore.instance
+                        .collection('orders')
+                        .where('userEmail', isEqualTo: accountController.currentUser.value!.email)
+                        .where('item_id', isEqualTo: widget.cardinfo.id)
+                        .get()
+                        .then((querySnapshot) {
+                      if (querySnapshot.docs.isEmpty) {
+                        FirebaseFirestore.instance.collection('orders').add({
+                          'userEmail': accountController.currentUser.value!.email,
+                          'item': widget.cardinfo.toJson(),
+                          'item_id':widget.cardinfo.id,
+                          'date': DateTime.now(),
+                        }).then((_) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(backgroundColor: AppColors.yellow,content: Text('Item added to cart')),
+                          );
+                        }).catchError((error) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(backgroundColor: AppColors.yellow,content: Text('Failed to add item to cart')),
+                          );
+                          print('Error adding item to cart: $error');
+                        });
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(backgroundColor: AppColors.yellow,content: Text('Item already in cart')),
+                        );
+                      }
+                    }).catchError((error) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(backgroundColor: AppColors.yellow,content: Text('Error checking existing orders')),
+                      );
+                      print('Error checking existing orders: $error');
+                    });
+                  },
                   width: 180, value: "Add to cart", color: AppColors.yellow),
               const SizedBox(width: 10),
               GestureDetector(

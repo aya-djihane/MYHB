@@ -13,23 +13,35 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
-
+import 'dart:async';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  const AndroidInitializationSettings initializationSettingsAndroid =
+  AndroidInitializationSettings('launcher_icon');
+  final InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+  );
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? userToken = prefs.getString('userToken');
+  final databaseService = DatabaseService();
+  await databaseService.initNotifications();
 
-  runApp(MyApp(isLoggedIn: userToken != null));
+  runApp(MyApp(isLoggedIn: userToken != null,));
 }
 
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
 
-  const MyApp({required this.isLoggedIn});
+
+  const MyApp({required this.isLoggedIn, });
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +59,13 @@ class MyApp extends StatelessWidget {
               brightness: uiProvider.isDark ? Brightness.dark : Brightness.light,
             ),
             home: isLoggedIn ? const UserDashboard() : ConnectivityWrapper(),
+            onGenerateRoute: (settings) {
+              // Route for displaying local notifications
+              if (settings.name == '/notification') {
+                return MaterialPageRoute(builder: (_) => NotificationScreen());
+              }
+              return null;
+            },
           ),
         ),
       ),
@@ -67,6 +86,20 @@ class ConnectivityWrapper extends StatelessWidget {
 
         return hasConnection ? const SplashScreen() : const NoInternetScreen();
       },
+    );
+  }
+}
+
+class NotificationScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Notification'),
+      ),
+      body: const Center(
+        child: Text('You received a notification!'),
+      ),
     );
   }
 }

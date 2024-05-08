@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:myhb_app/appColors.dart';
+import 'package:myhb_app/controller/account_controller.dart';
 import 'package:myhb_app/controller/dashboard_controller.dart';
+import 'package:myhb_app/screens/Notification.dart';
 import 'package:myhb_app/screens/account_screen.dart';
 import 'package:myhb_app/screens/favoritescreen.dart';
 import 'package:myhb_app/screens/home_page.dart';
@@ -14,6 +16,7 @@ class UserDashboard extends StatefulWidget {
 }
 class _UserDashboardState extends State<UserDashboard> {
   final DashboardController dashboardController = Get.put(DashboardController());
+  final AccountController accountController = Get.put(AccountController());
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -25,7 +28,10 @@ class _UserDashboardState extends State<UserDashboard> {
     );
     return GetX<DashboardController>(
         init: dashboardController,
+
         builder: (controller) {
+          accountController.fetchUsersAndCheckEmail();
+
           return Scaffold(
             body: Stack(
               children: [
@@ -34,7 +40,7 @@ class _UserDashboardState extends State<UserDashboard> {
                 if(dashboardController.pageType.value == PageType.announcements)
                    FavoritePage(),
                 if(dashboardController.pageType.value == PageType.meet)
-                  const HomePage(),
+                   NotificationScreen(),
                 if(dashboardController.pageType.value == PageType.account)
                   const AccountPage(),
                 Align(

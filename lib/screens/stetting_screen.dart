@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,7 @@ class Setting extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController nameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
-
+    String USER_COLLECTON_REF="users";
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -93,23 +94,21 @@ class Setting extends StatelessWidget {
                               children: [
                                 TextField(
                                   controller: nameController,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       labelText: 'Name'),
-                                ),
-                                TextField(
-                                  controller: emailController,
-                                  decoration: InputDecoration(
-                                      labelText: 'Email'),
                                 ),
                               ],
                             ),
                             actions: [
                               ElevatedButton(
-                                onPressed: () {
-                                  controller.currentUser.value!.name =
-                                      nameController.text;
-                                  controller.currentUser.value!.email =
-                                      emailController.text;
+                                onPressed: ()async {
+                                    await FirebaseFirestore.instance
+                                        .collection(USER_COLLECTON_REF)
+                                        .doc(controller.currentUser.value!.id)
+                                        .update({
+                                      'name': nameController.text,
+                                    });
+controller.fetchUsersAndCheckEmail();
                                   Get.back();
                                 },
                                 child: Text('Save'),
@@ -124,7 +123,7 @@ class Setting extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Icon(Ionicons.pencil,
+                      child: const Icon(Ionicons.pencil,
                           color: AppColors.darkGrey),
                     ),
                     Container(

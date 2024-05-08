@@ -10,6 +10,7 @@ import 'package:myhb_app/controller/app_controller.dart';
 import 'package:myhb_app/controller/dashboard_controller.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/models/user.dart';
+import 'package:myhb_app/screens/cart_view.dart';
 import 'package:myhb_app/widgets/ItemCard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
@@ -65,9 +66,14 @@ class _HomePageState extends State<HomePage> {
               print("user Email${user.profil} ");
             }
           }
-    ,child:  Icon(Ionicons.cart_outline, size: 30, color:  Theme.of(context).brightness == Brightness.light
-    ? AppColors.yellow
-        : AppColors.yellow)),
+    ,child:  GestureDetector(
+                onTap: (){
+                  Get.to(cartScreen());
+                },
+      child: Icon(Ionicons.cart_outline, size: 30, color:  Theme.of(context).brightness == Brightness.light
+      ? AppColors.yellow
+          : AppColors.yellow),
+    )),
         ),
 
       ],

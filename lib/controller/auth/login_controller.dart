@@ -3,12 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:myhb_app/controller/account_controller.dart';
 import 'package:myhb_app/models/user.dart';
 import 'package:myhb_app/screens/dashbord.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../appColors.dart';
-
 class AuthController extends GetxController {
+  final AccountController accountcontroller = Get.put(AccountController());
   RxBool ckiked = false.obs;
   RxBool isEmailValid = true.obs;
   RxBool isPasswordValid = true.obs;
@@ -42,7 +43,7 @@ class AuthController extends GetxController {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       await saveUserInfo(userCredential.user!);
-      failedLoginAttempts = 0; // Reset login attempts on successful login
+      failedLoginAttempts = 0;
       Get.snackbar('Success', 'User exists!',
           backgroundColor: AppColors.primaryGreen.withOpacity(.2));
       Get.offAll(const UserDashboard()); // Go to dashboard after login
@@ -75,12 +76,12 @@ class AuthController extends GetxController {
     }
   }
   Future<void> saveUserInfo(User user) async {
-    Users userInfo =
-    Users(id: user.uid, name: user.displayName, email: user.email);
+    Users userInfo = Users(id: user.uid, name: user.displayName, email: user.email);
     Map<String, Object?> userInfoJson = userInfo.toJson();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('userInfo', jsonEncode(userInfoJson));
     print("userInfo: ${userInfo.email}");
+    accountcontroller.fetchUsersAndCheckEmail();
   }
   void showLoginAttemptsDialog() {
     int countDownSeconds = 30;
@@ -133,5 +134,4 @@ class AuthController extends GetxController {
       }
     });
   }
-
 }
