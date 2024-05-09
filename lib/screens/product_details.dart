@@ -46,6 +46,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     return GetX<ItemController>(
         init: controller,
         builder: (controller) {
+          controller.chooseitem(widget.cardinfo.id!);
          return  Scaffold(
         appBar: AppBar(
           title:  Text(

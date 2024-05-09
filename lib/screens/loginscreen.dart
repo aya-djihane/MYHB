@@ -146,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: [
                         CustomButton(width: media.width,color: AppColors.yellow, value: 'Log In', onTap: () =>  !controller.stop.value?controller.login(emailController.text, passwordController.text):null),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         CustomButton(width: media.width,color: AppColors.yellow, value: 'SIGN UP', onTap: () => Get.to(SignUpScreen())),
                       ],
                     ),

@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
           }
     ,child:  GestureDetector(
                 onTap: (){
-                  Get.to(cartScreen());
+                  Get.to(CartScreen());
                 },
       child: Icon(Ionicons.cart_outline, size: 30, color:  Theme.of(context).brightness == Brightness.light
       ? AppColors.yellow

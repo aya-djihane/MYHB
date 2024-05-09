@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:myhb_app/models/cart_item.dart';
@@ -38,6 +39,9 @@ class ItemController extends GetxController {
   Future<void> updateCounter(Item item,int counter) async {
     await DatabaseService().updateItemCounter(item.id!,counter);
   }
+  Future<void> deletitem(String itemid) async {
+    await DatabaseService().deleteItemsById(itemid);
+  }
   Future<void> createfavorate(Item item) async {
     await DatabaseService().CreatItemFavorateRecord(item);
   }
@@ -46,6 +50,26 @@ class ItemController extends GetxController {
       notification.assignAll(items);
     });
   }
+  void addToCheckoutCollection(CartItem item) {
+    CollectionReference checkoutCollection = FirebaseFirestore.instance.collection('checkout');
+    DocumentReference newItemRef = checkoutCollection.doc();
+    DateTime dateObj = DateTime.now();
+    String formattedDate = DateFormat('MM/dd/yyyy').format(dateObj);
+    Map<String, dynamic> newItemData = {
+      'id': newItemRef.id,
+      'item': item.toJson(),
+      'useremail': accountController.currentUser.value!.email!,
+      'checkoutdate':formattedDate,
+    };
+    newItemRef.set(newItemData)
+        .then((value) {
+      print("Item added to checkout collection successfully!");
+    })
+        .catchError((error) {
+      print("Failed to add item to checkout collection: $error");
+    });
+  }
+
   Future<bool> addreview(Item item) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userData = prefs.getString('userInfo');
@@ -87,7 +111,7 @@ class ItemController extends GetxController {
             .where((p0) => p0.userEmail == accountController.currentUser.value!.email));
         totalorder.value = 0.0;
         selectedItemscart.forEach((element) {
-          totalorder.value += double.parse(element.item.price!.replaceAll("dz", ""));
+          totalorder.value += double.parse(element.item.price!.replaceAll("dz", ""))* element.counter;
         });
         loadingOrder.value = false;
       });

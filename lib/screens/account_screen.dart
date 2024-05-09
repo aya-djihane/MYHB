@@ -11,6 +11,7 @@ import 'package:myhb_app/controller/account_controller.dart';
 import 'package:myhb_app/controller/app_controller.dart';
 import 'package:myhb_app/screens/My_reviews.dart';
 import 'package:myhb_app/screens/cart_view.dart';
+import 'package:myhb_app/screens/checkout_screen.dart';
 import 'package:myhb_app/screens/stetting_screen.dart';
 import 'package:myhb_app/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
@@ -218,7 +219,7 @@ class _AccountPageState extends State<AccountPage> {
             padding: const EdgeInsets.only(bottom: 20.0,left: 20,right: 20),
             child: GestureDetector(
               onTap: (){
-                Get.to(cartScreen());
+                Get.to(CartScreen());
               },
               child: Container (
                 decoration: BoxDecoration(
@@ -265,6 +266,63 @@ class _AccountPageState extends State<AccountPage> {
                         color:Theme.of(context).brightness == Brightness.light
                           ? AppColors.darkGrey
                           : AppColors.yellow,),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20.0,left: 20,right: 20),
+            child: GestureDetector(
+              onTap: (){
+                Get.to(CheckoutScreen());
+              },
+              child: Container (
+                decoration: BoxDecoration(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? AppColors.white
+                        : AppColors.lightBlackDark,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: const [
+                      BoxShadow(),
+                    ]),
+                height: 69.h,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20.0,left: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            value:'My checkout ',
+                            type: TypeText.text,
+                            color: Theme.of(context).brightness == Brightness.light
+                                ? AppColors.darkGrey
+                                : AppColors.yellow,
+                          ),
+                          const SizedBox(height: 10,),
+                          CustomText(
+                            value:'Already have 10 orders',
+                            type: TypeText.subsubtext2,
+                            color: Theme.of(context).brightness == Brightness.light
+                                ? AppColors.grey
+                                : AppColors.yellow,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 17,
+                        color:Theme.of(context).brightness == Brightness.light
+                            ? AppColors.darkGrey
+                            : AppColors.yellow,),
                     ),
                   ],
                 ),

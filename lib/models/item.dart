@@ -26,7 +26,7 @@ class Item {
     this.isfavorite,
   });
 
-  factory Item.fromSnapshot(DocumentSnapshot snapshot) {
+    factory Item.fromSnapshot(DocumentSnapshot snapshot) {
     Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
     return Item(
       id: data['id'],
@@ -52,7 +52,7 @@ class Item {
       colors: (data['colors'] as List?)?.cast<String>(),
       files: (data['files'] as List?)?.cast<String>(),
       description: data['description'] as String?,
-      isfavorite: data['isfavorite'] as bool,
+      isfavorite: data['isfavorite']??false as bool,
     );
   }
 

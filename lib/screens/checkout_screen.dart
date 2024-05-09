@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myhb_app/appColors.dart';
+import 'package:myhb_app/controller/checkoutcontroller.dart';
 import 'package:myhb_app/controller/dashboard_controller.dart';
 import 'package:myhb_app/controller/item_controller.dart';
 import 'package:myhb_app/screens/waiting_screen.dart';
 import 'package:myhb_app/widgets/cartcard.dart';
+import 'package:myhb_app/widgets/checkoutCard.dart';
 import 'package:myhb_app/widgets/custom_button.dart';
 
-class CartScreen extends StatelessWidget {
-  final ItemController itemController = Get.find();
-
+class CheckoutScreen extends StatelessWidget {
+  CheckoutController checkoutController=Get.put(CheckoutController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "My Orders",
+          "My checkout Items",
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w400,
@@ -24,29 +25,26 @@ class CartScreen extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ),
-      body: GetBuilder<ItemController>(
+      body: GetBuilder<CheckoutController>(
         builder: (controller) {
-          controller.fetchOrderItems();
+          controller.fetchCheckoutList();
           return Column(
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 70.0),
+                  padding: const EdgeInsets.only(bottom: 0.0),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child:controller.selectedItemscart.isNotEmpty? Column(
-                        children: controller.selectedItemscart.map((item) {
+                      child: Column(
+                        children: controller.checkoutList.map((item) {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: CartCard(cartItem: item),
+                            child: checkoutCard(cartItem: item),
                           );
                         }).toList(),
-                      ):const Center(child: Padding(
-                        padding: EdgeInsets.only(top: 200.0),
-                        child: Text(" No order Element"),
-                      ),),
+                      ),
                     ),
                   ),
                 ),
@@ -55,79 +53,42 @@ class CartScreen extends StatelessWidget {
           );
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(left: 40.0,bottom: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Total",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Obx(() => Text(
-                  "${itemController.totalorder} DZ",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),)
-              ],
-            ),
-            const SizedBox(height: 16),
-            CustomButton(
-              width: MediaQuery.of(context).size.width,
-              withOpacity: false,
-              value: 'Check out',
-              color: AppColors.golden,
-              onTap: (){itemController.totalorder==0.0?null:Get.bottomSheet(PaymentScreen());},
 
-
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
 class PaymentScreen extends StatelessWidget {
   final Function(String cardNumber, String expiryDate, String cvv)? onCreditCardSubmit;
 
-   PaymentScreen({Key? key, this.onCreditCardSubmit}) : super(key: key);
+  PaymentScreen({Key? key, this.onCreditCardSubmit}) : super(key: key);
   final ItemController itemController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 130.h,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20))
-      ),
+      color: Colors.white,
       child:  Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Padding(
             padding: EdgeInsets.all(16.0),
-            child: Center(
-              child: Text(
-                'Select Payment Method',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,color: AppColors.golden,
-                ),
+            child: Text(
+              'Select Payment Method',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          // ListTile(
-          //   leading: Icon(Icons.credit_card),
-          //   title: Text('Credit Card'),
-          //   onTap: () {
-          //     _showCreditCardForm(context);
-          //   },
-          // ),
           ListTile(
-            leading: const Icon(Icons.monetization_on,color: AppColors.golden,),
+            leading: Icon(Icons.credit_card),
+            title: Text('Credit Card'),
+            onTap: () {
+              _showCreditCardForm(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.monetization_on),
             title: const Text('Cash on Delivery'),
             onTap: () {
               itemController.selectedItemscart.forEach((element) {itemController.addToCheckoutCollection(element );});

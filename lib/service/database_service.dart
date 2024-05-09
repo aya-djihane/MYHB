@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:myhb_app/chekoutEntry.dart';
 import 'package:myhb_app/models/cart_item.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/models/notification.dart';
@@ -17,6 +18,7 @@ const String REVIEW_COLLECTON_REF="reviewes";
 const String USER_COLLECTON_REF="users";
 const String Orders_COLLECTON_REF="orders";
 const String Notification_COLLECTON_REF="Notifications";
+
 Future<void> handleBackgroundMessage(RemoteMessage message)async{
 }
 
@@ -104,8 +106,10 @@ final _androidChannel = const AndroidNotificationChannel(
     );
 
 final _localNotification = FlutterLocalNotificationsPlugin();
+final CollectionReference checkoutCollection = FirebaseFirestore.instance.collection('checkout');
 
 DatabaseService(){
+
  _todoref = _firestore.collection(ITEMES_COLLECTON_REF).withConverter<Item>(
   fromFirestore: (snapshots, _) => Item.fromSnapshot(snapshots),
   toFirestore: (item, _) => item.toJson(),
@@ -145,6 +149,18 @@ Stream<List<CartItem>> getOrderItems() {
  });
 }
 
+Future<List<CheckoutEntry>> getCheckoutList() async {
+ SharedPreferences prefs = await SharedPreferences.getInstance();
+ String? userInfoJson = prefs.getString('userInfo');
+ Map<String, dynamic> userInfoMap = jsonDecode(userInfoJson!);
+ String email = userInfoMap['email'];
+
+ QuerySnapshot querySnapshot = await checkoutCollection.where('useremail', isEqualTo: email).get();
+
+ List<CheckoutEntry> checkoutList = querySnapshot.docs.map((doc) => CheckoutEntry.fromSnapshot(doc)).toList();
+ checkoutList.forEach((element) {print(element.item.item.id);});
+ return checkoutList;
+}
 Future<void> initNotifications( )async{
  await _firebaseMessaging.requestPermission();
  final fCMToken = await _firebaseMessaging.getToken();
@@ -209,6 +225,25 @@ Future<void> updateItemCounter(String itemId, int newCounter) async {
   print('Item counter updated successfully.');
  } catch (e) {
   print('Error updating item counter: $e');
+  // Handle the error as needed
+ }
+}
+Future<void> deleteItemsById(String itemId) async {
+ try {
+  final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+  await FirebaseFirestore.instance
+      .collection(Orders_COLLECTON_REF)
+      .where('item.id', isEqualTo: itemId)
+      .get();
+
+  for (final QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot
+  in querySnapshot.docs) {
+   await documentSnapshot.reference.delete();
+  }
+
+  print('Documents with item ID $itemId deleted successfully.');
+ } catch (e) {
+  print('Error deleting documents: $e');
   // Handle the error as needed
  }
 }
