@@ -4,7 +4,9 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:myhb_app/chekoutEntry.dart';
+import 'package:myhb_app/controller/dashboard_controller.dart';
 import 'package:myhb_app/models/cart_item.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/models/notification.dart';
@@ -18,6 +20,7 @@ const String REVIEW_COLLECTON_REF="reviewes";
 const String USER_COLLECTON_REF="users";
 const String Orders_COLLECTON_REF="orders";
 const String Notification_COLLECTON_REF="Notifications";
+final DashboardController dashboardController = Get.put(DashboardController());
 
 Future<void> handleBackgroundMessage(RemoteMessage message)async{
 }
@@ -159,9 +162,11 @@ Future<List<CheckoutEntry>> getCheckoutList() async {
 
  List<CheckoutEntry> checkoutList = querySnapshot.docs.map((doc) => CheckoutEntry.fromSnapshot(doc)).toList();
  checkoutList.forEach((element) {print(element.item.item.id);});
+
  return checkoutList;
 }
 Future<void> initNotifications( )async{
+ final DashboardController dashboardController = Get.put(DashboardController());
  await _firebaseMessaging.requestPermission();
  final fCMToken = await _firebaseMessaging.getToken();
  print("notif : ${fCMToken}");
@@ -170,7 +175,9 @@ Future<void> initNotifications( )async{
   final notification = event.notification;
   if (notification == null) return;
   final imageUrl = event.notification!.android!.imageUrl;
-
+  dashboardController.notifier.value=true;
+  print(dashboardController.notifier.value);
+  print("**************************");
   FirebaseFirestore.instance.collection('Notifications').add({
    'title': notification.title ?? '',
    'subtitle': notification.body ?? '',

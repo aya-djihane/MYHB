@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:myhb_app/controller/dashboard_controller.dart';
 import 'package:myhb_app/models/cart_item.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/models/notification.dart';
@@ -26,6 +27,8 @@ class ItemController extends GetxController {
   RxBool loadingOrder = false.obs;
   RxList<Notification> notification = <Notification>[].obs;
   final AccountController accountController = Get.find();
+  final DashboardController dashboardController = Get.find();
+
   @override
   void onInit() async{
   _databaseService = DatabaseService();
@@ -46,8 +49,12 @@ class ItemController extends GetxController {
     await DatabaseService().CreatItemFavorateRecord(item);
   }
   Future<void> getnotification() async {
+    dashboardController.notifier.value=false;
+    print(dashboardController.notifier.value);
     _databaseService.getNotification().listen((items) {
       notification.assignAll(items);
+
+
     });
   }
   void addToCheckoutCollection(CartItem item) {

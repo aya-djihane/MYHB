@@ -13,7 +13,9 @@ class DashboardController extends GetxController {
   var choosenType = Type.All.obs;
   RxBool loadingFavorite = false.obs;
   RxBool search = false.obs;
+  RxBool notifier = false.obs;
   var pageType = PageType.home.obs;
+
   RxList<Item> globalItems = <Item>[].obs;
   RxList<Item> filteredItems = <Item>[].obs;
   RxList<Item> favoriteItems = <Item>[].obs;

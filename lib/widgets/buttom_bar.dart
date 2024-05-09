@@ -4,8 +4,10 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:myhb_app/appColors.dart';
+import 'package:myhb_app/controller/dashboard_controller.dart';
 import 'package:myhb_app/widgets/custom_text.dart';
 enum PageType {home, meet, account,announcements}
 class BottomBar extends StatefulWidget {
@@ -26,6 +28,7 @@ class BottomBar extends StatefulWidget {
   State<BottomBar> createState() => _BottomBarState();
 }
 class _BottomBarState extends State<BottomBar> {
+  final DashboardController dashboardController = Get.find();
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -66,7 +69,7 @@ class _BottomBarState extends State<BottomBar> {
               onTap: widget.onTapAnnouncements,
             ),
           ),
-          Expanded(
+          Obx(() => Expanded(
               flex: 1,
               child: GestureDetector(
                 onTap:  widget.onTapMeet,
@@ -74,18 +77,28 @@ class _BottomBarState extends State<BottomBar> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      widget.pageType == PageType.meet ? Iconsax.notification:Iconsax.notification_copy,
-                      size: 28.sp,
-                      color: widget.pageType == PageType.meet ? Theme.of(context).brightness == Brightness.light
-                          ? AppColors.yellow:AppColors.yellow :Theme.of(context).brightness == Brightness.light
-                          ?AppColors.yellow.withOpacity(.5):AppColors.yellow,
+                    badges.Badge(
+                      badgeStyle:  badges.BadgeStyle(
+                        shape: badges.BadgeShape.circle,
+                        badgeColor: !dashboardController.notifier.value?Colors.transparent:Colors.red,
+                        padding: EdgeInsets.all(5),
+                        borderSide: BorderSide(color:!dashboardController.notifier.value?Colors.transparent: Colors.white, width: 2),
+                      ),
+                      position: badges.BadgePosition.topEnd(top: -1, end: -1),
+                      ignorePointer: true,
+                      child: Icon(
+                        widget.pageType == PageType.meet ? Iconsax.notification:Iconsax.notification_copy,
+                        size: 28.sp,
+                        color: widget.pageType == PageType.meet ? Theme.of(context).brightness == Brightness.light
+                            ? AppColors.yellow:AppColors.yellow :Theme.of(context).brightness == Brightness.light
+                            ?AppColors.yellow.withOpacity(.5):AppColors.yellow,
 
+                      ),
                     ),
                   ],
                 ),
               )
-          ),
+          ),),
           Expanded(
             flex: 1,
             child: _customIconTap(
