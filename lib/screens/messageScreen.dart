@@ -41,7 +41,7 @@ Get.snackbar (" message sened to admin","");
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 325.h,
+      height: 330.h,
       decoration:  BoxDecoration(
           color: Theme.of(context).brightness == Brightness.light
               ? AppColors.white:AppColors.lightBlack,
@@ -50,57 +50,59 @@ Get.snackbar (" message sened to admin","");
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 10,),
-            Container(height: 3,width: 90,decoration: const BoxDecoration(
-                color: AppColors.grey,
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20), topLeft: Radius.circular(20))
-            ),),
-            const SizedBox(height: 10,),
-            Text(
-              " Contect US",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w900,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? AppColors.yellow // Use light mode color
-                    : AppColors.yellow, // Use dark mode color
-                fontFamily: "Roboto",
-              ),
-              textAlign: TextAlign.center,
-            ),
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
-            ),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                  labelText: 'Email',
-                ) ,
-            ),
-            TextField(
-              controller: _messageController,
-              decoration: const InputDecoration(labelText: 'Message'),
-              maxLines: null,
-            ),
-            const SizedBox(height: 20),
-            GestureDetector(
-              onTap: _sendMessage,
-              child: Container(
-              decoration:  BoxDecoration(
-                color: AppColors.golden,
-                borderRadius: BorderRadius.circular(10)
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text("send to Us ",style: TextStyle(color: AppColors.white),),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 10,),
+              Container(height: 3,width: 90,decoration: const BoxDecoration(
+                  color: AppColors.grey,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20), topLeft: Radius.circular(20))
               ),),
-            ),
-          ],
+              const SizedBox(height: 10,),
+              Text(
+                " Contect US",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? AppColors.yellow // Use light mode color
+                      : AppColors.yellow, // Use dark mode color
+                  fontFamily: "Roboto",
+                ),
+                textAlign: TextAlign.center,
+              ),
+              TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(labelText: 'Name'),
+              ),
+              TextField(
+                controller: _emailController,
+                decoration: const InputDecoration(
+                    labelText: 'Email',
+                  ) ,
+              ),
+              TextField(
+                controller: _messageController,
+                decoration: const InputDecoration(labelText: 'Message'),
+                maxLines: null,
+              ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: _sendMessage,
+                child: Container(
+                decoration:  BoxDecoration(
+                  color: AppColors.golden,
+                  borderRadius: BorderRadius.circular(10)
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("send to Us ",style: TextStyle(color: AppColors.white),),
+                ),),
+              ),
+            ],
+          ),
         ),
       ),
     );
