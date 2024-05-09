@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,8 @@ import 'package:myhb_app/controller/dashboard_controller.dart';
 import 'package:myhb_app/controller/item_controller.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:myhb_app/screens/product_details.dart';
+
+import '../controller/account_controller.dart';
 
 class FavoriteCard extends StatefulWidget {
   final Item cardinfo;
@@ -19,6 +22,8 @@ class FavoriteCard extends StatefulWidget {
 class _FavoriteCardState extends State<FavoriteCard> {
   final ItemController  controller = Get.put(ItemController());
   final DashboardController dashboardController = Get.put(DashboardController());
+  final AccountController accountController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -122,23 +127,61 @@ class _FavoriteCardState extends State<FavoriteCard> {
         ),
         Positioned(
         bottom: 20,right: 30,
-          child: Container(
-            width: 122.w,
-            height: 30.h,
-            decoration:  BoxDecoration(
-                color: AppColors.yellow,
-                border: Border.all(color: AppColors.darkGrey,width: 1),
-                borderRadius: BorderRadius.circular(10)
-            ),
-            child: const Center(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.0),
-                child: Row(
-                  children: [
-                    Text("add to cart",style: TextStyle(fontSize: 12),),
-                    SizedBox(width: 5,),
-                    Icon(Icons.shopping_bag, size: 20,color: AppColors.black),
-                  ],
+          child: GestureDetector(
+            onTap: (){
+    FirebaseFirestore.instance
+        .collection('orders')
+        .where('userEmail', isEqualTo: accountController.currentUser.value!.email)
+        .where('item_id', isEqualTo: widget.cardinfo.id)
+        .get()
+        .then((querySnapshot) {
+    if (querySnapshot.docs.isEmpty) {
+    FirebaseFirestore.instance.collection('orders').add({
+    'userEmail': accountController.currentUser.value!.email,
+    'item': widget.cardinfo.toJson(),
+    'item_id':widget.cardinfo.id,
+    'date': DateTime.now(),
+    }).then((_) {
+    ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(backgroundColor: AppColors.yellow,content: Text('Item added to cart')),
+    );
+    }).catchError((error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(backgroundColor: AppColors.yellow,content: Text('Failed to add item to cart')),
+    );
+    print('Error adding item to cart: $error');
+    });
+    } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(backgroundColor: AppColors.yellow,content: Text('Item already in cart')),
+    );
+    }
+    }).catchError((error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(backgroundColor: AppColors.yellow,content: Text('Error checking existing orders')),
+    );
+    print('Error checking existing orders: $error');
+    });
+    },
+
+            child: Container(
+              width: 122.w,
+              height: 30.h,
+              decoration:  BoxDecoration(
+                  color: AppColors.yellow,
+                  border: Border.all(color: AppColors.darkGrey,width: 1),
+                  borderRadius: BorderRadius.circular(10)
+              ),
+              child: const Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Row(
+                    children: [
+                      Text("add to cart",style: TextStyle(fontSize: 12),),
+                      SizedBox(width: 5,),
+                      Icon(Icons.shopping_bag, size: 20,color: AppColors.black),
+                    ],
+                  ),
                 ),
               ),
             ),

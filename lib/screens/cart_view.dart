@@ -34,7 +34,7 @@ class CartScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 70.0),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
-                    child: Padding(
+                    child:Obx(() =>  Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child:controller.selectedItemscart.isNotEmpty? Column(
                         children: controller.selectedItemscart.map((item) {
@@ -47,7 +47,7 @@ class CartScreen extends StatelessWidget {
                         padding: EdgeInsets.only(top: 200.0),
                         child: Text(" No order Element"),
                       ),),
-                    ),
+                    ),)
                   ),
                 ),
               ),

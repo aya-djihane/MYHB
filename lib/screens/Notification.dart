@@ -10,6 +10,7 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title:  SizedBox(
           child: Text(
             "Notifiactions ",

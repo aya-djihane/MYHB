@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:myhb_app/controller/dashboard_controller.dart';
+import 'package:myhb_app/screens/cart_view.dart';
 import 'package:myhb_app/widgets/favoritecard.dart';
 import '../appColors.dart';
 class FavoritePage extends StatelessWidget {
@@ -10,17 +11,21 @@ class FavoritePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         actions:  [
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
-            child: Icon(Ionicons.cart_outline, size: 30, color: Theme.of(context).brightness == Brightness.light
-                ? AppColors.yellow
-                : AppColors.yellow,),
+            child: GestureDetector(
+              onTap: (){
+
+                Get.to(CartScreen());
+              },
+              child: Icon(Ionicons.cart_outline, size: 30, color: Theme.of(context).brightness == Brightness.light
+                  ? AppColors.yellow
+                  : AppColors.yellow,),
+            ),
           ),
         ],
-        leading:  Icon(Icons.search, size: 30, color: Theme.of(context).brightness == Brightness.light
-            ? AppColors.yellow
-            : AppColors.yellow,),
         title:  SizedBox(
           width: 200,
           child: Text(
