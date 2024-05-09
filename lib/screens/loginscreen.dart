@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontSize: 30,
                           fontFamily: "RubikLines",
                           fontWeight: FontWeight.bold,
-                          color: AppColors.darkGrey,
+                            color: AppColors.yellow
                         ),
                       ),
                     ],
@@ -145,9 +145,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 40),
                     child: Column(
                       children: [
-                        CustomButton(width: media.width, value: 'Log In', onTap: () =>  !controller.stop.value?controller.login(emailController.text, passwordController.text):null),
+                        CustomButton(width: media.width,color: AppColors.yellow, value: 'Log In', onTap: () =>  !controller.stop.value?controller.login(emailController.text, passwordController.text):null),
                         SizedBox(height: 16),
-                        CustomButton(width: media.width, value: 'SIGN UP', onTap: () => Get.to(SignUpScreen())),
+                        CustomButton(width: media.width,color: AppColors.yellow, value: 'SIGN UP', onTap: () => Get.to(SignUpScreen())),
                       ],
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
@@ -62,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.darkGrey,
+                              color: AppColors.yellow
                           ),
                         ),
                       ],
@@ -162,7 +163,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
-                      child: CustomButton(width: media.width, value: 'Sign Up', onTap: () => controller.signup(emailController.text,passwordController.text),),
+                      child: CustomButton(width: media.width, color: AppColors.yellow,value: 'Sign Up', onTap: () => controller.signup(emailController.text,passwordController.text),),
                     ),
                   ),
                   GestureDetector(
@@ -170,7 +171,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Get.to(const LoginScreen());
                     },
                     child: Padding(
-                      padding: EdgeInsets.only(left: media.width / 4.5, top: 0),
+                      padding: EdgeInsets.only(left: media.width / 4.57.w, top: 0),
                       child: const Text(
                         'Already have an account? Sign In',
                         style: TextStyle(fontSize: 14, fontFamily: "Merriweather", fontWeight: FontWeight.w600, color: AppColors.lightBlack),
