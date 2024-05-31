@@ -3,7 +3,6 @@
 
 
     package="com.example.ai_object_detector">
-    <!-- Add these permissions -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 

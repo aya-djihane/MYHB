@@ -63,35 +63,25 @@ class _CameraScreenState extends State<CameraScreen> {
   }
   Future<void> _takeScreenshotAndSaveToGallery(GlobalKey screenshotKey) async {
     try {
-      // Capture the widget image
       RenderRepaintBoundary boundary = screenshotKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      ui.Image image = await boundary.toImage(pixelRatio: 2.0);
 
-      // Convert the image to byte data
       ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       if (byteData == null) {
         Get.snackbar("Error", "Failed to capture screenshot");
         return;
       }
 
-      // Convert byte data to Uint8List
       Uint8List pngBytes = byteData.buffer.asUint8List();
-
-      // Get the application documents directory
       final directory = await getApplicationDocumentsDirectory();
       final imagePath = '${directory.path}/screenshot_${DateTime.now().millisecondsSinceEpoch}.png';
       final imageFile = File(imagePath);
 
-      // Write the image to a file
       await imageFile.writeAsBytes(pngBytes);
-
-      // Save the file to the gallery
       final result = await ImageGallerySaver.saveFile(imageFile.path);
       if (result != null && result["isSuccess"]) {
         Get.snackbar("Success", "Image saved to gallery: ${result["filePath"]}");
-        // Share the image
         await Share.shareFiles([imageFile.path], text: 'Check out this ${widget.type.toString().replaceAll("Type.", "")} available in ${widget.colors!.length} colors. What do you think?');
-        print("Image shared");
       } else {
         Get.snackbar("Error", "Failed to save image to gallery");
       }
