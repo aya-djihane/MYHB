@@ -395,7 +395,6 @@ class _CameraScreenState extends State<CameraScreen> {
                                 child:   Center(
                                       child: IconButton(onPressed: ()async{
                                         _takeScreenshotAndSaveToGallery(_screenshotKey);
-
                                       },    icon:const Icon(Icons.share,color: AppColors.black,),),
                                 ),
                         ),
