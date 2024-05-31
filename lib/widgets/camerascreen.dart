@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui'as ui;
-import 'package:flutter/widgets.dart';
 import 'package:myhb_app/models/item.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:camera/camera.dart';
@@ -39,7 +38,6 @@ class _CameraScreenState extends State<CameraScreen> {
   Color _containerColor = Colors.grey;
   int colorIndex = 0;
   Timer? _timer;
-
   @override
   void initState() {
     super.initState();
@@ -62,7 +60,6 @@ class _CameraScreenState extends State<CameraScreen> {
       });
     });
   }
-
   @override
   void dispose() {
     _controller.dispose();
@@ -70,7 +67,6 @@ class _CameraScreenState extends State<CameraScreen> {
     Tflite.close();
     super.dispose();
   }
-
   Future<void> _captureImage() async {
     if (!_controller.value.isInitialized) {
       return;
@@ -92,7 +88,6 @@ class _CameraScreenState extends State<CameraScreen> {
       });
     }
   }
-
   Future<void> _detectObjects(String imagePath) async {
     try {
       final interpreter = await Tflite.loadModel(
@@ -127,10 +122,6 @@ class _CameraScreenState extends State<CameraScreen> {
       print("Error detecting objects: $e");
     }
   }
-
-
-
-
   Future<void> _takeScreenshotAndSaveToGallery(GlobalKey _screenshotKey) async {
     try {
       RenderRepaintBoundary boundary = _screenshotKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
@@ -142,14 +133,15 @@ class _CameraScreenState extends State<CameraScreen> {
       File(imagePath).writeAsBytesSync(pngBytes);
       final result = await ImageGallerySaver.saveFile(imagePath);
       if (result != null && result.isNotEmpty) {
-        print("Image saved to gallery: $result");
+        Get.snackbar("Image saved to gallery: $result","");
         await Share.shareFiles([imagePath], text: 'Check out this ${widget.type.toString().replaceAll("Type.", "")} available ${widget.colors!.length} colors what do you think',);
         print("image shared  ");
       } else {
-        print("Failed to save image to gallery");
+        Get.snackbar("Failed to save image to gallery","");
       }
     } catch (e) {
-      print("Error taking screenshot and saving to gallery: $e");
+      Get.snackbar("Error taking screenshot and saving to gallery: $e","");
+
     }
   }  @override
   Widget build(BuildContext context) {
@@ -365,17 +357,23 @@ class _CameraScreenState extends State<CameraScreen> {
                     const SizedBox(height: 6,),
                     Padding(
                       padding: const EdgeInsets.only(right: 6.0),
-                      child: Container(
-                      width: 40.w,
-                              height: 35.h,
-                              decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(50)),
-                              child:   Center(
-                                    child: IconButton(onPressed: ()async{
-                      _takeScreenshotAndSaveToGallery(_screenshotKey);
-                                    },    icon:const Icon(Icons.share,color: AppColors.black,),),
-                              ),
+                      child: InkWell(
+                        onTap:(){
+                          _takeScreenshotAndSaveToGallery(_screenshotKey);
+                        },
+                        child: Container(
+
+                        width: 40.w,
+                                height: 35.h,
+                                decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(50)),
+                                child:   Center(
+                                      child: IconButton(onPressed: ()async{
+                                        _takeScreenshotAndSaveToGallery(_screenshotKey);
+                                      },    icon:const Icon(Icons.share,color: AppColors.black,),),
+                                ),
+                        ),
                       ),
                     ),
                   ],
@@ -390,7 +388,6 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 }
-
 bool isMatchingColorFound(List<String> cardColors, List<String> matchingColors) {
   List<String> cardColorNames = cardColors.map((colorCode) =>
       getColorNameFromCode(colorCode)).toList();

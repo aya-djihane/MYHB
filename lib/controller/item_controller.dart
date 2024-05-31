@@ -28,7 +28,6 @@ class ItemController extends GetxController {
   RxList<Notification> notification = <Notification>[].obs;
   final AccountController accountController = Get.find();
   final DashboardController dashboardController = Get.find();
-
   @override
   void onInit() async{
   _databaseService = DatabaseService();
@@ -50,11 +49,8 @@ class ItemController extends GetxController {
   }
   Future<void> getnotification() async {
     dashboardController.notifier.value=false;
-    print(dashboardController.notifier.value);
     _databaseService.getNotification().listen((items) {
       notification.assignAll(items);
-
-
     });
   }
   void addToCheckoutCollection(CartItem item) {
@@ -76,7 +72,6 @@ class ItemController extends GetxController {
       print("Failed to add item to checkout collection: $error");
     });
   }
-
   Future<bool> addreview(Item item) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userData = prefs.getString('userInfo');
@@ -137,4 +132,6 @@ class ItemController extends GetxController {
     await DatabaseService().CreatItemReviwRecord(choosenreview.value);
     fetchItems();
   }
+
+
 }

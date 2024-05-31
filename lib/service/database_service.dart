@@ -187,6 +187,8 @@ Future<void> initNotifications( )async{
    android:  AndroidNotificationDetails(
    _androidChannel.id,
     _androidChannel.name,
+    priority: Priority.high,
+    importance: Importance.high,
     channelDescription: _androidChannel.description,
    ),
   ),

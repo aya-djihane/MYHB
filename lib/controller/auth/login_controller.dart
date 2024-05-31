@@ -60,7 +60,6 @@ class AuthController extends GetxController {
           loginTimer = null;
         });
       }
-      print("******* ${e.code}");
       if (e.code == 'user-not-found') {
         Get.snackbar('Error', 'No user found for that email.',colorText: AppColors.white,backgroundColor: Colors.red,icon: const Icon(Icons.warning,color: Colors.white, ));
       }
@@ -68,11 +67,11 @@ class AuthController extends GetxController {
         Get.snackbar('Error', 'Wrong password provided for that user.',colorText: AppColors.white,backgroundColor: Colors.red,icon: const Icon(Icons.warning,color: Colors.white, ));
       } else {
         print('Error: $e');
-        Get.snackbar('Error', 'Failed to sign in: $e',colorText: AppColors.white,backgroundColor: Colors.red,icon: const Icon(Icons.warning,color: Colors.white, ));
+        Get.snackbar('Error', 'Failed to sign in: try again with right password',colorText: AppColors.white,backgroundColor: Colors.red,icon: const Icon(Icons.warning,color: Colors.white, ));
       }
     } catch (e) {
       print('Error: $e');
-      Get.snackbar('Error', 'Failed to sign in: $e',colorText: AppColors.white,backgroundColor: Colors.red,icon: const Icon(Icons.warning,color: Colors.white, ));
+      Get.snackbar('Error', 'Failed to sign in: try again with right password ',colorText: AppColors.white,backgroundColor: Colors.red,icon: const Icon(Icons.warning,color: Colors.white, ));
     }
   }
   Future<void> saveUserInfo(User user) async {

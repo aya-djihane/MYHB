@@ -19,6 +19,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
     return Scaffold(
+resizeToAvoidBottomInset: false,
       body: GetX<ForgotPasswordController>(
         init: forgotPasswordController,
         builder: (controller) {
