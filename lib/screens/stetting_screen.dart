@@ -156,7 +156,7 @@ controller.fetchUsersAndCheckEmail();
                             ),
 
                             child: Padding(
-                              padding:  EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 20.h),
+                              padding:  EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 10.h),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,7 +194,7 @@ controller.fetchUsersAndCheckEmail();
                               ],
                             ),
                             child: Padding(
-                              padding:  EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 20.h),
+                              padding:  EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 10.h),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
