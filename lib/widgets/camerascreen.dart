@@ -29,6 +29,7 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
+  
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
   final GlobalKey _screenshotKey = GlobalKey();
@@ -60,6 +61,46 @@ class _CameraScreenState extends State<CameraScreen> {
       });
     });
   }
+  Future<void> _takeScreenshotAndSaveToGallery(GlobalKey screenshotKey) async {
+    try {
+      // Capture the widget image
+      RenderRepaintBoundary boundary = screenshotKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+
+      // Convert the image to byte data
+      ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      if (byteData == null) {
+        Get.snackbar("Error", "Failed to capture screenshot");
+        return;
+      }
+
+      // Convert byte data to Uint8List
+      Uint8List pngBytes = byteData.buffer.asUint8List();
+
+      // Get the application documents directory
+      final directory = await getApplicationDocumentsDirectory();
+      final imagePath = '${directory.path}/screenshot_${DateTime.now().millisecondsSinceEpoch}.png';
+      final imageFile = File(imagePath);
+
+      // Write the image to a file
+      await imageFile.writeAsBytes(pngBytes);
+
+      // Save the file to the gallery
+      final result = await ImageGallerySaver.saveFile(imageFile.path);
+      if (result != null && result["isSuccess"]) {
+        Get.snackbar("Success", "Image saved to gallery: ${result["filePath"]}");
+        // Share the image
+        await Share.shareFiles([imageFile.path], text: 'Check out this ${widget.type.toString().replaceAll("Type.", "")} available in ${widget.colors!.length} colors. What do you think?');
+        print("Image shared");
+      } else {
+        Get.snackbar("Error", "Failed to save image to gallery");
+      }
+    } catch (e) {
+      Get.snackbar("Error", "Error taking screenshot and saving to gallery: $e");
+    }
+  }
+
+
   @override
   void dispose() {
     _controller.dispose();
@@ -122,28 +163,6 @@ class _CameraScreenState extends State<CameraScreen> {
       print("Error detecting objects: $e");
     }
   }
-  Future<void> _takeScreenshotAndSaveToGallery(GlobalKey _screenshotKey) async {
-    try {
-      RenderRepaintBoundary boundary = _screenshotKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-      ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-      Uint8List pngBytes = byteData!.buffer.asUint8List();
-      final directory = await getExternalStorageDirectory();
-      final imagePath = '${directory!.path}/screenshot.png';
-      File(imagePath).writeAsBytesSync(pngBytes);
-      final result = await ImageGallerySaver.saveFile(imagePath);
-      if (result != null && result.isNotEmpty) {
-        Get.snackbar("Image saved to gallery: $result","");
-        await Share.shareFiles([imagePath], text: 'Check out this ${widget.type.toString().replaceAll("Type.", "")} available ${widget.colors!.length} colors what do you think',);
-        print("image shared  ");
-      } else {
-        Get.snackbar("Failed to save image to gallery","");
-      }
-    } catch (e) {
-      Get.snackbar("Error taking screenshot and saving to gallery: $e","");
-
-    }
-  }  @override
   Widget build(BuildContext context) {
     final Size media = MediaQuery.of(context).size;
     return FutureBuilder<void>(
@@ -313,20 +332,25 @@ class _CameraScreenState extends State<CameraScreen> {
                   ],
                 ),
               ),
-              SizedBox(
-                width: media.width,
-                height: media.height,
-                child: ModelViewer(
-                  backgroundColor: Colors.transparent,
-                  src: widget.file,
-                  alt: 'A 3D model of an astronaut',
-                  ar: true,
-                  autoRotate: true,
-                  iosSrc:    widget.file,
-                  disableZoom: false,
-                  maxFieldOfView: '50deg',
-                  minFieldOfView: '60deg',
-                  cameraOrbit: '42deg 90deg 0.5m',
+              Center(
+                child: RepaintBoundary(
+                  key: _screenshotKey,
+                  child: SizedBox(
+                    width: media.width,
+                    height: media.height,
+                    child: ModelViewer(
+                      backgroundColor: Colors.transparent,
+                      src: widget.file,
+                      alt: 'A 3D model of an astronaut',
+                      ar: true,
+                      autoRotate: true,
+                      iosSrc: widget.file,
+                      disableZoom: false,
+                      maxFieldOfView: '50deg',
+                      minFieldOfView: '60deg',
+                      cameraOrbit: '42deg 90deg 0.5m',
+                    ),
+                  ),
                 ),
               ),
               Positioned(
@@ -357,9 +381,9 @@ class _CameraScreenState extends State<CameraScreen> {
                     const SizedBox(height: 6,),
                     Padding(
                       padding: const EdgeInsets.only(right: 6.0),
-                      child: InkWell(
+                      child: GestureDetector(
                         onTap:(){
-                          _takeScreenshotAndSaveToGallery(_screenshotKey);
+                           _takeScreenshotAndSaveToGallery(_screenshotKey);
                         },
                         child: Container(
 
@@ -371,6 +395,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                 child:   Center(
                                       child: IconButton(onPressed: ()async{
                                         _takeScreenshotAndSaveToGallery(_screenshotKey);
+
                                       },    icon:const Icon(Icons.share,color: AppColors.black,),),
                                 ),
                         ),
