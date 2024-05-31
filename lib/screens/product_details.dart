@@ -587,7 +587,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           color: Colors.transparent,
                         ),
                         child: Center(
-                            child: CameraScreen(file: widget.cardinfo.files![controller.choosenItem.value],colors: widget.cardinfo.colors,type: widget.cardinfo.type!,)),
+                            child: CameraScreen(file: widget.cardinfo.files![controller.choosenItem.value],colors: widget.cardinfo.colors,type: widget.cardinfo.type??Type.Lamb,)),
                       ),
                     ),
                   );

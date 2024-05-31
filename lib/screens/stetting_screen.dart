@@ -88,7 +88,7 @@ class Setting extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (_) => AlertDialog(
-                            title: Text('Edit Information'),
+                            title: const Text('Edit Information'),
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -111,13 +111,13 @@ class Setting extends StatelessWidget {
 controller.fetchUsersAndCheckEmail();
                                   Get.back();
                                 },
-                                child: Text('Save'),
+                                child: const Text('Save'),
                               ),
                               ElevatedButton(
                                 onPressed: () {
                                   Get.back();
                                 },
-                                child: Text('Cancel'),
+                                child: const Text('Cancel'),
                               ),
                             ],
                           ),
@@ -138,7 +138,7 @@ controller.fetchUsersAndCheckEmail();
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Container(
-                            height: 64.h,
+                            height: 80.h,
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                               color:Theme.of(context).brightness == Brightness.light
@@ -156,7 +156,7 @@ controller.fetchUsersAndCheckEmail();
                             ),
 
                             child: Padding(
-                              padding:  EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 10.h),
+                              padding:  EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 20.h),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +177,7 @@ controller.fetchUsersAndCheckEmail();
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Container(
-                            height: 64.h,
+                            height: 80.h,
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                               color:Theme.of(context).brightness == Brightness.light
@@ -194,7 +194,7 @@ controller.fetchUsersAndCheckEmail();
                               ],
                             ),
                             child: Padding(
-                              padding:  EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 10.h),
+                              padding:  EdgeInsets.symmetric(horizontal: 20.0.w,vertical: 20.h),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
